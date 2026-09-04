@@ -52,6 +52,23 @@ Public data source
 → backtests
 → figures and tables
 
+## Pilot Data / EDA
+
+Current temporary pilot:
+
+- SPY, IEF, GLD
+- 2010-01-04 to 2025-12-31 (Yahoo Finance via yfinance)
+- daily adjusted-price simple and log returns
+- equal-weight exploratory portfolio (no rebalancing)
+- 21-day trailing rolling volatility, return and squared-return ACF
+
+This is not the final empirical specification. See
+`notes/pilot_eda.md` for the full write-up, `notes/decision_log.md`
+for status, and `notebooks/01_pilot_data_and_eda.ipynb` for the
+reproducible walkthrough. Pipeline: `scripts/01_download_raw_data.py`
+→ `scripts/02_validate_and_build_processed_data.py` →
+`scripts/03_run_eda.py`.
+
 ## Current Open Methodological Decisions
 
 The following are NOT yet final:

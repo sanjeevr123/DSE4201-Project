@@ -1,0 +1,30 @@
+{
+  "per_ticker": {
+    "SPY": {
+      "first_valid_date": "2010-01-04 00:00:00",
+      "last_valid_date": "2025-12-31 00:00:00",
+      "n_rows_in_panel": 4024,
+      "n_missing": 0,
+      "n_nonpositive_prices": 0
+    },
+    "IEF": {
+      "first_valid_date": "2010-01-04 00:00:00",
+      "last_valid_date": "2025-12-31 00:00:00",
+      "n_rows_in_panel": 4024,
+      "n_missing": 0,
+      "n_nonpositive_prices": 0
+    },
+    "GLD": {
+      "first_valid_date": "2010-01-04 00:00:00",
+      "last_valid_date": "2025-12-31 00:00:00",
+      "n_rows_in_panel": 4024,
+      "n_missing": 0,
+      "n_nonpositive_prices": 0
+    }
+  },
+  "n_duplicate_dates": 0,
+  "is_index_monotonic_increasing": true,
+  "panel_first_date": "2010-01-04 00:00:00",
+  "panel_last_date": "2025-12-31 00:00:00",
+  "panel_n_rows": 4024
+}
