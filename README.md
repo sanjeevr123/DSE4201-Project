@@ -69,6 +69,38 @@ reproducible walkthrough. Pipeline: `scripts/01_download_raw_data.py`
 → `scripts/02_validate_and_build_processed_data.py` →
 `scripts/03_run_eda.py`.
 
+## Pilot Study (docs/PILOT_PROMPT.md)
+
+A separate, more tightly scoped pilot study — testing whether letting
+cross-asset correlations vary by regime improves VaR/ES forecasts beyond
+letting only volatilities vary — lives alongside the Day-1 EDA pipeline
+above. See `docs/PILOT_PROMPT.md` for the full specification and
+`docs/preregistration.md` for the pre-registered go/no-go criteria.
+
+Reproduce the pilot's data-acquisition step with:
+
+```
+python -m src.run_pilot
+```
+
+Run the pilot's correctness test suite (WP1) with:
+
+```
+pytest tests/ -v
+```
+
+Key pilot paths:
+
+- `config/pilot.yaml` — every pilot parameter and random seed.
+- `src/engine.py` — the model engine (HMM regimes, covariance-variant
+  VaR/ES, scoring), a reviewed-and-fixed copy of `starter/pilot_core.py`.
+- `data/raw/MANIFEST.txt` — SHA-256 provenance record for every archived raw
+  download; raw data is downloaded once and never re-pulled.
+- `output/` (singular) — pilot deliverables (figures, tables,
+  `PILOT_REPORT.md`). This is deliberately separate from `outputs/`
+  (plural) above, which belongs to the earlier, unrelated Day-1 EDA
+  pipeline — the two are not the same directory and are not merged.
+
 ## Current Open Methodological Decisions
 
 The following are NOT yet final:

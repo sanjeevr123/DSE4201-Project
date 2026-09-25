@@ -1,0 +1,2 @@
+filename	sha256	download_date	tickers	start	end	n_rows
+spy_ief_gld_raw_2026-09-26.csv	0ab8c7f353a7223e154cc3ee4cc3656c465dded45c19269fc24efba371150e29	2026-09-26	SPY,IEF,GLD	2004-11-18	2026-09-25	5497

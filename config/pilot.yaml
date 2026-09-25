@@ -1,0 +1,58 @@
+# Single source of truth for pilot-study parameters and random seeds.
+# Nothing in src/ or scripts/ should hard-code a value that appears here —
+# tune only by editing this file, and record any change in docs/decision_log.md.
+
+seed: 0                      # global master seed (HMM init, walk_forward default)
+random_seeds:
+  hmm: 0
+  simulation_master: 0       # used by WP2, not WP0/WP1
+
+data:
+  tickers: [SPY, IEF, GLD]
+  download_start: "2004-11-18"
+  auto_adjust: false
+  raw_dir: data/raw
+  metadata_dir: data/metadata
+  manifest: data/raw/MANIFEST.txt
+
+dates:
+  estimation_start: "2004-11-18"
+  estimation_end: "2009-12-31"
+  pilot_forecast_start: "2010-01-01"
+  pilot_forecast_end: "2015-12-31"
+  locked_test_start: "2016-01-01"   # pilot code must NEVER compute anything on/after this date
+
+portfolio:
+  weights: {SPY: 0.3333333333, IEF: 0.3333333333, GLD: 0.3333333333}
+
+model:
+  n_states: 2
+  window: 1260
+  refit: 21
+  garch_refit: 63
+  hs_window: 500
+  ewma_lambda: 0.94
+  covariance_type: diag       # hmmlearn GaussianHMM param, as used in fit_hmm
+
+alphas: [0.05, 0.025]
+
+scoring:
+  dm_hac_lags: null           # null => auto lag selection (matches dm_test default)
+  pairs:                      # Diebold-Mariano comparison pairs
+    - [D, B]                  # PRIMARY: isolates the correlation channel
+    - [B, A]
+    - [C, A]
+    - [D, A]
+    - [B, GARCHt]
+    - [D, GARCHt]
+    - [B, EWMA_MV]
+    - [D, EWMA_MV]
+
+audit:
+  sigma_threshold: 8
+  dividend_diff_tol: 1.0e-6
+  ief_spot_check_n: 3
+
+wp1_tests:
+  mc_draws: 1_000_000
+  mc_tolerance: 0.01

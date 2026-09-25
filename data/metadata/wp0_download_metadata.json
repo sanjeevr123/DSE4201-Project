@@ -1,0 +1,18 @@
+{
+  "source_name": "Yahoo Finance",
+  "access_method": "yfinance.download()",
+  "package_version": "1.2.0",
+  "retrieval_timestamp_utc": "2026-09-25T18:41:42.499467+00:00",
+  "tickers": [
+    "SPY",
+    "IEF",
+    "GLD"
+  ],
+  "requested_start_date": "2004-11-18",
+  "requested_end_date": "2026-09-26",
+  "actual_first_date": "2004-11-18",
+  "actual_last_date": "2026-09-25",
+  "raw_file": "spy_ief_gld_raw_2026-09-26.csv",
+  "sha256": "0ab8c7f353a7223e154cc3ee4cc3656c465dded45c19269fc24efba371150e29",
+  "auto_adjust_setting": false
+}
