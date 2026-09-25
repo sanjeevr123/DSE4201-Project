@@ -56,3 +56,27 @@ audit:
 wp1_tests:
   mc_draws: 1_000_000
   mc_tolerance: 0.01
+
+wp2:
+  # 2-state Markov-switching multivariate Student-t DGP. Assets ordered
+  # [equity, bond, gold] throughout (SPY-like, IEF-like, GLD-like).
+  df: 6
+  vol_calm: [0.0075, 0.0030, 0.0090]
+  vol_stress: [0.0200, 0.0050, 0.0160]
+  p_calm_calm: 0.99
+  p_stress_stress: 0.97
+  calm_corr: [-0.30, 0.05, 0.30]    # (eq-bond, eq-gold, bond-gold)
+  scenarios:
+    S0_vol_only:           [-0.30, 0.05, 0.30]
+    S1_moderate_breakdown: [0.00, 0.20, 0.30]
+    S2_strong_breakdown:   [0.40, 0.40, 0.30]
+    S3_flight_to_quality:  [-0.55, -0.10, 0.40]
+  burn_in: 1260
+  test_days: 2520
+  timing_reps: 10
+  full_reps_alpha_05: 200
+  full_reps_alpha_025: 100
+  power_vs_length_scenario: S1_moderate_breakdown
+  power_vs_length_years: [5, 10, 15]
+  dm_power_alpha: 0.05        # one-sided D<B DM test significance level for power calcs
+  checkpoint_dir: output/sim_checkpoints

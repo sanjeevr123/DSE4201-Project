@@ -1,0 +1,548 @@
+{
+  "n_refits": 72,
+  "n_collapsed_refits": 0,
+  "collapsed_refit_share": 0.0,
+  "n_large_jump_refits": 0,
+  "stress_share_distribution": {
+    "mean": 0.17576513566704752,
+    "std": 0.047426086071678884,
+    "min": 0.0769488854822123,
+    "max": 0.24208643151676992
+  },
+  "per_refit_records": [
+    {
+      "refit_date": "2010-01-04",
+      "stress_share_in_window": 0.15584639699387026,
+      "vol_ratio_stress_over_calm": 3.4702604031853976,
+      "collapsed": false,
+      "large_jump_from_prev_refit": false
+    },
+    {
+      "refit_date": "2010-02-03",
+      "stress_share_in_window": 0.15266711864349952,
+      "vol_ratio_stress_over_calm": 3.4524361796334295,
+      "collapsed": false,
+      "large_jump_from_prev_refit": false
+    },
+    {
+      "refit_date": "2010-03-05",
+      "stress_share_in_window": 0.15092450543315422,
+      "vol_ratio_stress_over_calm": 3.4419633720517706,
+      "collapsed": false,
+      "large_jump_from_prev_refit": false
+    },
+    {
+      "refit_date": "2010-04-06",
+      "stress_share_in_window": 0.15085166557419702,
+      "vol_ratio_stress_over_calm": 3.450650622982277,
+      "collapsed": false,
+      "large_jump_from_prev_refit": false
+    },
+    {
+      "refit_date": "2010-05-05",
+      "stress_share_in_window": 0.15040800628788545,
+      "vol_ratio_stress_over_calm": 3.4429262134152614,
+      "collapsed": false,
+      "large_jump_from_prev_refit": false
+    },
+    {
+      "refit_date": "2010-06-04",
+      "stress_share_in_window": 0.17322223533849912,
+      "vol_ratio_stress_over_calm": 3.2938996964287006,
+      "collapsed": false,
+      "large_jump_from_prev_refit": false
+    },
+    {
+      "refit_date": "2010-07-06",
+      "stress_share_in_window": 0.17448685910385056,
+      "vol_ratio_stress_over_calm": 3.238545793178684,
+      "collapsed": false,
+      "large_jump_from_prev_refit": false
+    },
+    {
+      "refit_date": "2010-08-04",
+      "stress_share_in_window": 0.16945984614230775,
+      "vol_ratio_stress_over_calm": 3.2027246075142486,
+      "collapsed": false,
+      "large_jump_from_prev_refit": false
+    },
+    {
+      "refit_date": "2010-09-02",
+      "stress_share_in_window": 0.16554051632327893,
+      "vol_ratio_stress_over_calm": 3.1828530063353293,
+      "collapsed": false,
+      "large_jump_from_prev_refit": false
+    },
+    {
+      "refit_date": "2010-10-04",
+      "stress_share_in_window": 0.16345427630034,
+      "vol_ratio_stress_over_calm": 3.1826848023267034,
+      "collapsed": false,
+      "large_jump_from_prev_refit": false
+    },
+    {
+      "refit_date": "2010-11-02",
+      "stress_share_in_window": 0.16448871751120248,
+      "vol_ratio_stress_over_calm": 3.1968058789527145,
+      "collapsed": false,
+      "large_jump_from_prev_refit": false
+    },
+    {
+      "refit_date": "2010-12-02",
+      "stress_share_in_window": 0.16229369587048736,
+      "vol_ratio_stress_over_calm": 3.1762892010539248,
+      "collapsed": false,
+      "large_jump_from_prev_refit": false
+    },
+    {
+      "refit_date": "2011-01-03",
+      "stress_share_in_window": 0.16191023790744508,
+      "vol_ratio_stress_over_calm": 3.1820514379904754,
+      "collapsed": false,
+      "large_jump_from_prev_refit": false
+    },
+    {
+      "refit_date": "2011-02-02",
+      "stress_share_in_window": 0.1617650097440613,
+      "vol_ratio_stress_over_calm": 3.1825109814540817,
+      "collapsed": false,
+      "large_jump_from_prev_refit": false
+    },
+    {
+      "refit_date": "2011-03-04",
+      "stress_share_in_window": 0.16104809761457056,
+      "vol_ratio_stress_over_calm": 3.176529867165179,
+      "collapsed": false,
+      "large_jump_from_prev_refit": false
+    },
+    {
+      "refit_date": "2011-04-04",
+      "stress_share_in_window": 0.15945252160862455,
+      "vol_ratio_stress_over_calm": 3.163325968346738,
+      "collapsed": false,
+      "large_jump_from_prev_refit": false
+    },
+    {
+      "refit_date": "2011-05-04",
+      "stress_share_in_window": 0.15923725004817066,
+      "vol_ratio_stress_over_calm": 3.1664369608444862,
+      "collapsed": false,
+      "large_jump_from_prev_refit": false
+    },
+    {
+      "refit_date": "2011-06-03",
+      "stress_share_in_window": 0.1596906701769452,
+      "vol_ratio_stress_over_calm": 3.1697505710173437,
+      "collapsed": false,
+      "large_jump_from_prev_refit": false
+    },
+    {
+      "refit_date": "2011-07-05",
+      "stress_share_in_window": 0.15942927704647475,
+      "vol_ratio_stress_over_calm": 3.1681609233783097,
+      "collapsed": false,
+      "large_jump_from_prev_refit": false
+    },
+    {
+      "refit_date": "2011-08-03",
+      "stress_share_in_window": 0.1584424086364743,
+      "vol_ratio_stress_over_calm": 3.155966203120473,
+      "collapsed": false,
+      "large_jump_from_prev_refit": false
+    },
+    {
+      "refit_date": "2011-09-01",
+      "stress_share_in_window": 0.17505037452256933,
+      "vol_ratio_stress_over_calm": 3.1044683859059923,
+      "collapsed": false,
+      "large_jump_from_prev_refit": false
+    },
+    {
+      "refit_date": "2011-10-03",
+      "stress_share_in_window": 0.19360357976502918,
+      "vol_ratio_stress_over_calm": 2.976961259217692,
+      "collapsed": false,
+      "large_jump_from_prev_refit": false
+    },
+    {
+      "refit_date": "2011-11-01",
+      "stress_share_in_window": 0.2110907820211651,
+      "vol_ratio_stress_over_calm": 2.8702059335239314,
+      "collapsed": false,
+      "large_jump_from_prev_refit": false
+    },
+    {
+      "refit_date": "2011-12-01",
+      "stress_share_in_window": 0.2294789004565829,
+      "vol_ratio_stress_over_calm": 2.777065510160885,
+      "collapsed": false,
+      "large_jump_from_prev_refit": false
+    },
+    {
+      "refit_date": "2012-01-03",
+      "stress_share_in_window": 0.22346845134519927,
+      "vol_ratio_stress_over_calm": 2.7474743324498916,
+      "collapsed": false,
+      "large_jump_from_prev_refit": false
+    },
+    {
+      "refit_date": "2012-02-02",
+      "stress_share_in_window": 0.22211205992427693,
+      "vol_ratio_stress_over_calm": 2.749162840168538,
+      "collapsed": false,
+      "large_jump_from_prev_refit": false
+    },
+    {
+      "refit_date": "2012-03-05",
+      "stress_share_in_window": 0.22459953078518718,
+      "vol_ratio_stress_over_calm": 2.7663610438302078,
+      "collapsed": false,
+      "large_jump_from_prev_refit": false
+    },
+    {
+      "refit_date": "2012-04-03",
+      "stress_share_in_window": 0.22516405739164652,
+      "vol_ratio_stress_over_calm": 2.7690847334374724,
+      "collapsed": false,
+      "large_jump_from_prev_refit": false
+    },
+    {
+      "refit_date": "2012-05-03",
+      "stress_share_in_window": 0.22355573523962155,
+      "vol_ratio_stress_over_calm": 2.7564628225466867,
+      "collapsed": false,
+      "large_jump_from_prev_refit": false
+    },
+    {
+      "refit_date": "2012-06-04",
+      "stress_share_in_window": 0.22089734201704445,
+      "vol_ratio_stress_over_calm": 2.7385083149866483,
+      "collapsed": false,
+      "large_jump_from_prev_refit": false
+    },
+    {
+      "refit_date": "2012-07-03",
+      "stress_share_in_window": 0.21847996304971298,
+      "vol_ratio_stress_over_calm": 2.7299751251563573,
+      "collapsed": false,
+      "large_jump_from_prev_refit": false
+    },
+    {
+      "refit_date": "2012-08-02",
+      "stress_share_in_window": 0.21933815911470556,
+      "vol_ratio_stress_over_calm": 2.739794577734368,
+      "collapsed": false,
+      "large_jump_from_prev_refit": false
+    },
+    {
+      "refit_date": "2012-08-31",
+      "stress_share_in_window": 0.22644311030375514,
+      "vol_ratio_stress_over_calm": 2.775934314143095,
+      "collapsed": false,
+      "large_jump_from_prev_refit": false
+    },
+    {
+      "refit_date": "2012-10-02",
+      "stress_share_in_window": 0.22784836347474843,
+      "vol_ratio_stress_over_calm": 2.7833298314436226,
+      "collapsed": false,
+      "large_jump_from_prev_refit": false
+    },
+    {
+      "refit_date": "2012-11-02",
+      "stress_share_in_window": 0.22882923982738854,
+      "vol_ratio_stress_over_calm": 2.788967582898271,
+      "collapsed": false,
+      "large_jump_from_prev_refit": false
+    },
+    {
+      "refit_date": "2012-12-04",
+      "stress_share_in_window": 0.2352163122985062,
+      "vol_ratio_stress_over_calm": 2.8334613230448102,
+      "collapsed": false,
+      "large_jump_from_prev_refit": false
+    },
+    {
+      "refit_date": "2013-01-04",
+      "stress_share_in_window": 0.23661303316833865,
+      "vol_ratio_stress_over_calm": 2.8447983034076674,
+      "collapsed": false,
+      "large_jump_from_prev_refit": false
+    },
+    {
+      "refit_date": "2013-02-05",
+      "stress_share_in_window": 0.2419224447280378,
+      "vol_ratio_stress_over_calm": 2.8964825572082615,
+      "collapsed": false,
+      "large_jump_from_prev_refit": false
+    },
+    {
+      "refit_date": "2013-03-07",
+      "stress_share_in_window": 0.24208643151676992,
+      "vol_ratio_stress_over_calm": 2.9164566558838096,
+      "collapsed": false,
+      "large_jump_from_prev_refit": false
+    },
+    {
+      "refit_date": "2013-04-08",
+      "stress_share_in_window": 0.23429540568189386,
+      "vol_ratio_stress_over_calm": 2.9797560919066215,
+      "collapsed": false,
+      "large_jump_from_prev_refit": false
+    },
+    {
+      "refit_date": "2013-05-07",
+      "stress_share_in_window": 0.23440002537937968,
+      "vol_ratio_stress_over_calm": 2.9819404416774744,
+      "collapsed": false,
+      "large_jump_from_prev_refit": false
+    },
+    {
+      "refit_date": "2013-06-06",
+      "stress_share_in_window": 0.23483942082926318,
+      "vol_ratio_stress_over_calm": 2.991008236887465,
+      "collapsed": false,
+      "large_jump_from_prev_refit": false
+    },
+    {
+      "refit_date": "2013-07-08",
+      "stress_share_in_window": 0.23568753969213335,
+      "vol_ratio_stress_over_calm": 3.0112648238051065,
+      "collapsed": false,
+      "large_jump_from_prev_refit": false
+    },
+    {
+      "refit_date": "2013-08-06",
+      "stress_share_in_window": 0.23779261922839637,
+      "vol_ratio_stress_over_calm": 3.0651422387753087,
+      "collapsed": false,
+      "large_jump_from_prev_refit": false
+    },
+    {
+      "refit_date": "2013-09-05",
+      "stress_share_in_window": 0.23811568587510218,
+      "vol_ratio_stress_over_calm": 3.106233319686293,
+      "collapsed": false,
+      "large_jump_from_prev_refit": false
+    },
+    {
+      "refit_date": "2013-10-04",
+      "stress_share_in_window": 0.22141327529870275,
+      "vol_ratio_stress_over_calm": 3.0952191574864916,
+      "collapsed": false,
+      "large_jump_from_prev_refit": false
+    },
+    {
+      "refit_date": "2013-11-04",
+      "stress_share_in_window": 0.2148434807721382,
+      "vol_ratio_stress_over_calm": 2.716613831869547,
+      "collapsed": false,
+      "large_jump_from_prev_refit": false
+    },
+    {
+      "refit_date": "2013-12-04",
+      "stress_share_in_window": 0.2268650431101838,
+      "vol_ratio_stress_over_calm": 2.363189566816726,
+      "collapsed": false,
+      "large_jump_from_prev_refit": false
+    },
+    {
+      "refit_date": "2014-01-06",
+      "stress_share_in_window": 0.21410244447971136,
+      "vol_ratio_stress_over_calm": 2.391788572649577,
+      "collapsed": false,
+      "large_jump_from_prev_refit": false
+    },
+    {
+      "refit_date": "2014-02-05",
+      "stress_share_in_window": 0.20121398519353428,
+      "vol_ratio_stress_over_calm": 2.376529714974409,
+      "collapsed": false,
+      "large_jump_from_prev_refit": false
+    },
+    {
+      "refit_date": "2014-03-07",
+      "stress_share_in_window": 0.18715246163076207,
+      "vol_ratio_stress_over_calm": 2.316491702247855,
+      "collapsed": false,
+      "large_jump_from_prev_refit": false
+    },
+    {
+      "refit_date": "2014-04-07",
+      "stress_share_in_window": 0.18686929308626,
+      "vol_ratio_stress_over_calm": 2.2295494554388493,
+      "collapsed": false,
+      "large_jump_from_prev_refit": false
+    },
+    {
+      "refit_date": "2014-05-07",
+      "stress_share_in_window": 0.17024285949097795,
+      "vol_ratio_stress_over_calm": 2.243691375000159,
+      "collapsed": false,
+      "large_jump_from_prev_refit": false
+    },
+    {
+      "refit_date": "2014-06-06",
+      "stress_share_in_window": 0.14437313246289138,
+      "vol_ratio_stress_over_calm": 2.3384795416492836,
+      "collapsed": false,
+      "large_jump_from_prev_refit": false
+    },
+    {
+      "refit_date": "2014-07-08",
+      "stress_share_in_window": 0.12721028411719812,
+      "vol_ratio_stress_over_calm": 2.414478728890034,
+      "collapsed": false,
+      "large_jump_from_prev_refit": false
+    },
+    {
+      "refit_date": "2014-08-06",
+      "stress_share_in_window": 0.12898377776822947,
+      "vol_ratio_stress_over_calm": 2.4370517337761908,
+      "collapsed": false,
+      "large_jump_from_prev_refit": false
+    },
+    {
+      "refit_date": "2014-09-05",
+      "stress_share_in_window": 0.13352705921606636,
+      "vol_ratio_stress_over_calm": 2.458993202774995,
+      "collapsed": false,
+      "large_jump_from_prev_refit": false
+    },
+    {
+      "refit_date": "2014-10-06",
+      "stress_share_in_window": 0.1356373776349336,
+      "vol_ratio_stress_over_calm": 2.4695273041249632,
+      "collapsed": false,
+      "large_jump_from_prev_refit": false
+    },
+    {
+      "refit_date": "2014-11-04",
+      "stress_share_in_window": 0.13007221673992184,
+      "vol_ratio_stress_over_calm": 2.479697656797362,
+      "collapsed": false,
+      "large_jump_from_prev_refit": false
+    },
+    {
+      "refit_date": "2014-12-04",
+      "stress_share_in_window": 0.1321032359880453,
+      "vol_ratio_stress_over_calm": 2.5035134494832807,
+      "collapsed": false,
+      "large_jump_from_prev_refit": false
+    },
+    {
+      "refit_date": "2015-01-06",
+      "stress_share_in_window": 0.13020285424315983,
+      "vol_ratio_stress_over_calm": 2.483394340926429,
+      "collapsed": false,
+      "large_jump_from_prev_refit": false
+    },
+    {
+      "refit_date": "2015-02-05",
+      "stress_share_in_window": 0.12812376889169952,
+      "vol_ratio_stress_over_calm": 2.494313587937539,
+      "collapsed": false,
+      "large_jump_from_prev_refit": false
+    },
+    {
+      "refit_date": "2015-03-09",
+      "stress_share_in_window": 0.129161319730718,
+      "vol_ratio_stress_over_calm": 2.5115739714906122,
+      "collapsed": false,
+      "large_jump_from_prev_refit": false
+    },
+    {
+      "refit_date": "2015-04-08",
+      "stress_share_in_window": 0.12835371304032728,
+      "vol_ratio_stress_over_calm": 2.498725475427604,
+      "collapsed": false,
+      "large_jump_from_prev_refit": false
+    },
+    {
+      "refit_date": "2015-05-07",
+      "stress_share_in_window": 0.12218611767997604,
+      "vol_ratio_stress_over_calm": 2.536265290529645,
+      "collapsed": false,
+      "large_jump_from_prev_refit": false
+    },
+    {
+      "refit_date": "2015-06-08",
+      "stress_share_in_window": 0.08675551283267413,
+      "vol_ratio_stress_over_calm": 2.6216986912207516,
+      "collapsed": false,
+      "large_jump_from_prev_refit": false
+    },
+    {
+      "refit_date": "2015-07-08",
+      "stress_share_in_window": 0.0769488854822123,
+      "vol_ratio_stress_over_calm": 2.773870698768317,
+      "collapsed": false,
+      "large_jump_from_prev_refit": false
+    },
+    {
+      "refit_date": "2015-08-06",
+      "stress_share_in_window": 0.07770570643469729,
+      "vol_ratio_stress_over_calm": 2.811769543739844,
+      "collapsed": false,
+      "large_jump_from_prev_refit": false
+    },
+    {
+      "refit_date": "2015-09-04",
+      "stress_share_in_window": 0.08765763161854427,
+      "vol_ratio_stress_over_calm": 2.8506960872419427,
+      "collapsed": false,
+      "large_jump_from_prev_refit": false
+    },
+    {
+      "refit_date": "2015-10-06",
+      "stress_share_in_window": 0.09716071351536518,
+      "vol_ratio_stress_over_calm": 2.747490195397833,
+      "collapsed": false,
+      "large_jump_from_prev_refit": false
+    },
+    {
+      "refit_date": "2015-11-04",
+      "stress_share_in_window": 0.09018667372404775,
+      "vol_ratio_stress_over_calm": 2.802805474024815,
+      "collapsed": false,
+      "large_jump_from_prev_refit": false
+    },
+    {
+      "refit_date": "2015-12-04",
+      "stress_share_in_window": 0.09048906390265007,
+      "vol_ratio_stress_over_calm": 2.817314436008877,
+      "collapsed": false,
+      "large_jump_from_prev_refit": false
+    }
+  ],
+  "window_refit_sensitivity": {
+    "window756_refit5": {
+      "error": "ValueError: startprob_ must sum to 1 (got nan)"
+    },
+    "window756_refit21": {
+      "mean_fz0_diff_D_minus_B": -0.004864501075695138,
+      "dm_D_B_t": -0.5612847576237617,
+      "dm_D_B_p": 0.5746034307507342
+    },
+    "window756_refit63": {
+      "mean_fz0_diff_D_minus_B": -0.008516917713613736,
+      "dm_D_B_t": -0.8816189740574186,
+      "dm_D_B_p": 0.37798289091338066
+    },
+    "window1260_refit5": {
+      "mean_fz0_diff_D_minus_B": -0.003299964525158572,
+      "dm_D_B_t": -0.5704547497427316,
+      "dm_D_B_p": 0.5683693046855569
+    },
+    "window1260_refit21": {
+      "mean_fz0_diff_D_minus_B": -0.00266405439010331,
+      "dm_D_B_t": -0.4687601416079184,
+      "dm_D_B_p": 0.6392410931206713
+    },
+    "window1260_refit63": {
+      "mean_fz0_diff_D_minus_B": -0.0018147067363454283,
+      "dm_D_B_t": -0.3288758219440966,
+      "dm_D_B_p": 0.7422495499796655
+    }
+  }
+}

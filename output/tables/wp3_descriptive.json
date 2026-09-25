@@ -1,0 +1,63 @@
+{
+  "stress_share_full_sample": 0.18295475513998982,
+  "expected_calm_duration_days": 144.6671551106781,
+  "expected_stress_duration_days": 32.447707623560746,
+  "regime_conditional_moments": {
+    "calm": {
+      "annualised_vol": {
+        "SPY": 0.12148912654276164,
+        "IEF": 0.05992147776214887,
+        "GLD": 0.1730921442537061
+      },
+      "correlation": [
+        [
+          1.0000000000000002,
+          -0.3290517487344954,
+          0.11957075120807525
+        ],
+        [
+          -0.3290517487344954,
+          1.0,
+          0.1247156321831653
+        ],
+        [
+          0.11957075120807527,
+          0.1247156321831653,
+          0.9999999999999999
+        ]
+      ]
+    },
+    "stress": {
+      "annualised_vol": {
+        "SPY": 0.38609150011745497,
+        "IEF": 0.10013378011626223,
+        "GLD": 0.28606088977631255
+      },
+      "correlation": [
+        [
+          0.9999999999999998,
+          -0.5133143055911522,
+          0.009721460926399885
+        ],
+        [
+          -0.5133143055911522,
+          1.0,
+          0.09439836457817198
+        ],
+        [
+          0.009721460926399889,
+          0.09439836457817201,
+          1.0000000000000002
+        ]
+      ]
+    }
+  },
+  "portfolio_vol_attribution": {
+    "calm_annualised_vol": 0.07537768759026138,
+    "vol_only_change_annualised_vol": 0.1663458206133315,
+    "corr_only_change_annualised_vol": 0.06928561817007774,
+    "both_change_annualised_vol": 0.15231156520212374,
+    "volatility_share_of_stress_increase_shapley": 1.1308027455273366,
+    "correlation_share_of_stress_increase_shapley": -0.13080274552733662
+  }
+}

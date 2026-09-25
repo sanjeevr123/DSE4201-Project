@@ -1,0 +1,33 @@
+{
+  "vol_calm": [
+    0.0076530956150143705,
+    0.0037746982940507876,
+    0.01090378018081486
+  ],
+  "vol_stress": [
+    0.02432147839587264,
+    0.006307835238677481,
+    0.018020142242142434
+  ],
+  "p_calm_calm": 0.9930875809423712,
+  "p_stress_stress": 0.9691811818695665,
+  "calm_corr": [
+    [
+      1.0000000000000002,
+      -0.3290517487344954,
+      0.11957075120807525
+    ],
+    [
+      -0.3290517487344954,
+      1.0,
+      0.1247156321831653
+    ],
+    [
+      0.11957075120807527,
+      0.1247156321831653,
+      0.9999999999999999
+    ]
+  ],
+  "df": 6,
+  "note": "Calibrated in-sample on 2004-11-18..2015-12-31 real SPY/IEF/GLD returns (HMM-weighted regime moments). Stress-state correlation is NOT calibrated here -- scenarios S0-S3 supply the stress correlation being tested, exactly as for the stylised DGP."
+}
