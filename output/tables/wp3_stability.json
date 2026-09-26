@@ -9,11 +9,19 @@
     "min": 0.0769488854822123,
     "max": 0.24208643151676992
   },
+  "expected_stress_duration_distribution": {
+    "mean": 69.72762977512926,
+    "min": 44.64264389265614,
+    "max": 96.83193793266238
+  },
+  "n_refits_meeting_g4_criteria": 65,
+  "share_refits_meeting_g4_criteria": 0.9027777777777778,
   "per_refit_records": [
     {
       "refit_date": "2010-01-04",
       "stress_share_in_window": 0.15584639699387026,
       "vol_ratio_stress_over_calm": 3.4702604031853976,
+      "expected_stress_duration_days": 71.02300583453629,
       "collapsed": false,
       "large_jump_from_prev_refit": false
     },
@@ -21,6 +29,7 @@
       "refit_date": "2010-02-03",
       "stress_share_in_window": 0.15266711864349952,
       "vol_ratio_stress_over_calm": 3.4524361796334295,
+      "expected_stress_duration_days": 82.19052538353395,
       "collapsed": false,
       "large_jump_from_prev_refit": false
     },
@@ -28,6 +37,7 @@
       "refit_date": "2010-03-05",
       "stress_share_in_window": 0.15092450543315422,
       "vol_ratio_stress_over_calm": 3.4419633720517706,
+      "expected_stress_duration_days": 84.03339530939414,
       "collapsed": false,
       "large_jump_from_prev_refit": false
     },
@@ -35,6 +45,7 @@
       "refit_date": "2010-04-06",
       "stress_share_in_window": 0.15085166557419702,
       "vol_ratio_stress_over_calm": 3.450650622982277,
+      "expected_stress_duration_days": 84.05009263546846,
       "collapsed": false,
       "large_jump_from_prev_refit": false
     },
@@ -42,6 +53,7 @@
       "refit_date": "2010-05-05",
       "stress_share_in_window": 0.15040800628788545,
       "vol_ratio_stress_over_calm": 3.4429262134152614,
+      "expected_stress_duration_days": 83.95629401678656,
       "collapsed": false,
       "large_jump_from_prev_refit": false
     },
@@ -49,6 +61,7 @@
       "refit_date": "2010-06-04",
       "stress_share_in_window": 0.17322223533849912,
       "vol_ratio_stress_over_calm": 3.2938996964287006,
+      "expected_stress_duration_days": 87.67723076584538,
       "collapsed": false,
       "large_jump_from_prev_refit": false
     },
@@ -56,6 +69,7 @@
       "refit_date": "2010-07-06",
       "stress_share_in_window": 0.17448685910385056,
       "vol_ratio_stress_over_calm": 3.238545793178684,
+      "expected_stress_duration_days": 63.04564659007847,
       "collapsed": false,
       "large_jump_from_prev_refit": false
     },
@@ -63,6 +77,7 @@
       "refit_date": "2010-08-04",
       "stress_share_in_window": 0.16945984614230775,
       "vol_ratio_stress_over_calm": 3.2027246075142486,
+      "expected_stress_duration_days": 62.066262061440405,
       "collapsed": false,
       "large_jump_from_prev_refit": false
     },
@@ -70,6 +85,7 @@
       "refit_date": "2010-09-02",
       "stress_share_in_window": 0.16554051632327893,
       "vol_ratio_stress_over_calm": 3.1828530063353293,
+      "expected_stress_duration_days": 61.72151859795697,
       "collapsed": false,
       "large_jump_from_prev_refit": false
     },
@@ -77,6 +93,7 @@
       "refit_date": "2010-10-04",
       "stress_share_in_window": 0.16345427630034,
       "vol_ratio_stress_over_calm": 3.1826848023267034,
+      "expected_stress_duration_days": 61.56118223059451,
       "collapsed": false,
       "large_jump_from_prev_refit": false
     },
@@ -84,6 +101,7 @@
       "refit_date": "2010-11-02",
       "stress_share_in_window": 0.16448871751120248,
       "vol_ratio_stress_over_calm": 3.1968058789527145,
+      "expected_stress_duration_days": 61.49100156026966,
       "collapsed": false,
       "large_jump_from_prev_refit": false
     },
@@ -91,6 +109,7 @@
       "refit_date": "2010-12-02",
       "stress_share_in_window": 0.16229369587048736,
       "vol_ratio_stress_over_calm": 3.1762892010539248,
+      "expected_stress_duration_days": 61.498171439443674,
       "collapsed": false,
       "large_jump_from_prev_refit": false
     },
@@ -98,6 +117,7 @@
       "refit_date": "2011-01-03",
       "stress_share_in_window": 0.16191023790744508,
       "vol_ratio_stress_over_calm": 3.1820514379904754,
+      "expected_stress_duration_days": 61.45184635444815,
       "collapsed": false,
       "large_jump_from_prev_refit": false
     },
@@ -105,6 +125,7 @@
       "refit_date": "2011-02-02",
       "stress_share_in_window": 0.1617650097440613,
       "vol_ratio_stress_over_calm": 3.1825109814540817,
+      "expected_stress_duration_days": 61.416747229126635,
       "collapsed": false,
       "large_jump_from_prev_refit": false
     },
@@ -112,6 +133,7 @@
       "refit_date": "2011-03-04",
       "stress_share_in_window": 0.16104809761457056,
       "vol_ratio_stress_over_calm": 3.176529867165179,
+      "expected_stress_duration_days": 61.419491952256394,
       "collapsed": false,
       "large_jump_from_prev_refit": false
     },
@@ -119,6 +141,7 @@
       "refit_date": "2011-04-04",
       "stress_share_in_window": 0.15945252160862455,
       "vol_ratio_stress_over_calm": 3.163325968346738,
+      "expected_stress_duration_days": 61.520042498813694,
       "collapsed": false,
       "large_jump_from_prev_refit": false
     },
@@ -126,6 +149,7 @@
       "refit_date": "2011-05-04",
       "stress_share_in_window": 0.15923725004817066,
       "vol_ratio_stress_over_calm": 3.1664369608444862,
+      "expected_stress_duration_days": 61.589203918226936,
       "collapsed": false,
       "large_jump_from_prev_refit": false
     },
@@ -133,6 +157,7 @@
       "refit_date": "2011-06-03",
       "stress_share_in_window": 0.1596906701769452,
       "vol_ratio_stress_over_calm": 3.1697505710173437,
+      "expected_stress_duration_days": 61.5375517386475,
       "collapsed": false,
       "large_jump_from_prev_refit": false
     },
@@ -140,6 +165,7 @@
       "refit_date": "2011-07-05",
       "stress_share_in_window": 0.15942927704647475,
       "vol_ratio_stress_over_calm": 3.1681609233783097,
+      "expected_stress_duration_days": 61.54242635738955,
       "collapsed": false,
       "large_jump_from_prev_refit": false
     },
@@ -147,6 +173,7 @@
       "refit_date": "2011-08-03",
       "stress_share_in_window": 0.1584424086364743,
       "vol_ratio_stress_over_calm": 3.155966203120473,
+      "expected_stress_duration_days": 61.63801372088002,
       "collapsed": false,
       "large_jump_from_prev_refit": false
     },
@@ -154,6 +181,7 @@
       "refit_date": "2011-09-01",
       "stress_share_in_window": 0.17505037452256933,
       "vol_ratio_stress_over_calm": 3.1044683859059923,
+      "expected_stress_duration_days": 61.280546081806996,
       "collapsed": false,
       "large_jump_from_prev_refit": false
     },
@@ -161,6 +189,7 @@
       "refit_date": "2011-10-03",
       "stress_share_in_window": 0.19360357976502918,
       "vol_ratio_stress_over_calm": 2.976961259217692,
+      "expected_stress_duration_days": 71.52869989497086,
       "collapsed": false,
       "large_jump_from_prev_refit": false
     },
@@ -168,6 +197,7 @@
       "refit_date": "2011-11-01",
       "stress_share_in_window": 0.2110907820211651,
       "vol_ratio_stress_over_calm": 2.8702059335239314,
+      "expected_stress_duration_days": 78.79153570034089,
       "collapsed": false,
       "large_jump_from_prev_refit": false
     },
@@ -175,6 +205,7 @@
       "refit_date": "2011-12-01",
       "stress_share_in_window": 0.2294789004565829,
       "vol_ratio_stress_over_calm": 2.777065510160885,
+      "expected_stress_duration_days": 88.59205753253741,
       "collapsed": false,
       "large_jump_from_prev_refit": false
     },
@@ -182,6 +213,7 @@
       "refit_date": "2012-01-03",
       "stress_share_in_window": 0.22346845134519927,
       "vol_ratio_stress_over_calm": 2.7474743324498916,
+      "expected_stress_duration_days": 65.92440236263256,
       "collapsed": false,
       "large_jump_from_prev_refit": false
     },
@@ -189,6 +221,7 @@
       "refit_date": "2012-02-02",
       "stress_share_in_window": 0.22211205992427693,
       "vol_ratio_stress_over_calm": 2.749162840168538,
+      "expected_stress_duration_days": 65.04541484424503,
       "collapsed": false,
       "large_jump_from_prev_refit": false
     },
@@ -196,6 +229,7 @@
       "refit_date": "2012-03-05",
       "stress_share_in_window": 0.22459953078518718,
       "vol_ratio_stress_over_calm": 2.7663610438302078,
+      "expected_stress_duration_days": 65.34565831074477,
       "collapsed": false,
       "large_jump_from_prev_refit": false
     },
@@ -203,6 +237,7 @@
       "refit_date": "2012-04-03",
       "stress_share_in_window": 0.22516405739164652,
       "vol_ratio_stress_over_calm": 2.7690847334374724,
+      "expected_stress_duration_days": 65.33799992913649,
       "collapsed": false,
       "large_jump_from_prev_refit": false
     },
@@ -210,6 +245,7 @@
       "refit_date": "2012-05-03",
       "stress_share_in_window": 0.22355573523962155,
       "vol_ratio_stress_over_calm": 2.7564628225466867,
+      "expected_stress_duration_days": 65.37220556299673,
       "collapsed": false,
       "large_jump_from_prev_refit": false
     },
@@ -217,6 +253,7 @@
       "refit_date": "2012-06-04",
       "stress_share_in_window": 0.22089734201704445,
       "vol_ratio_stress_over_calm": 2.7385083149866483,
+      "expected_stress_duration_days": 65.42500559650647,
       "collapsed": false,
       "large_jump_from_prev_refit": false
     },
@@ -224,6 +261,7 @@
       "refit_date": "2012-07-03",
       "stress_share_in_window": 0.21847996304971298,
       "vol_ratio_stress_over_calm": 2.7299751251563573,
+      "expected_stress_duration_days": 65.56367164558999,
       "collapsed": false,
       "large_jump_from_prev_refit": false
     },
@@ -231,6 +269,7 @@
       "refit_date": "2012-08-02",
       "stress_share_in_window": 0.21933815911470556,
       "vol_ratio_stress_over_calm": 2.739794577734368,
+      "expected_stress_duration_days": 65.78727373763775,
       "collapsed": false,
       "large_jump_from_prev_refit": false
     },
@@ -238,6 +277,7 @@
       "refit_date": "2012-08-31",
       "stress_share_in_window": 0.22644311030375514,
       "vol_ratio_stress_over_calm": 2.775934314143095,
+      "expected_stress_duration_days": 65.611313101418,
       "collapsed": false,
       "large_jump_from_prev_refit": false
     },
@@ -245,6 +285,7 @@
       "refit_date": "2012-10-02",
       "stress_share_in_window": 0.22784836347474843,
       "vol_ratio_stress_over_calm": 2.7833298314436226,
+      "expected_stress_duration_days": 65.66948386969928,
       "collapsed": false,
       "large_jump_from_prev_refit": false
     },
@@ -252,6 +293,7 @@
       "refit_date": "2012-11-02",
       "stress_share_in_window": 0.22882923982738854,
       "vol_ratio_stress_over_calm": 2.788967582898271,
+      "expected_stress_duration_days": 65.79378360494363,
       "collapsed": false,
       "large_jump_from_prev_refit": false
     },
@@ -259,6 +301,7 @@
       "refit_date": "2012-12-04",
       "stress_share_in_window": 0.2352163122985062,
       "vol_ratio_stress_over_calm": 2.8334613230448102,
+      "expected_stress_duration_days": 67.28678378697902,
       "collapsed": false,
       "large_jump_from_prev_refit": false
     },
@@ -266,6 +309,7 @@
       "refit_date": "2013-01-04",
       "stress_share_in_window": 0.23661303316833865,
       "vol_ratio_stress_over_calm": 2.8447983034076674,
+      "expected_stress_duration_days": 67.50885523116136,
       "collapsed": false,
       "large_jump_from_prev_refit": false
     },
@@ -273,6 +317,7 @@
       "refit_date": "2013-02-05",
       "stress_share_in_window": 0.2419224447280378,
       "vol_ratio_stress_over_calm": 2.8964825572082615,
+      "expected_stress_duration_days": 68.92078539070705,
       "collapsed": false,
       "large_jump_from_prev_refit": false
     },
@@ -280,6 +325,7 @@
       "refit_date": "2013-03-07",
       "stress_share_in_window": 0.24208643151676992,
       "vol_ratio_stress_over_calm": 2.9164566558838096,
+      "expected_stress_duration_days": 68.91528631506154,
       "collapsed": false,
       "large_jump_from_prev_refit": false
     },
@@ -287,6 +333,7 @@
       "refit_date": "2013-04-08",
       "stress_share_in_window": 0.23429540568189386,
       "vol_ratio_stress_over_calm": 2.9797560919066215,
+      "expected_stress_duration_days": 90.90782788981183,
       "collapsed": false,
       "large_jump_from_prev_refit": false
     },
@@ -294,6 +341,7 @@
       "refit_date": "2013-05-07",
       "stress_share_in_window": 0.23440002537937968,
       "vol_ratio_stress_over_calm": 2.9819404416774744,
+      "expected_stress_duration_days": 90.94190137730189,
       "collapsed": false,
       "large_jump_from_prev_refit": false
     },
@@ -301,6 +349,7 @@
       "refit_date": "2013-06-06",
       "stress_share_in_window": 0.23483942082926318,
       "vol_ratio_stress_over_calm": 2.991008236887465,
+      "expected_stress_duration_days": 91.17067666911801,
       "collapsed": false,
       "large_jump_from_prev_refit": false
     },
@@ -308,6 +357,7 @@
       "refit_date": "2013-07-08",
       "stress_share_in_window": 0.23568753969213335,
       "vol_ratio_stress_over_calm": 3.0112648238051065,
+      "expected_stress_duration_days": 91.68299427382661,
       "collapsed": false,
       "large_jump_from_prev_refit": false
     },
@@ -315,6 +365,7 @@
       "refit_date": "2013-08-06",
       "stress_share_in_window": 0.23779261922839637,
       "vol_ratio_stress_over_calm": 3.0651422387753087,
+      "expected_stress_duration_days": 92.42565975968914,
       "collapsed": false,
       "large_jump_from_prev_refit": false
     },
@@ -322,6 +373,7 @@
       "refit_date": "2013-09-05",
       "stress_share_in_window": 0.23811568587510218,
       "vol_ratio_stress_over_calm": 3.106233319686293,
+      "expected_stress_duration_days": 92.31965578509124,
       "collapsed": false,
       "large_jump_from_prev_refit": false
     },
@@ -329,6 +381,7 @@
       "refit_date": "2013-10-04",
       "stress_share_in_window": 0.22141327529870275,
       "vol_ratio_stress_over_calm": 3.0952191574864916,
+      "expected_stress_duration_days": 85.57375788177602,
       "collapsed": false,
       "large_jump_from_prev_refit": false
     },
@@ -336,6 +389,7 @@
       "refit_date": "2013-11-04",
       "stress_share_in_window": 0.2148434807721382,
       "vol_ratio_stress_over_calm": 2.716613831869547,
+      "expected_stress_duration_days": 81.01799546042601,
       "collapsed": false,
       "large_jump_from_prev_refit": false
     },
@@ -343,6 +397,7 @@
       "refit_date": "2013-12-04",
       "stress_share_in_window": 0.2268650431101838,
       "vol_ratio_stress_over_calm": 2.363189566816726,
+      "expected_stress_duration_days": 80.32970756038134,
       "collapsed": false,
       "large_jump_from_prev_refit": false
     },
@@ -350,6 +405,7 @@
       "refit_date": "2014-01-06",
       "stress_share_in_window": 0.21410244447971136,
       "vol_ratio_stress_over_calm": 2.391788572649577,
+      "expected_stress_duration_days": 72.95560252635372,
       "collapsed": false,
       "large_jump_from_prev_refit": false
     },
@@ -357,6 +413,7 @@
       "refit_date": "2014-02-05",
       "stress_share_in_window": 0.20121398519353428,
       "vol_ratio_stress_over_calm": 2.376529714974409,
+      "expected_stress_duration_days": 66.75428957890162,
       "collapsed": false,
       "large_jump_from_prev_refit": false
     },
@@ -364,6 +421,7 @@
       "refit_date": "2014-03-07",
       "stress_share_in_window": 0.18715246163076207,
       "vol_ratio_stress_over_calm": 2.316491702247855,
+      "expected_stress_duration_days": 61.81377392620785,
       "collapsed": false,
       "large_jump_from_prev_refit": false
     },
@@ -371,6 +429,7 @@
       "refit_date": "2014-04-07",
       "stress_share_in_window": 0.18686929308626,
       "vol_ratio_stress_over_calm": 2.2295494554388493,
+      "expected_stress_duration_days": 54.513709604482244,
       "collapsed": false,
       "large_jump_from_prev_refit": false
     },
@@ -378,6 +437,7 @@
       "refit_date": "2014-05-07",
       "stress_share_in_window": 0.17024285949097795,
       "vol_ratio_stress_over_calm": 2.243691375000159,
+      "expected_stress_duration_days": 47.41697693989296,
       "collapsed": false,
       "large_jump_from_prev_refit": false
     },
@@ -385,6 +445,7 @@
       "refit_date": "2014-06-06",
       "stress_share_in_window": 0.14437313246289138,
       "vol_ratio_stress_over_calm": 2.3384795416492836,
+      "expected_stress_duration_days": 44.64264389265614,
       "collapsed": false,
       "large_jump_from_prev_refit": false
     },
@@ -392,6 +453,7 @@
       "refit_date": "2014-07-08",
       "stress_share_in_window": 0.12721028411719812,
       "vol_ratio_stress_over_calm": 2.414478728890034,
+      "expected_stress_duration_days": 57.48441591223823,
       "collapsed": false,
       "large_jump_from_prev_refit": false
     },
@@ -399,6 +461,7 @@
       "refit_date": "2014-08-06",
       "stress_share_in_window": 0.12898377776822947,
       "vol_ratio_stress_over_calm": 2.4370517337761908,
+      "expected_stress_duration_days": 58.85178915596883,
       "collapsed": false,
       "large_jump_from_prev_refit": false
     },
@@ -406,6 +469,7 @@
       "refit_date": "2014-09-05",
       "stress_share_in_window": 0.13352705921606636,
       "vol_ratio_stress_over_calm": 2.458993202774995,
+      "expected_stress_duration_days": 54.1071773232322,
       "collapsed": false,
       "large_jump_from_prev_refit": false
     },
@@ -413,6 +477,7 @@
       "refit_date": "2014-10-06",
       "stress_share_in_window": 0.1356373776349336,
       "vol_ratio_stress_over_calm": 2.4695273041249632,
+      "expected_stress_duration_days": 52.26213526951716,
       "collapsed": false,
       "large_jump_from_prev_refit": false
     },
@@ -420,6 +485,7 @@
       "refit_date": "2014-11-04",
       "stress_share_in_window": 0.13007221673992184,
       "vol_ratio_stress_over_calm": 2.479697656797362,
+      "expected_stress_duration_days": 65.4571442407529,
       "collapsed": false,
       "large_jump_from_prev_refit": false
     },
@@ -427,6 +493,7 @@
       "refit_date": "2014-12-04",
       "stress_share_in_window": 0.1321032359880453,
       "vol_ratio_stress_over_calm": 2.5035134494832807,
+      "expected_stress_duration_days": 66.39511185691225,
       "collapsed": false,
       "large_jump_from_prev_refit": false
     },
@@ -434,6 +501,7 @@
       "refit_date": "2015-01-06",
       "stress_share_in_window": 0.13020285424315983,
       "vol_ratio_stress_over_calm": 2.483394340926429,
+      "expected_stress_duration_days": 66.85221708666204,
       "collapsed": false,
       "large_jump_from_prev_refit": false
     },
@@ -441,6 +509,7 @@
       "refit_date": "2015-02-05",
       "stress_share_in_window": 0.12812376889169952,
       "vol_ratio_stress_over_calm": 2.494313587937539,
+      "expected_stress_duration_days": 72.66638842641909,
       "collapsed": false,
       "large_jump_from_prev_refit": false
     },
@@ -448,6 +517,7 @@
       "refit_date": "2015-03-09",
       "stress_share_in_window": 0.129161319730718,
       "vol_ratio_stress_over_calm": 2.5115739714906122,
+      "expected_stress_duration_days": 73.4817513247755,
       "collapsed": false,
       "large_jump_from_prev_refit": false
     },
@@ -455,6 +525,7 @@
       "refit_date": "2015-04-08",
       "stress_share_in_window": 0.12835371304032728,
       "vol_ratio_stress_over_calm": 2.498725475427604,
+      "expected_stress_duration_days": 73.40692532737809,
       "collapsed": false,
       "large_jump_from_prev_refit": false
     },
@@ -462,6 +533,7 @@
       "refit_date": "2015-05-07",
       "stress_share_in_window": 0.12218611767997604,
       "vol_ratio_stress_over_calm": 2.536265290529645,
+      "expected_stress_duration_days": 69.56162789207654,
       "collapsed": false,
       "large_jump_from_prev_refit": false
     },
@@ -469,6 +541,7 @@
       "refit_date": "2015-06-08",
       "stress_share_in_window": 0.08675551283267413,
       "vol_ratio_stress_over_calm": 2.6216986912207516,
+      "expected_stress_duration_days": 60.31658411664027,
       "collapsed": false,
       "large_jump_from_prev_refit": false
     },
@@ -476,6 +549,7 @@
       "refit_date": "2015-07-08",
       "stress_share_in_window": 0.0769488854822123,
       "vol_ratio_stress_over_calm": 2.773870698768317,
+      "expected_stress_duration_days": 90.47452621739053,
       "collapsed": false,
       "large_jump_from_prev_refit": false
     },
@@ -483,6 +557,7 @@
       "refit_date": "2015-08-06",
       "stress_share_in_window": 0.07770570643469729,
       "vol_ratio_stress_over_calm": 2.811769543739844,
+      "expected_stress_duration_days": 92.62465236996098,
       "collapsed": false,
       "large_jump_from_prev_refit": false
     },
@@ -490,6 +565,7 @@
       "refit_date": "2015-09-04",
       "stress_share_in_window": 0.08765763161854427,
       "vol_ratio_stress_over_calm": 2.8506960872419427,
+      "expected_stress_duration_days": 96.83193793266238,
       "collapsed": false,
       "large_jump_from_prev_refit": false
     },
@@ -497,6 +573,7 @@
       "refit_date": "2015-10-06",
       "stress_share_in_window": 0.09716071351536518,
       "vol_ratio_stress_over_calm": 2.747490195397833,
+      "expected_stress_duration_days": 70.24351170385017,
       "collapsed": false,
       "large_jump_from_prev_refit": false
     },
@@ -504,6 +581,7 @@
       "refit_date": "2015-11-04",
       "stress_share_in_window": 0.09018667372404775,
       "vol_ratio_stress_over_calm": 2.802805474024815,
+      "expected_stress_duration_days": 52.47251971148264,
       "collapsed": false,
       "large_jump_from_prev_refit": false
     },
@@ -511,6 +589,7 @@
       "refit_date": "2015-12-04",
       "stress_share_in_window": 0.09048906390265007,
       "vol_ratio_stress_over_calm": 2.817314436008877,
+      "expected_stress_duration_days": 52.30134212121698,
       "collapsed": false,
       "large_jump_from_prev_refit": false
     }

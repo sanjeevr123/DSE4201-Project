@@ -179,6 +179,8 @@ def stability_diagnostics(R: pd.DataFrame) -> dict:
         gamma = hmm.predict_proba(x.reshape(-1, 1))
         stress_share = float(gamma[:, 1].mean())
         vol_ratio = float(np.sqrt(hmm.covars_.ravel()[1] / hmm.covars_.ravel()[0]))
+        p_stress_stay = float(hmm.transmat_[1, 1])
+        expected_stress_duration = 1.0 / (1.0 - p_stress_stay) if p_stress_stay < 1.0 else float("inf")
         collapsed = stress_share < 0.01 or stress_share > 0.99 or vol_ratio < 1.2
         large_jump = (
             prev_stress_share is not None and abs(stress_share - prev_stress_share) > 0.3
@@ -187,14 +189,22 @@ def stability_diagnostics(R: pd.DataFrame) -> dict:
             "refit_date": str(dates[t0].date()),
             "stress_share_in_window": stress_share,
             "vol_ratio_stress_over_calm": vol_ratio,
+            "expected_stress_duration_days": expected_stress_duration,
             "collapsed": bool(collapsed),
             "large_jump_from_prev_refit": bool(large_jump),
         })
         prev_stress_share = stress_share
 
     stress_shares = [r["stress_share_in_window"] for r in records]
+    durations = [r["expected_stress_duration_days"] for r in records]
     n_collapsed = sum(r["collapsed"] for r in records)
     n_flips = sum(r["large_jump_from_prev_refit"] for r in records)
+    n_meets_g4 = sum(
+        1 for r in records
+        if r["expected_stress_duration_days"] >= 5
+        and 0.10 <= r["stress_share_in_window"] <= 0.40
+        and not r["large_jump_from_prev_refit"]
+    )
 
     sensitivity = {}
     for win_len in [756, 1260]:
@@ -226,6 +236,13 @@ def stability_diagnostics(R: pd.DataFrame) -> dict:
             "min": float(np.min(stress_shares)),
             "max": float(np.max(stress_shares)),
         },
+        "expected_stress_duration_distribution": {
+            "mean": float(np.mean(durations)),
+            "min": float(np.min(durations)),
+            "max": float(np.max(durations)),
+        },
+        "n_refits_meeting_g4_criteria": n_meets_g4,
+        "share_refits_meeting_g4_criteria": n_meets_g4 / len(records) if records else float("nan"),
         "per_refit_records": records,
         "window_refit_sensitivity": sensitivity,
     }

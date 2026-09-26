@@ -1,0 +1,87 @@
+{
+  "wp1": {
+    "returncode": 0,
+    "summary_line": "41 passed, 80 warnings in 1.95s",
+    "elapsed_seconds": 2.1866891384124756,
+    "all_passed": true
+  },
+  "wp3": {
+    "identical": true,
+    "diffs_by_file": {
+      "wp3_descriptive.json": {
+        "n_diffs": 0,
+        "sample_diffs": []
+      },
+      "wp3_walk_forward.json": {
+        "n_diffs": 0,
+        "sample_diffs": []
+      },
+      "wp3_episodes.json": {
+        "n_diffs": 0,
+        "sample_diffs": []
+      }
+    }
+  },
+  "wp2_subset": {
+    "S0_vol_only": {
+      "n_checked": 5,
+      "n_mismatches": 0,
+      "mismatches": []
+    },
+    "S1_moderate_breakdown": {
+      "n_checked": 5,
+      "n_mismatches": 0,
+      "mismatches": []
+    },
+    "S2_strong_breakdown": {
+      "n_checked": 5,
+      "n_mismatches": 0,
+      "mismatches": []
+    },
+    "S3_flight_to_quality": {
+      "n_checked": 5,
+      "n_mismatches": 0,
+      "mismatches": []
+    }
+  },
+  "wp2_different_seed": {
+    "S0_vol_only": {
+      "main_run_power": 0.05,
+      "alt_seed_power": 0.04,
+      "alt_seed_n_reps": 50,
+      "within_wide_tolerance": true
+    },
+    "S1_moderate_breakdown": {
+      "main_run_power": 0.255,
+      "alt_seed_power": 0.22,
+      "alt_seed_n_reps": 50,
+      "within_wide_tolerance": true
+    },
+    "S2_strong_breakdown": {
+      "main_run_power": 0.525,
+      "alt_seed_power": 0.52,
+      "alt_seed_n_reps": 50,
+      "within_wide_tolerance": true
+    },
+    "S3_flight_to_quality": {
+      "main_run_power": 0.035,
+      "alt_seed_power": 0.0,
+      "alt_seed_n_reps": 50,
+      "within_wide_tolerance": true
+    }
+  },
+  "machine_specs": {
+    "platform": "macOS-26.6.2-arm64-arm-64bit",
+    "processor": "arm",
+    "python_version": "3.9.6",
+    "cpu_count": 10,
+    "package_versions": {
+      "numpy": "2.0.2",
+      "scipy": "1.13.1",
+      "pandas": "2.3.3",
+      "hmmlearn": "0.3.3",
+      "arch": "7.2.0",
+      "joblib": "1.5.3"
+    }
+  }
+}

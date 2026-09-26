@@ -34,7 +34,7 @@ from src.wp2_simulation import aggregate_scenario, run_replications, scenario_na
 TRADING_DAYS_PER_YEAR = 252
 
 
-def main() -> None:
+def main(n_jobs: int = -1) -> None:
     cfg = get_config()["wp2"]
     n_full_05 = cfg["full_reps_alpha_05"]
     n_full_025 = cfg["full_reps_alpha_025"]
@@ -48,8 +48,8 @@ def main() -> None:
         summary[dgp_name] = {}
         for scen in scenario_names():
             ts = time.time()
-            res_05 = run_replications(dgp_name, scen, 0.05, n_full_05)
-            res_025 = run_replications(dgp_name, scen, 0.025, n_full_025)
+            res_05 = run_replications(dgp_name, scen, 0.05, n_full_05, n_jobs=n_jobs)
+            res_025 = run_replications(dgp_name, scen, 0.025, n_full_025, n_jobs=n_jobs)
             summary[dgp_name][scen] = {
                 "alpha_0.05": aggregate_scenario(res_05),
                 "alpha_0.025": aggregate_scenario(res_025),
@@ -65,10 +65,10 @@ def main() -> None:
         test_days = years * TRADING_DAYS_PER_YEAR
         ts = time.time()
         if test_days == default_test_days:
-            res = run_replications("stylised", length_scen, 0.05, n_full_05)
+            res = run_replications("stylised", length_scen, 0.05, n_full_05, n_jobs=n_jobs)
         else:
             res = run_replications("stylised", length_scen, 0.05, n_full_05,
-                                    T=burn_in + test_days)
+                                    T=burn_in + test_days, n_jobs=n_jobs)
         length_results[years] = aggregate_scenario(res)
         print(f"[power-vs-length] {years}y ({test_days}d): {n_full_05} reps in "
               f"{time.time()-ts:.0f}s (D<B power: {length_results[years]['D_lt_B']['power']:.2%})")
@@ -84,4 +84,9 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-    main()
+    import argparse
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--n-jobs", type=int, default=-1,
+                         help="Parallel worker count for joblib (default: all cores).")
+    args = parser.parse_args()
+    main(n_jobs=args.n_jobs)

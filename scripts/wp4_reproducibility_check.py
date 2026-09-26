@@ -37,7 +37,7 @@ sys.path.insert(0, str(REPO_ROOT))
 
 import numpy as np
 
-from src.wp2_simulation import aggregate_scenario, one_rep, run_replications, scenario_names
+from src.wp2_simulation import aggregate_scenario, one_rep, scenario_names
 
 TABLE_DIR = REPO_ROOT / "output" / "tables"
 
@@ -129,18 +129,29 @@ def check_wp2_subset_reproducibility(n_check: int = 5) -> dict:
     return out
 
 
-def check_wp2_different_seed(n_reps: int = 50, seed_base: int = 999_999) -> dict:
+def check_wp2_different_seed(n_reps: int = 50, seed_base: int = 999_999, n_jobs: int = -1) -> dict:
     """Re-run a reduced-scale WP2 batch with a different master seed and
-    compare conclusions against the main run within Monte Carlo error."""
+    compare conclusions against the main run within Monte Carlo error.
+
+    Deliberately bypasses run_replications' checkpoint cache: checkpoint_path
+    keys only on (dgp, scenario, alpha, T), not seed_base, so calling
+    run_replications here would just hit the main run's already-complete
+    checkpoint file and silently return its seed_base=0 results instead of
+    recomputing under the new seed. one_rep is called directly instead, and
+    nothing is written to output/sim_checkpoints/ for this check."""
     main_path = TABLE_DIR / "wp2_summary.json"
     if not main_path.exists():
         return {"error": "wp2_summary.json not found -- run scripts/wp2_run_simulation.py first"}
     with open(main_path) as f:
         main_summary = json.load(f)
 
+    from joblib import Parallel, delayed
+
     out = {}
     for scen in scenario_names():
-        results = run_replications("stylised", scen, 0.05, n_reps, seed_base=seed_base)
+        results = Parallel(n_jobs=n_jobs)(
+            delayed(one_rep)("stylised", scen, r, 0.05, seed_base=seed_base) for r in range(n_reps)
+        )
         agg = aggregate_scenario(results)
         main_power = main_summary["stylised"][scen]["alpha_0.05"]["D_lt_B"]["power"]
         out[scen] = {
@@ -166,7 +177,7 @@ def machine_specs() -> dict:
     }
 
 
-def main() -> None:
+def main(n_jobs: int = -1) -> None:
     report = {}
     print("Checking WP1 test-suite reproducibility...")
     report["wp1"] = check_wp1_tests()
@@ -178,7 +189,7 @@ def main() -> None:
     report["wp2_subset"] = check_wp2_subset_reproducibility()
 
     print("Checking WP2 conclusions under a different master seed...")
-    report["wp2_different_seed"] = check_wp2_different_seed()
+    report["wp2_different_seed"] = check_wp2_different_seed(n_jobs=n_jobs)
 
     report["machine_specs"] = machine_specs()
 
@@ -194,4 +205,9 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-    main()
+    import argparse
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--n-jobs", type=int, default=-1,
+                         help="Parallel worker count for joblib (default: all cores).")
+    args = parser.parse_args()
+    main(n_jobs=args.n_jobs)
