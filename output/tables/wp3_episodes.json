@@ -1,0 +1,44 @@
+{
+  "2011_us_downgrade_euro_crisis": {
+    "n_days": 65,
+    "date_range": [
+      "2011-08-01",
+      "2011-10-31"
+    ],
+    "mean_stress_prob": 0.7455790633893025,
+    "max_stress_prob": 0.9837762396609335,
+    "mean_realised_return": 0.0005888542815503899,
+    "worst_realised_return": -0.018987456903598893,
+    "D_hits": 2,
+    "B_hits": 2,
+    "mean_fz0_D_minus_B": -0.039954538512405824
+  },
+  "2013_taper_tantrum": {
+    "n_days": 106,
+    "date_range": [
+      "2013-05-01",
+      "2013-09-30"
+    ],
+    "mean_stress_prob": 0.006758499420985174,
+    "max_stress_prob": 0.06050330929006534,
+    "mean_realised_return": -0.00027761036253153904,
+    "worst_realised_return": -0.027613917692695458,
+    "D_hits": 9,
+    "B_hits": 10,
+    "mean_fz0_D_minus_B": -0.06062529857024747
+  },
+  "2015_august_selloff": {
+    "n_days": 21,
+    "date_range": [
+      "2015-08-01",
+      "2015-08-31"
+    ],
+    "mean_stress_prob": 0.26924520410935127,
+    "max_stress_prob": 0.9891975488148061,
+    "mean_realised_return": -0.0003470946459287033,
+    "worst_realised_return": -0.015278190728031195,
+    "D_hits": 1,
+    "B_hits": 1,
+    "mean_fz0_D_minus_B": 0.09221600673690533
+  }
+}

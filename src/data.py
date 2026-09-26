@@ -18,8 +18,9 @@ Pilot data-source provenance:
 
 from __future__ import annotations
 
+import hashlib
 from pathlib import Path
-from typing import Iterable
+from typing import Iterable, Optional
 
 import pandas as pd
 import yfinance as yf
@@ -28,6 +29,7 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 RAW_DATA_DIR = REPO_ROOT / "data" / "raw"
 PROCESSED_DATA_DIR = REPO_ROOT / "data" / "processed"
 METADATA_DIR = REPO_ROOT / "data" / "metadata"
+MANIFEST_PATH = RAW_DATA_DIR / "MANIFEST.txt"
 
 
 def download_raw_pilot_data(
@@ -141,6 +143,86 @@ def validate_raw_prices(
     report["panel_last_date"] = str(df.index.max())
     report["panel_n_rows"] = int(df.shape[0])
     return report
+
+
+def compute_sha256(path: Path) -> str:
+    """SHA-256 hex digest of a file, read in chunks so large files are fine."""
+    h = hashlib.sha256()
+    with open(path, "rb") as f:
+        for chunk in iter(lambda: f.read(1 << 20), b""):
+            h.update(chunk)
+    return h.hexdigest()
+
+
+def append_manifest_entry(
+    filename: str,
+    sha256: str,
+    download_date: str,
+    tickers: Iterable[str],
+    start: str,
+    end: str,
+    n_rows: int,
+    manifest_path: Path = MANIFEST_PATH,
+) -> None:
+    """Append one tab-separated row recording provenance of a raw snapshot.
+
+    The manifest is append-only: every raw file ever downloaded gets a
+    permanent record, even if a later download supersedes it, so the archive
+    stays fully auditable. Never re-download data that already has a valid
+    manifest entry — see raw_snapshot_exists_for_range().
+    """
+    manifest_path.parent.mkdir(parents=True, exist_ok=True)
+    if not manifest_path.exists():
+        manifest_path.write_text(
+            "filename\tsha256\tdownload_date\ttickers\tstart\tend\tn_rows\n"
+        )
+    row = "\t".join([
+        filename, sha256, download_date, ",".join(tickers), start, end, str(n_rows),
+    ])
+    with open(manifest_path, "a") as f:
+        f.write(row + "\n")
+
+
+def raw_snapshot_exists_for_range(
+    start: str, manifest_path: Path = MANIFEST_PATH
+) -> Optional[str]:
+    """Return the filename of an already-archived raw snapshot for this start
+    date, if one is recorded in the manifest, else None.
+
+    Used to enforce "never re-download; always read the archived file" — the
+    downloader checks this before ever calling yfinance.
+    """
+    if not manifest_path.exists():
+        return None
+    manifest = pd.read_csv(manifest_path, sep="\t", dtype=str)
+    matches = manifest[manifest["start"] == start]
+    if matches.empty:
+        return None
+    filename = matches.iloc[-1]["filename"]
+    if not (RAW_DATA_DIR / filename).exists():
+        return None
+    return filename
+
+
+def assert_no_locked_period_leakage(
+    df: pd.DataFrame, cutoff: str = "2015-12-31"
+) -> None:
+    """Raise AssertionError if `df`'s index reaches past the locked test period.
+
+    This is the pilot's non-negotiable research-integrity guard: the pilot
+    must never compute any forecast, loss, regime estimate or statistic on
+    2016-01-01 onward. Every real-data-facing function in this pilot must
+    call this before doing any further computation.
+    """
+    if len(df) == 0:
+        return
+    max_date = pd.Timestamp(df.index.max())
+    cutoff_ts = pd.Timestamp(cutoff)
+    assert max_date <= cutoff_ts, (
+        f"Locked test period leaked into the pipeline: data reaches "
+        f"{max_date.date()}, but the pilot must never touch data on or "
+        f"after {(cutoff_ts + pd.Timedelta(days=1)).date()}."
+    )
 
 
 def build_adjusted_price_panel(df: pd.DataFrame, tickers: Iterable[str]) -> pd.DataFrame:
