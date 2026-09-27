@@ -1,4 +1,8 @@
 """
+HISTORICAL / SUPERSEDED: kept only as an audit trail. The live, tested
+version is src/wp2_simulation.py + scripts/wp2_run_simulation.py. Do not
+import from or edit this file for current work.
+
 Monte Carlo pilot: can the design detect the correlation channel?
 Data-generating process: 2-state Markov-switching multivariate Student-t
 (df=6) for three assets resembling US equities, 7-10y Treasuries and gold.

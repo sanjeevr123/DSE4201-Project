@@ -1,4 +1,8 @@
 """
+HISTORICAL / SUPERSEDED: kept only as an audit trail. The live, tested
+version is src/wp3_real_data.py + scripts/wp3_run_real_data_pilot.py. Do
+not import from or edit this file for current work.
+
 REAL-DATA PILOT  (run on your own laptop)
 =========================================
 Runs the thesis pipeline on SPY / IEF / GLD using ONLY data up to 2015-12-31.
