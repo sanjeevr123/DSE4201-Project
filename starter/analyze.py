@@ -1,3 +1,8 @@
+"""
+HISTORICAL / SUPERSEDED: kept only as an audit trail. WP2's aggregation
+now lives in src/wp2_simulation.py (aggregate_scenario). Do not import
+from or edit this file for current work.
+"""
 import json, sys
 import numpy as np
 from collections import defaultdict

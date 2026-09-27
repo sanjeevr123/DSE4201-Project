@@ -17,7 +17,12 @@ with my thesis supervisor.
 
 ## Current Project Stage
 
-Week 1 — Foundations, research setup, data pipeline and preliminary analysis.
+Pilot study complete (WP0-WP5). All six pre-registered go/no-go criteria
+passed — **decision: PROCEED** with the full design. See
+`output/PILOT_REPORT.md` (or `output/PILOT_REPORT.pdf`) for the full
+results, scorecard, and 4-week plan for the full thesis run. Next stage:
+finalizing the ETF universe and other open decisions below with Prof. Seo,
+then extending the pilot's pipeline to the full 2016-2025 thesis window.
 
 ## Current Pilot Dataset
 
@@ -74,8 +79,14 @@ reproducible walkthrough. Pipeline: `scripts/01_download_raw_data.py`
 A separate, more tightly scoped pilot study — testing whether letting
 cross-asset correlations vary by regime improves VaR/ES forecasts beyond
 letting only volatilities vary — lives alongside the Day-1 EDA pipeline
-above. See `docs/PILOT_PROMPT.md` for the full specification and
+above. **This is a deliberate split, not duplication**: two independent
+pipelines exist side by side (`scripts/01-03` + `outputs/`, plural, for
+the earlier Day-1 EDA; `scripts/00`/`wp2`/`wp3`/`wp4` + `output/`,
+singular, for the pilot study), each with its own raw data snapshot,
+metadata, and deliverables directory. See `docs/decisions_log.md` for why.
+See `docs/PILOT_PROMPT.md` for the full specification and
 `docs/preregistration.md` for the pre-registered go/no-go criteria.
+Results: `output/PILOT_REPORT.md`.
 
 Reproduce the pilot's data-acquisition step with:
 

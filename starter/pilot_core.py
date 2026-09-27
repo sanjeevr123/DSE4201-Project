@@ -1,4 +1,9 @@
 """
+HISTORICAL / SUPERSEDED: this is the original prototype, kept only as an
+audit trail of what was reviewed and fixed. The live, tested engine is
+src/engine.py (see docs/decisions_log.md for what changed and why). Do
+not import from or edit this file for current work.
+
 Pilot core: regime-dependent covariance ablation for portfolio VaR/ES.
 
 Models (all share the SAME 2-state HMM fitted on the equity return only):
