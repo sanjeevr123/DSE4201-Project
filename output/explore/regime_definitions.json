@@ -1,0 +1,163 @@
+{
+  "HMM_SPY2": {
+    "stress_share": 0.21719258021178367,
+    "mean_stress_run_days": 30.653846153846153,
+    "n_stress_episodes": 26,
+    "switches_per_year": 3.444794952681388,
+    "calm_vol_ann": 0.06772985772332889,
+    "stress_vol_ann": 0.1318441871790864,
+    "vol_share": 1.1430942194338,
+    "corr_share": -0.14309421943380007,
+    "d_avg_pair_corr": -0.13360217973709607,
+    "corr_eq_bond_calm": -0.2919819226540513,
+    "corr_eq_bond_stress": -0.523052623613534,
+    "episode_mean_stress_prob": {
+      "GFC 2008-09..2009-03": 0.9973964228418258,
+      "Euro/flash 2010": 0.970798725887691,
+      "US downgrade 2011": 0.9941812688349205,
+      "Taper tantrum 2013": 0.03320374438990101,
+      "China Aug 2015": 0.7831427450131289,
+      "Q4 2018": 0.8705891570022117
+    },
+    "calm_control_2017_mean_stress_prob": 0.0005397114780232597,
+    "corr_with_baseline_stress_prob": 1.0
+  },
+  "HMM_SPY3": {
+    "stress_share": 0.04120642997349486,
+    "mean_stress_run_days": 51.0,
+    "n_stress_episodes": 3,
+    "switches_per_year": 0.39747634069400634,
+    "calm_vol_ann": 0.06364619530366414,
+    "stress_vol_ann": 0.217859364457918,
+    "vol_share": 1.0760239876045103,
+    "corr_share": -0.07602398760451035,
+    "d_avg_pair_corr": -0.1204610104971146,
+    "corr_eq_bond_calm": -0.21316741357315863,
+    "corr_eq_bond_stress": -0.42690474426359987,
+    "episode_mean_stress_prob": {
+      "GFC 2008-09..2009-03": 0.9274242010773411,
+      "Euro/flash 2010": 0.008558085983641897,
+      "US downgrade 2011": 0.24150718350897651,
+      "Taper tantrum 2013": 1.6356619298905222e-05,
+      "China Aug 2015": 0.08391790343025986,
+      "Q4 2018": 0.0077400949399385206
+    },
+    "calm_control_2017_mean_stress_prob": 6.08384526724697e-08,
+    "corr_with_baseline_stress_prob": 0.45516482877630265
+  },
+  "HMM_MV2": {
+    "stress_share": 0.1645890491648597,
+    "mean_stress_run_days": 4.475806451612903,
+    "n_stress_episodes": 124,
+    "switches_per_year": 16.36277602523659,
+    "calm_vol_ann": 0.062162909100158883,
+    "stress_vol_ann": 0.15763893249347607,
+    "vol_share": 1.0855706648209815,
+    "corr_share": -0.08557066482098152,
+    "d_avg_pair_corr": -0.1151902075368135,
+    "corr_eq_bond_calm": -0.3317353151162554,
+    "corr_eq_bond_stress": -0.4893707858633183,
+    "episode_mean_stress_prob": {
+      "GFC 2008-09..2009-03": 0.9100243369151563,
+      "Euro/flash 2010": 0.5507635057570572,
+      "US downgrade 2011": 0.7885678732922198,
+      "Taper tantrum 2013": 0.16730656127338603,
+      "China Aug 2015": 0.4750278088575956,
+      "Q4 2018": 0.20083700750916092
+    },
+    "calm_control_2017_mean_stress_prob": 0.002944193352079372,
+    "corr_with_baseline_stress_prob": 0.7333117968493534
+  },
+  "HMM_SPYVIX2": {
+    "stress_share": 0.4093191768467144,
+    "mean_stress_run_days": 51.766666666666666,
+    "n_stress_episodes": 30,
+    "switches_per_year": 3.9747634069400632,
+    "calm_vol_ann": 0.06415836166006417,
+    "stress_vol_ann": 0.10987739849992617,
+    "vol_share": 1.1796668437510867,
+    "corr_share": -0.17966684375108666,
+    "d_avg_pair_corr": -0.16582306173662836,
+    "corr_eq_bond_calm": -0.17411474830527884,
+    "corr_eq_bond_stress": -0.4987282110736502,
+    "episode_mean_stress_prob": {
+      "GFC 2008-09..2009-03": 0.9999999999999735,
+      "Euro/flash 2010": 0.9999999369013437,
+      "US downgrade 2011": 0.9999999739053049,
+      "Taper tantrum 2013": 0.11555174696919661,
+      "China Aug 2015": 0.8646666155385339,
+      "Q4 2018": 0.8912547857415704
+    },
+    "calm_control_2017_mean_stress_prob": 2.2586200068205472e-05,
+    "corr_with_baseline_stress_prob": 0.685251378412586
+  },
+  "RULE_VIX20": {
+    "stress_share": 0.28023133543638273,
+    "mean_stress_run_days": 12.25287356321839,
+    "n_stress_episodes": 87,
+    "switches_per_year": 11.526813880126182,
+    "calm_vol_ann": 0.06694784547189525,
+    "stress_vol_ann": 0.12156963390997857,
+    "vol_share": 1.1550282478296707,
+    "corr_share": -0.15502824782967073,
+    "d_avg_pair_corr": -0.14063175504433723,
+    "corr_eq_bond_calm": -0.2450151202274031,
+    "corr_eq_bond_stress": -0.5103012563163549,
+    "episode_mean_stress_prob": {
+      "GFC 2008-09..2009-03": 1.0,
+      "Euro/flash 2010": 1.0,
+      "US downgrade 2011": 1.0,
+      "Taper tantrum 2013": 0.018867924528301886,
+      "China Aug 2015": 0.8095238095238095,
+      "Q4 2018": 0.5873015873015873
+    },
+    "calm_control_2017_mean_stress_prob": 0.0,
+    "corr_with_baseline_stress_prob": 0.7572895628232257
+  },
+  "RULE_RV75": {
+    "stress_share": 0.24868559411146163,
+    "mean_stress_run_days": 29.5625,
+    "n_stress_episodes": 32,
+    "switches_per_year": 4.239747634069401,
+    "calm_vol_ann": 0.06968136735753656,
+    "stress_vol_ann": 0.12237925653860578,
+    "vol_share": 1.1551409702428936,
+    "corr_share": -0.15514097024289364,
+    "d_avg_pair_corr": -0.1186758033392004,
+    "corr_eq_bond_calm": -0.316469373130958,
+    "corr_eq_bond_stress": -0.5034536300849921,
+    "episode_mean_stress_prob": {
+      "GFC 2008-09..2009-03": 1.0,
+      "Euro/flash 2010": 0.9285714285714286,
+      "US downgrade 2011": 0.9538461538461539,
+      "Taper tantrum 2013": 0.0,
+      "China Aug 2015": 0.7619047619047619,
+      "Q4 2018": 0.746031746031746
+    },
+    "calm_control_2017_mean_stress_prob": 0.0,
+    "corr_with_baseline_stress_prob": 0.7424015893037853
+  },
+  "RULE_CORR": {
+    "stress_share": 0.3280757097791798,
+    "mean_stress_run_days": 36.705882352941174,
+    "n_stress_episodes": 34,
+    "switches_per_year": 4.504731861198739,
+    "calm_vol_ann": 0.08870352766838431,
+    "stress_vol_ann": 0.07973329533715308,
+    "vol_share": 2.0084413090369324,
+    "corr_share": -1.0084413090369324,
+    "d_avg_pair_corr": 0.15962629034022496,
+    "corr_eq_bond_calm": -0.49268602352096924,
+    "corr_eq_bond_stress": -0.14523826933870154,
+    "episode_mean_stress_prob": {
+      "GFC 2008-09..2009-03": 0.08029197080291971,
+      "Euro/flash 2010": 0.0,
+      "US downgrade 2011": 0.0,
+      "Taper tantrum 2013": 0.6792452830188679,
+      "China Aug 2015": 0.0,
+      "Q4 2018": 0.2698412698412698
+    },
+    "calm_control_2017_mean_stress_prob": 0.42231075697211157,
+    "corr_with_baseline_stress_prob": -0.215237906506798
+  }
+}

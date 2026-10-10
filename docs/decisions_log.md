@@ -61,3 +61,17 @@ methodology decisions outside the pilot's scope.
   output/literature_positioning.md, not for specific numeric findings, since
   the briefing gives no further detail and it was not independently
   re-verified.
+
+- **Exploratory vs. confirmatory split (added after the pilot, Oct 2026)**:
+  following the supervisor's instruction to explore broadly (alternative
+  regime definitions, other ETF types), all post-pilot exploration is
+  restricted to data through 2019-12-31 (`src/explore.py` asserts this;
+  `scripts/explore_00_download.py` never downloads later data). 2020-2025
+  — which contains the 2022 stock-bond correlation reversal motivating the
+  thesis — is the confirmatory hold-out: nothing there is looked at until
+  the specification(s) to be tested have been fixed and logged. Every
+  specification tried in exploration (regime definitions, universes) is
+  reported in `output/explore/`, including the unpromising ones, so the
+  number of specs tried is auditable. Exploration results are descriptive
+  (in-sample smoothed regime weights, block-bootstrap CIs) and are NOT
+  evidence for or against the thesis hypothesis.
