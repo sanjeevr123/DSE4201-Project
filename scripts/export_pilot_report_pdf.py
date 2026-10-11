@@ -1,10 +1,11 @@
 """
-Exports output/PILOT_REPORT.md to output/PILOT_REPORT.pdf with figures
+Exports a Markdown file under output/ to a same-named PDF, with figures
 embedded. Pure-Python (markdown + xhtml2pdf), since pandoc/wkhtmltopdf/
 weasyprint's native dependencies are not available on this machine.
 
 Run with:
-    .venv/bin/python scripts/export_pilot_report_pdf.py
+    .venv/bin/python scripts/export_pilot_report_pdf.py [NAME.md]
+    (defaults to PILOT_REPORT.md if no argument is given)
 """
 from __future__ import annotations
 
@@ -34,14 +35,15 @@ hr { margin-top: 14pt; }
 
 
 def main() -> None:
-    md_path = OUT_DIR / "PILOT_REPORT.md"
+    name = sys.argv[1] if len(sys.argv) > 1 else "PILOT_REPORT.md"
+    md_path = OUT_DIR / name
     text = md_path.read_text()
     html_body = markdown.markdown(text, extensions=["tables", "fenced_code"])
     html = f"<html><head>{CSS}</head><body>{html_body}</body></html>"
 
-    pdf_path = OUT_DIR / "PILOT_REPORT.pdf"
+    pdf_path = md_path.with_suffix(".pdf")
     with open(pdf_path, "wb") as f:
-        result = pisa.CreatePDF(html, dest=f, path=str(OUT_DIR / "PILOT_REPORT.md"))
+        result = pisa.CreatePDF(html, dest=f, path=str(md_path))
 
     if result.err:
         print(f"Errors during PDF generation: {result.err}", file=sys.stderr)

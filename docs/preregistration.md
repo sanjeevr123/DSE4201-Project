@@ -98,3 +98,13 @@ with the full design (Option B). G3 and G4 both pass only marginally
 think one is badly chosen, say so in the report, but judge against the
 original," not adjusted after seeing results. See `output/PILOT_REPORT.md`
 for the full discussion and honest minimum-detectable-effect statement.
+
+## Addendum (Oct 2026): exploratory vs. confirmatory data split
+
+The G1-G6 pilot decision above is unchanged. For the post-pilot phase the
+supervisor asked for broad exploration of regime definitions and ETF types.
+To keep a clean test: (i) 2005-2019 is the exploratory/development window
+(2016-2019 may serve as a pseudo-holdout); (ii) 2020-2025 is the
+confirmatory window, untouched until the tested specifications are fixed
+and written down; (iii) all specifications tried in exploration are logged.
+See `docs/decisions_log.md` and `output/explore/`.
