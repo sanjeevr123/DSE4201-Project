@@ -20,9 +20,22 @@ with my thesis supervisor.
 Pilot study complete (WP0-WP5). All six pre-registered go/no-go criteria
 passed — **decision: PROCEED** with the full design. See
 `output/PILOT_REPORT.md` (or `output/PILOT_REPORT.pdf`) for the full
-results, scorecard, and 4-week plan for the full thesis run. Next stage:
-finalizing the ETF universe and other open decisions below with Prof. Seo,
-then extending the pilot's pipeline to the full 2016-2025 thesis window.
+results, scorecard, and 4-week plan for the full thesis run.
+
+**Exploration phase (Oct 2026) done, awaiting supervisor input.** Following
+Prof. Seo's instruction to explore broadly, regime definitions, ETF
+universes, bond-aware regime signals and a long-history stock/bond sample
+were screened and backtested on data through 2019-12-31 only. Headline
+(descriptive, in-sample): regime models beat a pooled normal but never beat
+GARCH-t/DCC-t, and letting correlations switch gives no detectable gain over
+regime volatilities alone (0 of 214 tests significant after Holm correction),
+even in the 1992-1999 positive stock-bond-correlation era. The sample is
+underpowered to detect an effect of the size seen. See
+`output/explore/EXPLORATION_SUMMARY.md` for findings, candidate directions
+and the open questions for the supervisor. **2020-2025 is a confirmatory
+hold-out and has not been touched.** Next stage: decide the direction with
+Prof. Seo, fix and log the specification(s), then test them once on the
+hold-out.
 
 ## Current Pilot Dataset
 
@@ -111,6 +124,33 @@ Key pilot paths:
   `PILOT_REPORT.md`). This is deliberately separate from `outputs/`
   (plural) above, which belongs to the earlier, unrelated Day-1 EDA
   pipeline — the two are not the same directory and are not merged.
+
+## Exploration Phase (post-pilot)
+
+Exploratory vs. confirmatory split: 2005-2019 is the development window
+(2016-2019 serves as a pseudo-holdout); 2020-2025, which contains the 2022
+stock-bond correlation reversal, is untouched until the tested
+specifications are fixed and logged. `src/explore.py` asserts no data past
+2019-12-31, and every specification tried is reported in `output/explore/`,
+including the unpromising ones. See `docs/decisions_log.md` and the addendum
+in `docs/preregistration.md`.
+
+Pipeline (run from the repo root with `.venv/bin/python`):
+
+| Step | Script | Output |
+|---|---|---|
+| 0 | `scripts/explore_00_download.py`, `explore_00b_download_rates.py` | ETF/VIX and ^TNX/^MOVE raw snapshots (`data/raw/`, logged in `MANIFEST.txt`) |
+| 1-4 | `explore_01..04_*.py` | universe screen, regime-definition comparison, long-history stock-bond check, figures |
+| 5 | `explore_05_backtests.py` (`--validate` first), `explore_05b_longhistory_backtest.py` | walk-forward VaR/ES forecasts in `output/explore/backtests/` |
+| 6 | `explore_06_score.py` | `backtest_loss_table.csv`, `backtest_dm_table.csv` |
+| 7 | `explore_07_figures.py` | `fig_backtest_E_corr_channel.png` |
+
+`explore_05_backtests.py --validate` checks that the generalised engine
+(`src/explore_wf.py`) reproduces the pilot's WP3 table before any full run.
+Set `OMP_NUM_THREADS=1` (and the BLAS equivalents) when running the full
+backtests in parallel, or the worker processes thrash.
+
+`output/STUDY_GUIDE.md` / `.pdf` is a study guide to the project.
 
 ## Current Open Methodological Decisions
 
