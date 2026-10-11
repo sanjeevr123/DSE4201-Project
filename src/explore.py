@@ -76,3 +76,10 @@ def run_lengths(states: np.ndarray, target: int = 1) -> np.ndarray:
     s = (states == target).astype(int)
     d = np.diff(np.r_[0, s, 0])
     return np.where(d == -1)[0] - np.where(d == 1)[0]
+
+
+def load_rates() -> pd.DataFrame:
+    """10y yield (^TNX, percent) from 1986 and MOVE index from 2002, <= 2019-12-31."""
+    df = pd.read_csv(RAW_DATA_DIR / "explore_rates_1986_2019.csv", index_col=0, parse_dates=True)
+    assert df.index.max() <= EXPLORE_END, "exploration data leaked past 2019-12-31"
+    return df

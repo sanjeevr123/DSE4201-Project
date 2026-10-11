@@ -25,7 +25,7 @@ import pandas as pd
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
-from src.explore import load_explore_returns  # noqa: E402
+from src.explore import load_explore_returns, load_rates  # noqa: E402
 from src.explore_wf import HMMProvider, RuleProvider, run_benchmarks, run_regime_models  # noqa: E402
 
 OUT = ROOT / "output" / "explore" / "backtests"
@@ -35,16 +35,21 @@ FIRST_FORECAST = "2010-01-01"
 
 UNIVERSES = {
     "U1_pilot": ["SPY", "IEF", "GLD"],
+    "U2_tlt": ["SPY", "TLT", "GLD"],
     "U3_credit": ["SPY", "IEF", "HYG"],
     "U4_globaleq": ["SPY", "EFA", "EEM"],
     "U5_4asset": ["SPY", "IEF", "GLD", "EEM"],
+    "U6_5asset": ["SPY", "IEF", "GLD", "DBC", "VNQ"],
+    "U7_8asset": ["SPY", "TLT", "IEF", "GLD", "HYG", "EEM", "VNQ", "DBC"],
     "U8_sectors": ["XLU", "XLK", "XLF", "XLE"],
+    "U9_lqd": ["SPY", "LQD", "GLD"],
     "U10_riskassets": ["HYG", "EEM", "VNQ", "DBC"],
 }
 
 
-def build_providers(spy, ief, vix, which=None):
+def build_providers(spy, ief, vix, which=None, tnx=None, move=None):
     rv = pd.Series(spy).rolling(21).std().values
+    ief_rv = pd.Series(ief).rolling(21).std().values
     corr63 = pd.Series(spy).rolling(63).corr(pd.Series(ief)).values
     P = {
         "HMM_SPY2": HMMProvider("HMM_SPY2", spy, K=2),
@@ -53,7 +58,15 @@ def build_providers(spy, ief, vix, which=None):
         "RULE_VIX20": RuleProvider("RULE_VIX20", vix, thr=20.0),
         "RULE_RV75": RuleProvider("RULE_RV75", rv, q=0.75),
         "RULE_CORR": RuleProvider("RULE_CORR", corr63, q=2 / 3),
+        # direction B: bond-aware regime signals
+        "HMM_SPYIEF2": HMMProvider("HMM_SPYIEF2", np.c_[spy * 100, ief * 100], K=2),
+        "RULE_IEFRV75": RuleProvider("RULE_IEFRV75", ief_rv, q=0.75),
     }
+    if tnx is not None:
+        dy = pd.Series(tnx).diff()
+        P["RULE_YLDVOL75"] = RuleProvider("RULE_YLDVOL75", dy.rolling(21).std().values, q=0.75)
+    if move is not None:
+        P["RULE_MOVE75"] = RuleProvider("RULE_MOVE75", move, q=0.75)
     return P if which is None else {k: P[k] for k in which}
 
 
@@ -65,9 +78,11 @@ def run_universe(name: str, providers=None, dcc: bool = True, last_date: str | N
     spy = R_all["SPY"].reindex(df.index).values
     ief = R_all["IEF"].reindex(df.index).values
     vix = vix_all.reindex(df.index).ffill().values
+    rates = load_rates().reindex(df.index).ffill()
+    tnx, move = rates["^TNX"].values, rates["^MOVE"].values
     if last_date:
         keep = df.index <= pd.Timestamp(last_date)
-        df, spy, ief, vix = df[keep], spy[keep], ief[keep], vix[keep]
+        df, spy, ief, vix, tnx, move = df[keep], spy[keep], ief[keep], vix[keep], tnx[keep], move[keep]
     R = df.values
     w = np.ones(R.shape[1]) / R.shape[1]
     start = max(int(np.searchsorted(df.index, pd.Timestamp(FIRST_FORECAST))), WINDOW)
@@ -77,7 +92,7 @@ def run_universe(name: str, providers=None, dcc: bool = True, last_date: str | N
     models = {"V": {a: dict(bench["V"][a]) for a in ALPHAS}, "E": {a: dict(bench["E"][a]) for a in ALPHAS}}
     stress = {}
     diag = {}
-    for pname, prov in build_providers(spy, ief, vix, providers).items():
+    for pname, prov in build_providers(spy, ief, vix, providers, tnx, move).items():
         rr = run_regime_models(R, w, prov, ALPHAS, start, window=window, refit=REFIT)
         for a in ALPHAS:
             for m in ("A", "B", "C", "D"):
@@ -129,5 +144,5 @@ if __name__ == "__main__":
         validate()
     else:
         names = args or list(UNIVERSES)
-        with ProcessPoolExecutor(max_workers=min(len(names), 6)) as ex:
+        with ProcessPoolExecutor(max_workers=min(len(names), 10)) as ex:
             list(ex.map(_job, names))

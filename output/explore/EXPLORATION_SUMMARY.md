@@ -1,8 +1,8 @@
 # Exploration summary: regime definitions, ETF universes, stock-bond history
 
 For the meeting with Prof. Seo. Descriptive and in-sample, all data through 2019-12-31. 2020-2025 is held out and untouched.
-Scripts: `scripts/explore_00..04_*.py`. Tables: `*.json` in this folder.
-Specs tried so far: 10 universes x 2 windows, 13 single assets x 2 windows, 7 regime definitions, 1 long-history check. None were dropped.
+Scripts: `scripts/explore_00..07_*.py`. Tables: `*.json` / `*.csv` in this folder.
+Specs tried so far: 10 universes x 2 windows, 13 single assets x 2 windows, 7 regime definitions, 1 long-history check (descriptive); then walk-forward backtests of 10 ETF universes x 10 regime definitions plus 1 long-history sample x 7 regime definitions, each at 2 alpha levels with 4 covariance variants and 5 benchmarks (214 headline correlation-channel tests). None were dropped.
 
 ## Three findings
 
@@ -27,13 +27,37 @@ Using long-history funds (VFINX vs VUSTX), the 252-day stock-bond correlation wa
 
 *Figure:* `fig_longhistory_D_stock_bond_corr.png`.
 
+## Backtest results (walk-forward VaR/ES, FZ0 loss, forecasts 2010-2019; 1992-2019 for the long-history sample)
+
+Engine check: the generalised engine reproduces the pilot's WP3 loss table to within 5e-6 (`explore_05_backtests.py --validate`). Scores: `backtest_loss_table.csv`, `backtest_dm_table.csv`; figure `fig_backtest_E_corr_channel.png`. Universes containing HYG (U3, U7, U10) start forecasting in 2012 because HYG history is short. Model D = regime-specific volatilities and correlations, B = regime-specific volatilities only, A = pooled single normal.
+
+**4. Regime models beat the pooled normal but never beat smooth benchmarks.**
+- D beats A significantly in 105 of 214 comparisons and is never significantly worse.
+- D is never significantly better than GARCH-t or DCC-t (0 of 214 each) and is significantly worse in 96 (GARCH-t) and 124 (DCC-t) of them. The few negative differences against DCC-t have p of 0.58 to 0.95.
+- DCC-t and GARCH-t are statistically indistinguishable in 9 of 11 samples. DCC-t is a little better in U4 and U7.
+
+**5. The correlation channel (D vs B) is not detectable, and its sign depends on the regime signal.**
+- 37 of 214 tests have raw p < 0.05, against about 11 expected under no effect. They split 18 favouring D and 19 favouring B, and none survive a Holm correction (smallest adjusted p = 0.14).
+- The sign follows the signal: equity-volatility HMMs favour D in the equity-heavy universes U8 and U10 (-9 to -12 per 1000). Bond-aware rules (MOVE, yield vol, IEF vol, correlation) favour B in the same universes (+4 to +13). In bond-containing universes (U1, U2, U3) D is usually slightly better, up to -18 per 1000 for the correlation rule in U3.
+- The sample cannot resolve the effect. The median minimum detectable FZ0 difference (80% power) is 0.009 at the 5% level and 0.012 at 2.5%, against a median observed |D-B| of 0.003.
+- Pseudo-holdout 2016-2019 looks the same: 22 of 100 tests have p < 0.05, with mixed signs.
+
+**6. Direction A (long history) does not rescue the correlation channel.**
+In the 1992-1999 era, when stock-bond correlation was positive, D-B is within +/-7 per 1000 for six of seven signals (e.g. HMM_SPY2 -5.6, RULE_RV75 -6.3) and +11.5 for RULE_CORR. It is positive (D worse) in 2000-2009 for every signal, and negative in 2010-2019. A correlation-switching model does not help even in the regime the thesis is about, using this fund proxy and these regime signals. 2022 remains untested.
+
+**7. Direction B (bond-aware signals) gives no consistent gain over the equity-vol signals.**
+The SPY+IEF HMM, IEF vol, yield-change vol and MOVE rules beat the SPY HMM on D-A in a few universes (e.g. MOVE and SPY+IEF HMM in U2 and U7) and lose in others, with no consistent pattern. The correlation rule is the extreme case: D is no better than A in most universes (D-A from -12 to +20 per 1000) because that rule carries little volatility information. Its only clear win is D vs B in U3 (-18 per 1000), where it is also the signal that flagged the taper tantrum.
+
+**Reading.** Taken together with findings 1-3, the exploration points toward direction D as the honest headline: the correlation-regime hypothesis is not testable with power on 2010-2019 data, and no specification tried here changes that. The remaining question for the held-out period is whether 2022 behaves differently, and a single stock-bond reversal episode gives little statistical power either.
+
 ## Caveats
 
 - **Regime weights are smoothed and in-sample.** These are descriptive statistics, not forecasts. They show where a correlation channel exists, not whether the model improves forecasts.
 - **Correlations rise in high-volatility regimes partly by construction** (Forbes & Rigobon 2002). The positive shifts for risk assets are therefore an upper bound on true contagion.
 - **Block-bootstrap CIs hold the regime weights fixed.** They ignore uncertainty in the HMM fit, so they are narrower than the true uncertainty.
 - **VFINX/VUSTX are mutual funds used as proxies.** They are not ETFs, they price once a day, and VUSTX tracks long Treasuries rather than IEF.
-- **No forecasting backtest has been run on any new spec yet.**
+- **Backtest p-values are unadjusted except the Holm correction on the headline D-vs-B family.** The 10 regime definitions and 11 samples were all examined, so any single positive result would need that correction before it is cited. Backtest samples overlap heavily (the same SPY and bond series appear in most universes), so the 214 tests are not independent.
+- **Benchmarks are refit on a different schedule than the regime models** (GARCH-t and DCC every 63 days, HMM every 21), which does not favour the regime models. Regime models are not tuned to beat them.
 
 ## Candidate directions
 

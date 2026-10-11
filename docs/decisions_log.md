@@ -75,3 +75,12 @@ methodology decisions outside the pilot's scope.
   number of specs tried is auditable. Exploration results are descriptive
   (in-sample smoothed regime weights, block-bootstrap CIs) and are NOT
   evidence for or against the thesis hypothesis.
+
+- **Exploration backtests (Oct 2026)**: generalised walk-forward engine
+  (`src/explore_wf.py`) validated against the pilot's WP3 table (all 14
+  loss entries within 5e-6) before use. Ran 10 ETF universes x 10 regime
+  definitions (+ long-history VFINX/VUSTX x 7), 2 alpha levels, with
+  DCC-GARCH benchmarks; adds bond-aware regime signals (^TNX yield vol, ^MOVE,
+  IEF vol, SPY+IEF HMM). All specs reported in `output/explore/backtest_*.csv`.
+  Result: no detectable correlation-channel gain (0/214 Holm-significant) and
+  no regime model beats GARCH-t/DCC-t. 2020-2025 still untouched.
