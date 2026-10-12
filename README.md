@@ -144,6 +144,9 @@ Pipeline (run from the repo root with `.venv/bin/python`):
 | 5 | `explore_05_backtests.py` (`--validate` first), `explore_05b_longhistory_backtest.py` | walk-forward VaR/ES forecasts in `output/explore/backtests/` |
 | 6 | `explore_06_score.py` | `backtest_loss_table.csv`, `backtest_dm_table.csv` |
 | 7 | `explore_07_figures.py` | `fig_backtest_E_corr_channel.png` |
+| 8 | `explore_08_routes.py` (`--validate` first) | GARCH-margin + regime-correlation arm (layer 2) and Route M (Kendall) / Route P (single pair) variants (layer 1), pilot universe |
+| 9 | `explore_09_score_routes.py` | `output/explore/routes/routes_{loss,dm}_table.csv` |
+| 10-11 | `explore_10_power_routes.py` (`--validate` first), `explore_11_power_summary.py` | power/size of each route on the pilot DGP; `power_summary.csv`, `fig_routes_G_power.png` |
 
 `explore_05_backtests.py --validate` checks that the generalised engine
 (`src/explore_wf.py`) reproduces the pilot's WP3 table before any full run.
