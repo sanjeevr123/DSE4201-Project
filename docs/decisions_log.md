@@ -114,3 +114,15 @@ methodology decisions outside the pilot's scope.
   provider, layer 2) is secondary and unadjusted. Specs added: 2 providers x (5 layer-1 + 10
   layer-2 arms) x 2 alphas on one universe, plus 5 arms x 4 scenarios x 200 reps x 2 alphas
   in the power study.
+
+- **Confound check on U3, U8, U10 (Oct 2026, declared before the results were scored)**:
+  hypothesis from the U1 result: giving the regime model GARCH margins removes most of the
+  gap to GARCH-t/DCC. Pre-declared primary family: RSC_S_N vs D (GARCH margins vs static
+  regime covariance, both with regime-switching sample correlation), alpha = 5%, full
+  forecast window, SPY HMM, Holm over the three universes. Everything else is secondary and
+  unadjusted. Route M / Route P arms are not scored on these universes (the single pair is
+  only meaningful for SPY-IEF). HYG-containing universes (U3, U10) start in 2012.
+  Result (confound check): GARCH-margin effect -0.039 (U3, p 0.13), -0.036 (U8, p 0.11),
+  -0.073 (U10, p 0.001; Holm 0.003); old significant gaps to GARCH-t shrink to within
+  +/-0.016, p > 0.12. Direction supports the confound explanation; statistical confirmation is
+  strong in one of three universes.

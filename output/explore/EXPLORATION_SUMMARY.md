@@ -54,7 +54,7 @@ The SPY+IEF HMM, IEF vol, yield-change vol and MOVE rules beat the SPY HMM on D-
 
 Details, tables and caveats: `output/FURTHER_EXPLORATION_RESEARCH.md`, Section 2.4; data in `output/explore/routes/`; figure `fig_routes_G_power.png`.
 
-**8. Most of the regime-vs-GARCH gap is a modelling confound.** Giving the regime model GARCH(1,1) volatility (instead of constant volatility inside each regime) moves its loss by about -0.026 and fixes calibration (5% hit rate 3.6% to about 5%). The regime-correlation model is then indistinguishable from DCC (p = 0.99) and GARCH-t (p = 0.86). On this universe the earlier gap was not significant anyway, so the confirmation belongs on U3, U8 and U10.
+**8. Most of the regime-vs-GARCH gap is a modelling confound.** Giving the regime model GARCH(1,1) volatility (instead of constant volatility inside each regime) moves its loss by about -0.026 and fixes calibration (5% hit rate 3.6% to about 5%). The regime-correlation model is then indistinguishable from DCC (p = 0.99) and GARCH-t (p = 0.86). Checked on U3, U8 and U10: the same direction in all four universes (margin effect -0.026 to -0.073, about the size of the old gap; significant after Holm only in U10, p of about 0.11-0.13 in U3 and U8), and the previously significant gaps to GARCH-t become small and non-significant (within +/-0.016). Caveat: the static and GARCH models also differ in the mean treatment.
 
 **9. The correlation channel is still not detectable with GARCH margins.** Regime vs constant correlation: -0.004 (p = 0.26 to 0.31), minimum detectable difference about 0.011.
 

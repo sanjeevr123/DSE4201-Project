@@ -124,6 +124,23 @@ Code: `src/explore_routes.py`, `scripts/explore_08..11_*.py`; tables in `output/
 - At alpha = 2.5% every route has lower power (S2: 25% for D and D_M, 50% for D_P).
 - Under the null, D_P rejects in the wrong direction 11% of the time (5% expected), a mild sign that an unneeded switching parameter costs some accuracy.
 
+**Confound check on three more universes (U3 SPY/IEF/HYG, U8 sectors, U10 risk assets; SPY HMM, layer 2 only).** Pre-declared primary family: GARCH-margin effect = RSC (Gaussian) vs D, alpha = 5%, full window, Holm over the three universes (`docs/decisions_log.md`, `scripts/explore_12_score_confound.py`). HYG universes start in 2012.
+
+| Universe | Old gap: D vs GARCH-t | GARCH-margin effect (RSC vs D) | p (Holm) | RSC-t vs GARCH-t now | RSC-t vs DCC-t now |
+|---|---|---|---|---|---|
+| U1 (reference) | +0.030 (p = 0.18) | -0.026 | 0.13 | -0.003 (p = 0.85) | -0.001 (p = 0.94) |
+| U3 credit | +0.061 (p = 0.02) | -0.039 | 0.13 (0.21) | +0.016 (p = 0.26) | +0.012 (p = 0.13) |
+| U8 sectors | +0.045 (p = 0.06) | -0.036 | 0.11 (0.21) | +0.006 (p = 0.67) | +0.000 (p = 0.99) |
+| U10 risk assets | +0.059 (p = 0.03) | -0.073 | 0.001 (0.003) | -0.016 (p = 0.12) | -0.007 (p = 0.22) |
+
+- **Direction and size:** adding GARCH margins improves the loss in all four universes by 0.026 to 0.073, which is about the size of the old gap. Only U10 is significant in the primary family after Holm; U3 and U8 are about p = 0.11-0.13 each.
+- **The significant gaps against GARCH-t (U3, U10; U8 borderline) are no longer significant** once the regime model has GARCH volatility: the Student-t regime-correlation model is within +/-0.016 of GARCH-t and DCC-t everywhere (p > 0.12). Note that "significant before, not significant now" is not itself a significance test; the direct test is the margin-effect column.
+- **Calibration:** the static models B and D are rejected by the Kupiec test in U8 and U10 (too conservative, hit rates 2.8-3.8% at 5%), while the GARCH-margin arms are close to 5% (U10: 4.3-5.0%).
+- **Correlation channel with GARCH margins (RSC vs CCC):** -0.004 to -0.006 in all four universes (p = 0.14-0.31 each at 5%), the same small, consistently signed effect as on U1. The four samples share most of their data, so I do not pool them. Constant correlation is also statistically as good as DCC (CCC vs DCC-N: +0.015 at most, p >= 0.10).
+- **Caveat:** the margin effect compares models that also differ in the mean (the static models use regime-specific means, the GARCH arms a constant mean), so it is the effect of the whole change, not volatility alone.
+
+**Conclusion on the confound:** supported. Most of the "regime models lose to GARCH/DCC" gap is a modelling choice (constant covariance within regimes), not evidence against regime information. Statistical confirmation of the margin effect itself is strong in one of three universes and consistent in direction in all.
+
 **What this changes.**
 1. The primary confirmatory contrast should use **GARCH margins (layer 2)**, where models are calibrated and competitive with DCC, with Route P (SPY-IEF) as the default switching route.
 2. Kendall's tau does not earn a place in that primary design; keep it as a robustness check.

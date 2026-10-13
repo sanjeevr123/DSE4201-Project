@@ -5,6 +5,8 @@ Route M / Route P comparison, on the pilot universe (SPY/IEF/GLD, equal weight),
   .venv/bin/python scripts/explore_08_routes.py --validate
       reproduces model B and D of the pilot-universe backtest (output/explore/backtests/U1_pilot.pkl)
       with the new layer-1 code path (must agree to ~1e-9 before anything else is trusted)
+  .venv/bin/python scripts/explore_08_routes.py --universes U3_credit U8_sectors U10_riskassets
+      layer 2 only (SPY HMM), to check the GARCH-margin effect on other universes
   .venv/bin/python scripts/explore_08_routes.py [PROVIDER ...]
       full run; default providers: HMM_SPY2 (declared primary) and RULE_RV75 (sensitivity)
 
@@ -85,6 +87,16 @@ def _job(name):
     print(f"{name}: {res['runtime_s']:.0f}s, {len(res['y'])} forecast days", flush=True)
 
 
+def _job_universe(universe):
+    """Layer 2 only, SPY HMM provider: the GARCH-margin confound check on another universe.
+    (Route M / Route P arms are computed but not scored there: the pair is only meaningful for SPY-IEF.)"""
+    res = run("HMM_SPY2", universe=universe, layers=(2,))
+    OUT.mkdir(parents=True, exist_ok=True)
+    with open(OUT / f"{universe}_routes_HMM_SPY2.pkl", "wb") as f:
+        pickle.dump(res, f)
+    print(f"{universe}: {res['runtime_s']:.0f}s, {len(res['y'])} forecast days", flush=True)
+
+
 def validate():
     res = run("HMM_SPY2", layers=(1,), last_date="2012-12-31")
     old = pickle.load(open(ROOT / "output" / "explore" / "backtests" / "U1_pilot.pkl", "rb"))
@@ -104,6 +116,10 @@ if __name__ == "__main__":
     args = sys.argv[1:]
     if args and args[0] == "--validate":
         validate()
+    elif args and args[0] == "--universes":
+        unis = args[1:]
+        with ProcessPoolExecutor(max_workers=len(unis)) as ex:
+            list(ex.map(_job_universe, unis))
     else:
         names = args or ["HMM_SPY2", "RULE_RV75"]
         with ProcessPoolExecutor(max_workers=len(names)) as ex:
