@@ -50,6 +50,16 @@ The SPY+IEF HMM, IEF vol, yield-change vol and MOVE rules beat the SPY HMM on D-
 
 **Reading.** Taken together with findings 1-3, the exploration points toward direction D as the honest headline: the correlation-regime hypothesis is not testable with power on 2010-2019 data, and no specification tried here changes that. The remaining question for the held-out period is whether 2022 behaves differently, and a single stock-bond reversal episode gives little statistical power either.
 
+## Follow-up: GARCH margins and the dependence-route comparison (SPY/IEF/GLD)
+
+Details, tables and caveats: `output/FURTHER_EXPLORATION_RESEARCH.md`, Section 2.4; data in `output/explore/routes/`; figure `fig_routes_G_power.png`.
+
+**8. Most of the regime-vs-GARCH gap is a modelling confound.** Giving the regime model GARCH(1,1) volatility (instead of constant volatility inside each regime) moves its loss by about -0.026 and fixes calibration (5% hit rate 3.6% to about 5%). The regime-correlation model is then indistinguishable from DCC (p = 0.99) and GARCH-t (p = 0.86). Checked on U3, U8 and U10: the same direction in all four universes (margin effect -0.026 to -0.073, about the size of the old gap; significant after Holm only in U10, p of about 0.11-0.13 in U3 and U8), and the previously significant gaps to GARCH-t become small and non-significant (within +/-0.016). Caveat: the static and GARCH models also differ in the mean treatment.
+
+**9. The correlation channel is still not detectable with GARCH margins.** Regime vs constant correlation: -0.004 (p = 0.26 to 0.31), minimum detectable difference about 0.011.
+
+**10. Route comparison.** Neither pre-declared primary test is significant (D_M vs B p = 0.145, Holm 0.29; D_P vs B p = 0.37). The Kendall's-tau route has an edge only without GARCH margins. In simulation (pilot DGP, 200 reps), the single-pair route (SPY-IEF) has the best power: 35% vs 25% (moderate shift) and 78.5% vs 52.5% (strong shift), with no size distortion; the simulated shifts are concentrated in that pair by construction.
+
 ## Caveats
 
 - **Regime weights are smoothed and in-sample.** These are descriptive statistics, not forecasts. They show where a correlation channel exists, not whether the model improves forecasts.

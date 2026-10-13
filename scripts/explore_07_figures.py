@@ -40,3 +40,33 @@ for s in ("top", "right", "left", "bottom"):
     ax.spines[s].set_visible(False)
 fig.tight_layout()
 fig.savefig(OUT / "fig_backtest_E_corr_channel.png", dpi=150)
+
+
+# ---- Figure F: forecast loss relative to GARCH-t (the benchmark to beat)
+L = pd.read_csv(OUT / "backtest_loss_table.csv")
+L = L[(L.alpha == 0.05) & L.period.isin(["full_2010_2019", "full_1992_2019"])]
+tab = L.pivot(index="universe", columns="model", values="fz0")
+rel = pd.DataFrame({
+    "A: pooled normal": tab["A"] - tab["GARCHt"],
+    "B: regime vol (SPY HMM)": tab["HMM_SPY2/B"] - tab["GARCHt"],
+    "D: regime vol + corr (SPY HMM)": tab["HMM_SPY2/D"] - tab["GARCHt"],
+    "DCC-t (smooth correlation)": tab["DCC_t"] - tab["GARCHt"],
+})
+fig, ax = plt.subplots(figsize=(9, 5))
+style = {"A: pooled normal": ("#9a9a9a", "o"), "B: regime vol (SPY HMM)": ("#2a6f97", "s"),
+         "D: regime vol + corr (SPY HMM)": ("#c8553d", "D"), "DCC-t (smooth correlation)": ("#3d8b5f", "^")}
+y = np.arange(len(rel))
+ax.axvline(0, color="#222", lw=1)
+for k, (c, m) in style.items():
+    ax.scatter(rel[k], y, color=c, marker=m, s=42, label=k, zorder=3, edgecolor="white", linewidth=0.6)
+ax.set_yticks(y, rel.index, fontsize=9)
+ax.invert_yaxis()
+ax.set_xlabel("Mean FZ0 loss minus GARCH-t's (to the right = worse than GARCH-t), VaR/ES 5%")
+ax.set_title("No regime model beats the smooth GARCH-t benchmark in any universe", fontsize=11, loc="left")
+ax.grid(axis="x", color="#ddd", lw=0.6)
+ax.legend(frameon=False, fontsize=8.5, loc="lower right")
+for s in ("top", "right"):
+    ax.spines[s].set_visible(False)
+fig.tight_layout()
+fig.savefig(OUT / "fig_backtest_F_vs_garch.png", dpi=150)
+print(rel.round(3))

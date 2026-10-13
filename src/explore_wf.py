@@ -186,9 +186,12 @@ class RuleProvider:
 
 # ------------------------------------------------------------ regime-model run
 def run_regime_models(R: np.ndarray, w: np.ndarray, provider, alphas, start: int,
-                      window: int = 1260, refit: int = 21, models=("A", "B", "C", "D")) -> dict:
+                      window: int = 1260, refit: int = 21, models=("A", "B", "C", "D"),
+                      variants_fn=None) -> dict:
     """Walk-forward A/B/C/D forecasts for one regime provider. Returns
-    {alpha: {model: (V, E)}} arrays of length T (NaN before `start`), plus stress_prob."""
+    {alpha: {model: (V, E)}} arrays of length T (NaN before `start`), plus stress_prob.
+    `variants_fn(R_window, gamma) -> (covs, means)` may replace build_variants_k (used by
+    src/explore_routes.py for the Kendall-matrix and single-pair variants)."""
     T = R.shape[0]
     V = {a: {m: np.full(T, np.nan) for m in models} for a in alphas}
     E = {a: {m: np.full(T, np.nan) for m in models} for a in alphas}
@@ -197,7 +200,7 @@ def run_regime_models(R: np.ndarray, w: np.ndarray, provider, alphas, start: int
         t1 = min(t0 + refit, T)
         win, blk = slice(t0 - window, t0), slice(t0, t1)
         gamma, preds = provider.step(win, blk)
-        covs, means = build_variants_k(R[win], gamma)
+        covs, means = (variants_fn or build_variants_k)(R[win], gamma)
         sds = {k: np.array([np.sqrt(w @ covs[k][j] @ w) for j in range(len(covs[k]))]) for k in models}
         mus = {k: np.array([w @ means[k][j] for j in range(len(means[k]))]) for k in models}
         for i, t in enumerate(range(t0, t1)):

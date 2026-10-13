@@ -84,3 +84,45 @@ methodology decisions outside the pilot's scope.
   IEF vol, SPY+IEF HMM). All specs reported in `output/explore/backtest_*.csv`.
   Result: no detectable correlation-channel gain (0/214 Holm-significant) and
   no regime model beats GARCH-t/DCC-t. 2020-2025 still untouched.
+
+- **Total-correlation check (Oct 2026, <=2019 data)**: rolling 63-day Gaussian
+  total correlation (-0.5 log det R) on SPY/IEF/GLD is exactly invariant to
+  flipping an asset's sign, was highest in calm 2012H1 (0.40, SPY-IEF rho
+  -0.63) and lowest in the 2013 taper tantrum (0.08, rho -0.04). Judged
+  unsuitable as the primary dependence measure for the stock-bond question;
+  kept as a descriptive summary only. One additional exploratory spec.
+
+- **Exceedance-correlation check (Oct 2026, <=2019 data)**: on SPY/IEF
+  (3,804 days) the joint lower-tail version has n=22 (10%) and n=6 (5%), so
+  it is unusable; conditioning on the SPY lower tail only gives rho -0.32
+  (n=381, 10%) and -0.28 (n=191, 5%, 90% block-bootstrap CI -0.49 to -0.10)
+  against a bivariate-normal-implied -0.19 at 10%. Conditioning on a tail
+  shrinks correlation toward zero by construction, so values must be
+  compared with a normal-implied null. Descriptive use only. One additional
+  exploratory spec.
+
+- **Plan steps 1, 2, 2B implemented (Oct 2026, <=2019 data)**: `src/explore_routes.py`
+  adds (i) Route M, a weighted Kendall's-tau correlation matrix with nearest-correlation
+  repair; (ii) Route P, only the SPY-IEF pair switching (pair fixed in advance by theory,
+  not by scanning); (iii) layer 2, GARCH(1,1) margins + constant (CCC) or regime-switching
+  (RSC) correlation of the standardised residuals, Gaussian and Student-t innovations, same
+  margins in every arm. Validation: layer-1 B and D reproduce the saved pilot-universe
+  backtest bit for bit; the power harness reproduces the pilot's WP2 D-vs-B t statistics to
+  1e-6 on the same simulated datasets; 9 new unit tests. Pre-declared primary tests: D_M vs B
+  and D_P vs B, alpha = 5%, full 2010-2019, provider HMM_SPY2, Holm over the two. Everything
+  else (alpha = 2.5%, sub-periods, within-estimator contrasts, the RULE_RV75 sensitivity
+  provider, layer 2) is secondary and unadjusted. Specs added: 2 providers x (5 layer-1 + 10
+  layer-2 arms) x 2 alphas on one universe, plus 5 arms x 4 scenarios x 200 reps x 2 alphas
+  in the power study.
+
+- **Confound check on U3, U8, U10 (Oct 2026, declared before the results were scored)**:
+  hypothesis from the U1 result: giving the regime model GARCH margins removes most of the
+  gap to GARCH-t/DCC. Pre-declared primary family: RSC_S_N vs D (GARCH margins vs static
+  regime covariance, both with regime-switching sample correlation), alpha = 5%, full
+  forecast window, SPY HMM, Holm over the three universes. Everything else is secondary and
+  unadjusted. Route M / Route P arms are not scored on these universes (the single pair is
+  only meaningful for SPY-IEF). HYG-containing universes (U3, U10) start in 2012.
+  Result (confound check): GARCH-margin effect -0.039 (U3, p 0.13), -0.036 (U8, p 0.11),
+  -0.073 (U10, p 0.001; Holm 0.003); old significant gaps to GARCH-t shrink to within
+  +/-0.016, p > 0.12. Direction supports the confound explanation; statistical confirmation is
+  strong in one of three universes.
