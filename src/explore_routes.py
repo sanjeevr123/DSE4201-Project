@@ -145,9 +145,12 @@ RS_MODELS = ("CCC_S", "CCC_M", "RSC_S", "RSC_M", "RSC_P")
 
 
 def run_rs_corr(R: np.ndarray, w: np.ndarray, provider, alphas, start: int, window: int = 1260,
-                refit: int = 21, margin_refit: int = 63, pair: tuple[int, int] = (0, 1)) -> dict:
+                refit: int = 21, margin_refit: int = 63, pair: tuple[int, int] = (0, 1),
+                zero_mean: bool = False) -> dict:
     """Layer 2 walk-forward. Models (each with _N and _t): CCC_S / CCC_M (pooled sample / Kendall
-    correlation of GARCH residuals), RSC_S / RSC_M (regime-specific), RSC_P (only `pair` switches)."""
+    correlation of GARCH residuals), RSC_S / RSC_M (regime-specific), RSC_P (only `pair` switches).
+    zero_mean=True sets the forecast location to zero (control for the mean treatment; the GARCH
+    recursions still use the fitted constant mean, as before)."""
     T, N = R.shape
     rp = R @ w
     names = [f"{m}_{d}" for m in RS_MODELS for d in ("N", "t")]
@@ -176,7 +179,7 @@ def run_rs_corr(R: np.ndarray, w: np.ndarray, provider, alphas, start: int, wind
         Rm_k = [weighted_kendall_corr(z, gamma[:, k] + 1e-12) for k in range(K)]
         Rp_k = [pair_variant(Rs_pool, Rs_k[k], pair) for k in range(K)]
         sets = {"CCC_S": [Rs_pool], "CCC_M": [Rm_pool], "RSC_S": Rs_k, "RSC_M": Rm_k, "RSC_P": Rp_k}
-        mu_p = float(w @ params[0]) / 100
+        mu_p = 0.0 if zero_mean else float(w @ params[0]) / 100
         A_in = (np.sqrt(sig2[:-1]) / 100) * w
         sd_in = np.sqrt(np.einsum("ti,ij,tj->t", A_in, Rs_pool, A_in))
         nu = fit_t_df((rp[win] - mu_p) / sd_in)
