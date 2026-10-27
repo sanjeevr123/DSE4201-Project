@@ -3,12 +3,13 @@
 **Regime-switching risk models for ETF portfolios.** Sanjeev, 27 October 2026. Rough draft for Prof. Seo's feedback.
 Everything below is exploratory and uses data through 31 December 2019. The 2020-2025 period has not been used by any model.
 
-## 1. Where the project stands
+## 1. At a glance
 
 - **Question.** For a fixed diversified ETF portfolio, which of three ingredients improves one-day-ahead VaR/ES forecasts: regime-dependent volatility, volatility dynamics within a regime, or regime-dependent correlation?
-- **Done.** A pilot with pre-registered go/no-go criteria; a broad exploration (10 ETF universes, 10 regime definitions, a 1992-2019 fund sample); a controlled model ladder with mean controls; a replication; a power study with GARCH margins; a validated code base (62 tests).
-- **Not done.** The confirmatory test on 2020-2025 (waiting for your view on the design), a second data vendor, the thesis write-up beyond a methods draft.
-- **Short version of the result.** I find no detectable gain from letting correlations switch by regime. Most of the improvement comes from volatility modelling, and my design has limited power for correlation effects. I report that power next to each result.
+- **Headline.** I find no detectable gain from letting correlations switch by regime. Most of the improvement comes from volatility modelling (regimes, then GARCH dynamics), and my design has limited power for correlation effects, which I report next to every result.
+- **Done.** A pre-registered pilot; a broad exploration (10 ETF universes, 10 regime definitions, a 1992-2019 fund sample); a controlled model ladder; a replication; a power study with GARCH margins; a validated code base (62 tests); a methods chapter draft (attached as `01_design_and_methods.md`).
+- **Not done.** The confirmatory test on 2020-2025 (waiting for your view on the design), a second data vendor, and the results chapters.
+- **What I need from you.** Seven short answers, listed in section 8 (five decisions, two pieces of guidance).
 
 ## 2. Research question and design
 
@@ -53,11 +54,10 @@ All six pre-registered criteria passed (correctness; test size; detectability; r
 
 ### 4b. Exploration (214 headline tests across universes, regime definitions and two alpha levels)
 
-- Letting correlations switch (D vs B): 37 of 214 tests have raw p < 0.05 (18 favour D, 19 favour B), and **none survive the Holm correction** (smallest adjusted p = 0.141).
-- Regime models beat the pooled normal in 105 of 214 comparisons and are never significantly worse. They are **never significantly better than GARCH-t or DCC-t**, and are significantly worse in 96 (GARCH-t) and 124 (DCC-t) of 214.
-- In diversified universes correlations fall in stress (Treasuries hedge more); only equity-heavy or risk-asset universes show rising correlations.
-- The positive stock-bond correlation that motivates the thesis is absent from 2010-2019. Share of days with positive 252-day correlation (fund proxies): 90.6% in 1987-1999, 23.7% in 2000-2009, 0% in 2010-2019.
-- Volatility-based regime definitions agree with each other, and all miss the 2013 taper tantrum (a bond-led shock).
+- **Correlation switching (D vs B):** 37 of 214 tests have raw p < 0.05 (18 favour D, 19 favour B); **none survive Holm** (smallest adjusted p = 0.141).
+- **Against benchmarks:** regime models beat the pooled normal in 105 of 214 comparisons (never significantly worse) but are **never significantly better than GARCH-t or DCC-t**, and are significantly worse in 96 and 124 of 214.
+- **Where correlations move:** in diversified universes correlations fall in stress (Treasuries hedge more); only equity-heavy or risk-asset universes show rises.
+- **The motivating regime is missing from the data:** positive 252-day stock-bond correlation on 90.6% of days in 1987-1999, 23.7% in 2000-2009 and 0% in 2010-2019 (fund proxies). All volatility-based regime definitions miss the 2013 taper tantrum.
 
 ### 4c. The ladder (5% VaR/ES, Gaussian components, pooled mean, full forecast window)
 
@@ -117,11 +117,18 @@ A controlled ablation plus a detectability analysis: where does regime informati
 
 ## 8. Questions for you
 
+**Decisions that unblock the next step**
 1. Is the ladder-plus-detectability framing acceptable as the thesis?
 2. Do you approve the single confirmatory test described in 7.2?
 3. Do you approve the hold-out protocol (choices fixed on data through 2019, then freeze, then one run on 2020-2025)?
 4. Is a second data vendor (for example CRSP) available through the university?
 5. I dropped the allocation extension. Should the title be narrowed accordingly?
+
+**Guidance I would value**
+6. Is a thesis whose main result is a well-powered null (no detectable gain from correlation switching, with the power reported) acceptable, or would you steer me towards a design with a better chance of a positive result? And is a slow macro-state signal for the stock-bond correlation (for example inflation volatility) worth including, or better left as future work?
+7. What milestones or deadlines would you like from me from here, and in what form do you want the next update?
+
+*Attached with this draft: `01_design_and_methods.md`, a first draft of the methods chapter.*
 
 ## Glossary
 
