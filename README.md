@@ -1,19 +1,19 @@
 # Regime-Switching Risk Models for ETF Portfolios
 
-## Approved Thesis Title
+## Thesis Title
 
 Regime-Switching Risk Models for ETF Portfolios:
-Do Market-State Shifts Improve Tail-Risk Forecasting
-and Risk-Controlled Allocation?
+Do Market-State Shifts Improve Tail-Risk Forecasting?
 
-## Working Research Question
+The allocation clause of the originally approved title was dropped with
+the allocation extension, as the supervisor allowed. The official
+title-change process is still to be confirmed (`notes/requirements.md`).
 
-Does a real-time regime-aware model improve one-day-ahead
-tail-risk forecasts for a fixed diversified ETF portfolio relative
-to conventional non-regime benchmarks?
+## Research Question
 
-This research question is currently provisional and will be refined
-with my thesis supervisor.
+Where does regime information change one-day-ahead tail-risk forecasts
+for a fixed diversified ETF portfolio, and how large an effect could this
+data reveal?
 
 ## Current Project Stage
 
@@ -22,20 +22,20 @@ passed — **decision: PROCEED** with the full design. See
 `output/PILOT_REPORT.md` (or `output/PILOT_REPORT.pdf`) for the full
 results, scorecard, and 4-week plan for the full thesis run.
 
-**Exploration phase (Oct 2026) done, awaiting supervisor input.** Following
-Prof. Seo's instruction to explore broadly, regime definitions, ETF
-universes, bond-aware regime signals and a long-history stock/bond sample
-were screened and backtested on data through 2019-12-31 only. Headline
-(descriptive, in-sample): regime models beat a pooled normal but never beat
-GARCH-t/DCC-t, and letting correlations switch gives no detectable gain over
-regime volatilities alone (0 of 214 tests significant after Holm correction),
-even in the 1992-1999 positive stock-bond-correlation era. The sample is
-underpowered to detect an effect of the size seen. See
-`output/explore/EXPLORATION_SUMMARY.md` for findings, candidate directions
-and the open questions for the supervisor. **2020-2025 is a confirmatory
-hold-out and has not been touched.** Next stage: decide the direction with
-Prof. Seo, fix and log the specification(s), then test them once on the
-hold-out.
+**Exploration (Oct 2026) done; supervisor feedback received (Nov 2026).**
+Regime definitions, ETF universes, bond-aware signals and a long-history
+stock/bond sample were screened and backtested on data through 2019-12-31
+only (`output/explore/EXPLORATION_SUMMARY.md`). Prof. Seo approved the
+direction and the hold-out (`notes/supervisor_feedback_2026-11.md`).
+
+**Current stage: pre-freeze.** `docs/THESIS_PLAN.md` is the plan and
+`docs/EXECUTION_LOG.md` records progress. Estimated effects of regime
+correlation on GARCH margins are -0.004 to -0.006 on the ETF universes,
+below the 0.007 to 0.014 the design could detect, so this is inconclusive
+(`output/explore/ladder/ladder_dm_table.csv`). **2020-2025 is a one-shot
+confirmatory hold-out.** No model has been fitted or tuned on it. Earlier
+descriptive work displayed summary statistics for those years; the
+preregistration lists this and the other disclosures.
 
 ## Current Pilot Dataset
 
@@ -77,7 +77,7 @@ Current temporary pilot:
 - SPY, IEF, GLD
 - 2010-01-04 to 2025-12-31 (Yahoo Finance via yfinance)
 - daily adjusted-price simple and log returns
-- equal-weight exploratory portfolio (no rebalancing)
+- equal-weight exploratory portfolio (constant weights of 1/3 each, rebalanced daily)
 - 21-day trailing rolling volatility, return and squared-return ACF
 
 This is not the final empirical specification. See
@@ -127,10 +127,11 @@ Key pilot paths:
 
 ## Exploration Phase (post-pilot)
 
-Exploratory vs. confirmatory split: 2005-2019 is the development window
-(2016-2019 serves as a pseudo-holdout); 2020-2025, which contains the 2022
-stock-bond correlation reversal, is untouched until the tested
-specifications are fixed and logged. `src/explore.py` asserts no data past
+Exploratory vs. confirmatory split: data through 2019-12-31 are the
+development window, with forecasts from 2010 (1992 for the fund sample)
+and 2016-2019 as a dry-run window that is not independent of development
+choices; 2020-2025, which contains the 2022 stock-bond correlation
+reversal, is not used for fitting or tuning. `src/explore.py` asserts no data past
 2019-12-31, and every specification tried is reported in `output/explore/`,
 including the unpromising ones. See `docs/decisions_log.md` and the addendum
 in `docs/preregistration.md`.
@@ -155,20 +156,11 @@ backtests in parallel, or the worker processes thrash.
 
 `output/STUDY_GUIDE.md` / `.pdf` is a study guide to the project.
 
-## Current Open Methodological Decisions
+## Methodological Decisions
 
-The following are NOT yet final:
-
-- Final ETF universe
-- Portfolio construction method
-- Two versus three regimes
-- Regime-identifying variable
-- Markov-switching versus alternative latent-state specification
-- Expanding versus rolling estimation window
-- Initial estimation-window length
-- Benchmark model set
-- VaR/Expected Shortfall evaluation design
-- Dependence-testing method
-- Portfolio-allocation extension
-
-These decisions should not be silently fixed by code.
+Settled with the supervisor's November feedback, and frozen in
+`docs/preregistration_confirmatory.md` once tagged: universe (SPY/IEF/GLD,
+constant equal weights), two regimes, SPY-only HMM signal, rolling 1,260-day
+window, benchmark set, VaR/ES evaluation design, and the confirmatory test.
+The allocation extension is dropped. No additional macro-regime models or
+robustness checks. See `notes/decision_log.md` and `docs/decisions_log.md`.
