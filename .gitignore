@@ -10,3 +10,6 @@ __pycache__/
 .env
 output/sim_checkpoints/
 notes/literature/cache/
+
+# third-party reference thesis, kept local only
+notes/reference/
