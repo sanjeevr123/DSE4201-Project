@@ -3,8 +3,8 @@
 Needed to keep claims in the thesis at full-text level. In priority order. For each, tell me what you obtain (a PDF in `notes/literature/` is enough; it is not committed) and I will read it and update `notes/literature_matrix.csv`.
 
 **High: the thesis would otherwise have to leave a claim out**
-1. Acerbi, C. and Szekely, B. (2014). Backtesting expected shortfall. *Risk* 27(11), 76-81 (the MSCI working paper of December 2014 is the same work). Needed for the Z2 definition and its critical values. No registry record exists, and I could only see secondary descriptions.
-2. Giacomini, R. and White, H. (2006). Tests of conditional predictive ability. *Econometrica* 74(6), 1545-1578. I read the Boston College working paper version; I need the published text to confirm the statements and theorem numbers.
+1. ~~Acerbi, C. and Szekely, B. (2014). Backtesting expected shortfall. *Risk* 27(11), 76-81 (the MSCI working paper of December 2014 is the same work). Needed for the Z2 definition and its critical values. No registry record exists, and I could only see secondary descriptions.~~ **Received 2026-11-04 (MSCI white paper; read in full). Still open: the Risk 27(11) journal version, only if the examiners expect it.**
+2. ~~Giacomini, R. and White, H. (2006). Tests of conditional predictive ability. *Econometrica* 74(6), 1545-1578. I read the Boston College working paper version; I need the published text to confirm the statements and theorem numbers.~~ **Received 2026-11-04 (published text; read in full; statements confirmed).**
 3. Clark, T.E. and McCracken, M.W. (2001). *Journal of Econometrics* 105(1), 85-110, and Clark, T.E. and West, K.D. (2007). *Journal of Econometrics* 138(1), 291-311. Same reason: I read working-paper versions.
 
 **Medium: closed-access papers I can only describe from the abstract**

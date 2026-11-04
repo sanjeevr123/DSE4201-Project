@@ -35,3 +35,8 @@ Method, fixed in advance by the standing rule: a specific finding is cited only 
 ## Still open
 
 Full text of Fortin et al., Paolella et al. and Pelletier (closed access), Christoffersen (1998), Holm (1979, issue number), published versions of the three nested-model papers, Acerbi-Szekely. All are in `notes/outbox/05_library_requests.md`.
+
+
+## Update 2026-11-04: two papers supplied by the author
+- **Giacomini and White (2006), published Econometrica text:** read in full. The statements used in Chapter 5 are confirmed (forecasting method as the object; rolling and fixed windows; nested and non-nested; unconditional test is Diebold-Mariano, Theorem 4; HAC allowed in the conditional test, Comment 5).
+- **Acerbi and Szekely, MSCI Research Insight (27 Oct 2014):** read in full. Z2 is defined with ES as a positive loss, so my Z2 (returns, negative ES) has the **opposite sign**; the thesis now says so. The paper reports critical values (Table 4) and simulated p-values (eq. 12). It is a white paper, not the Risk 27(11) article, which remains unchecked; the bibliography cites the white paper.
