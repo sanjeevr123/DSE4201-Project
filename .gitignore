@@ -9,3 +9,4 @@ __pycache__/
 .coverage
 .env
 output/sim_checkpoints/
+notes/literature/cache/

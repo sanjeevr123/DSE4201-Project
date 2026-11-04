@@ -55,23 +55,11 @@ volatility effect with a weaker correlation effect. The pilot's simple
 decomposition is offered as exactly that: the transparent, weaker-but-
 interpretable version of their finding, not a replication of it.
 
-## Ardia, Bluteau, Boudt et al. (2018)
+## Ardia, Bluteau, Boudt and Catania (2018)
 
-(https://www.sciencedirect.com/science/article/pii/S0169207018300840) —
-a large-scale performance study finding regime-switching GARCH does not
-uniformly dominate single-regime GARCH across assets and periods.
+*Verified 2026-11-04 (see `notes/literature_audit.md`).* *International Journal of Forecasting* 34(4), 733-747, a large-scale performance study of single-regime and Markov-switching GARCH models for risk forecasting. The paper reports that Markov-switching GARCH models give more accurate VaR, expected-shortfall and left-tail forecasts than their single-regime counterparts, especially for stock returns, with larger improvements when the switching is added to simple specifications such as the GARCH-Normal model (full text, p. 735; abstract). It also reports that accounting for parameter uncertainty improves left-tail forecasts whether or not regime switching is included.
 
-The pilot's univariate regime-volatility comparison (B/D vs GARCHt)
-reproduces this same pattern of inconsistent dominance, and does so even
-inside the simulation where the true DGP *is* a two-regime volatility
-process: power for B beating GARCHt is only 31.5% in S0 (vol-only,
-n=200) and falls to 6.0% in S2 (strong breakdown, where GARCH-t's smooth
-adaptation apparently captures much of the same signal). On real
-2010-2015 data, B-GARCHt and D-GARCHt are both statistically
-indistinguishable (p=0.66, p=0.72). This is consistent with Ardia et
-al.'s broad conclusion: even when a plausible regime structure exists,
-regime-switching does not reliably beat a well-specified single-regime
-GARCH-t benchmark by a wide margin.
+An earlier version of this section said the paper finds that regime-switching "does not uniformly dominate" single-regime GARCH and called the pilot's result "consistent with Ardia et al.'s broad conclusion". Neither statement is supported by the abstract or by the passages of the full text I read, and both were deleted. The pilot's own result stands without attribution: B and D are not distinguishable from GARCH-t on the pilot sample (p = 0.66 and 0.72), and the simulated power of B against GARCH-t is 6.0% to 31.5%.
 
 ## Kinlaw, Kritzman, Page et al. (2021)
 
@@ -99,7 +87,7 @@ a raw correlation number would not reveal.
 | Correlation channel has real detectable power given a strong regime shift | Santos et al. (2013) | WP2 S2: 52.5% power (stylised) |
 | No significant real-data difference, 2010-2015 window | Fortin et al. (2023) | WP3: DM t=-0.469, p=0.639 |
 | Simple ablation gives a weaker, more qualified version of regime-correlation gains | Paolella et al. (2019) | Power caps at ~50%; real-data null |
-| Regime-volatility does not uniformly beat single-regime GARCH-t | Ardia et al. (2018) | Sim power 6-32%; real-data p=0.66-0.72 |
+| B and D are not distinguishable from GARCH-t on the pilot sample (own result; no attribution) | none | Sim power 6-32%; real-data p=0.66-0.72 |
 | Naive crisis-correlation framing can mislead; forecast accuracy is the right lens | Kinlaw et al. (2021); Forbes & Rigobon (2002, motivating point only) | Real-data eq-bond correlation *more* negative in stress, not less |
 
 [UNVERIFIED]: No claim above extends beyond what is directly computed in
