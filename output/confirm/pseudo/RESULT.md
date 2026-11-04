@@ -74,10 +74,10 @@ Simulated power at 1,508 days: 18.2% for the moderate and 35.2% for the strong s
   "margin_fallbacks": [],
   "dcc_refits": 16,
   "dcc_fallbacks": 0,
-  "git_head": "b7f4a2db334b3b9666c3a00152e02e917761926d",
+  "git_head": "694639cc66e1aca027e8a85ad0554f98eb03a286",
   "freeze_tag": null,
   "raw_sha256": "0ab8c7f353a7223e154cc3ee4cc3656c465dded45c19269fc24efba371150e29",
-  "runtime_s": 17.304138898849487,
+  "runtime_s": 17.55703902244568,
   "python": "3.9.6"
 }
 ```
