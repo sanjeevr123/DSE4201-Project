@@ -1,0 +1,22 @@
+{
+  "mode": "pseudo",
+  "outcome": "O2",
+  "sesoi": 0.002,
+  "sentence": "The hold-out data neither establish an improvement nor exclude one. The estimate is -0.0020 (95% CI [-0.0049, +0.0009]); an improvement of at least 0.0036 (the minimum detectable difference for the one-sided 5% test, 80% power) would have been detected with 80% probability, and smaller improvements, including none, are consistent with the data.",
+  "sesoi_comparison": {
+    "lower_bound": -0.00439288007002232,
+    "excludes_improvement_larger_than_sesoi": false
+  },
+  "n": 1006,
+  "lags": 6,
+  "mean_diff": -0.001991133259701792,
+  "se": 0.0014601172170469498,
+  "t": -1.363680419938345,
+  "p_one_sided": 0.08633408455311081,
+  "p_two_sided": 0.17266816910622174,
+  "ci_lo": -0.004852963005113814,
+  "ci_hi": 0.0008706964857102292,
+  "lower_bound_one_sided": -0.00439288007002232,
+  "mde_two_sided": 0.004090664395278735,
+  "mde_one_sided": 0.0036305814601872407
+}
