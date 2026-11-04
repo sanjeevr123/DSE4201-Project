@@ -1,0 +1,31 @@
+\begin{table}[t]
+\centering\setstretch{1}\footnotesize\setlength{\tabcolsep}{3.5pt}
+\caption{\uc{Simulated size and power of the difference tests (500 replications per scenario at 1,508 days; 200 at 2,520 days)}}\label{tab:power1508}
+\begin{tabular}{lcccrr}
+\toprule
+Scenario & One-sided rejection [95\% CI] & Two-sided & Upper tail & Mean $\bar d$ & Mean SE \\
+\midrule
+\multicolumn{6}{l}{\textbf{Primary test: RSC\_P versus CCC, 1,508 test days}}\\
+S0 (no correlation change) & 3.6\% [2.0\%, 5.2\%] & 7.4\% & 5.2\% & 0.0002 & 0.0006 \\
+S1 (moderate) & 18.2\% [14.8\%, 21.6\%] & 14.2\% & 0.4\% & $-$0.0009 & 0.0010 \\
+S2 (strong) & 35.2\% [31.0\%, 39.4\%] & 24.2\% & 0.0\% & $-$0.0034 & 0.0026 \\
+S3 (flight to quality) & 2.4\% [1.1\%, 3.7\%] & 4.8\% & 3.4\% & 0.0002 & 0.0017 \\
+\midrule
+\multicolumn{6}{l}{\textbf{Same test, 2,520 test days (earlier study)}}\\
+S0 (no correlation change) & 4.5\% [1.6\%, 7.4\%] & 7.0\% & 4.5\% & 0.0001 & 0.0005 \\
+S1 (moderate) & 27.0\% [20.8\%, 33.2\%] & 17.5\% & 0.0\% & $-$0.0009 & 0.0008 \\
+S2 (strong) & 53.5\% [46.6\%, 60.4\%] & 44.0\% & 0.0\% & $-$0.0035 & 0.0020 \\
+S3 (flight to quality) & 5.5\% [2.3\%, 8.7\%] & 3.5\% & 1.0\% & 0.0001 & 0.0013 \\
+\midrule
+\multicolumn{6}{l}{\textbf{RSC versus CCC (all pairs switch), 1,508 test days}}\\
+S0 (no correlation change) & 4.6\% [2.8\%, 6.4\%] & 7.2\% & 4.2\% & 0.0004 & 0.0018 \\
+S1 (moderate) & 17.2\% [13.9\%, 20.5\%] & 9.8\% & 0.4\% & $-$0.0022 & 0.0032 \\
+S2 (strong) & 25.4\% [21.6\%, 29.2\%] & 17.0\% & 0.0\% & $-$0.0069 & 0.0069 \\
+S3 (flight to quality) & 2.6\% [1.2\%, 4.0\%] & 6.6\% & 5.2\% & 0.0010 & 0.0036 \\
+\midrule
+\multicolumn{6}{l}{\textbf{Static D versus B, 1,508 test days (size under GARCH margins)}}\\
+S0 (no correlation change) & 9.6\% [7.0\%, 12.2\%] & 14.8\% & 8.0\% & 0.0002 & 0.0024 \\
+\bottomrule
+\end{tabular}
+\tabnote{Tail level $\alpha=5\%$, Gaussian chain, simulated data from the stylised GARCH regime-switching process (Section~\ref{sec:power-design}); S0 is the null and its row is the test size. One-sided: reject when $t<-1.6449$ (the pre-declared rule). Two-sided: $|t|>1.96$. Upper tail: $t>+1.96$, the rate at which the richer model is declared significantly worse. The interval is a 95\% binomial interval on the replications. Mean $\bar d$ and mean SE are averages over replications. Sources: \texttt{power\_1508\_summary.csv}, \texttt{power\_2520\_twosided.csv}.}
+\end{table}

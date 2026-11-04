@@ -1,0 +1,100 @@
+\section{EVALUATION AND INFERENCE}\label{ch:eval}
+
+This chapter defines how forecasts are scored and how two models are compared. It separates five things that are easily blurred: the quantity of interest (the estimand), the way it is estimated (the estimator), the hypothesis test, the rule that turns the test into a decision, and the sentence the decision licenses (the interpretation). It also states how I read simulated power, why a smallest effect of interest is declared, and which results are pre-specified and which are not.
+
+\subsection{The loss function}\label{sec:loss}
+
+A forecast of $(\VaR_t,\ES_t)$ is scored against the realised return $y_t$ with the loss
+\begin{equation}
+\FZ(y_t,\VaR_t,\ES_t;\alpha)=-\frac{\mathbb{1}\{y_t\le \VaR_t\}\,(\VaR_t-y_t)}{\alpha\,\ES_t}+\frac{\VaR_t}{\ES_t}+\log(-\ES_t)-1,
+\end{equation}
+where $\VaR_t<0$ and $\ES_t<0$ are return quantiles. Lower is better. This is the member of the Fissler--Ziegel family \citep{fissler2016} that \citet{patton2019} call FZ0; I checked its definition and the conditions it needs in the arXiv version of their paper. The family is built on the result that VaR and ES are jointly elicitable, which means that there are losses whose expected value is smallest at the true pair. That property is the reason to use such a loss: a forecaster who reports the true VaR and ES does not lose in expectation to one who reports something else.\footnote{I did not re-derive the elicitability result and rely on the cited papers for it. I use the loss as a formula; a unit test checks that on simulated normal data the true VaR and ES have lower mean loss than biased ones.} Scaling the return and both forecasts by $c>0$ adds $\log c$ to the loss, so a difference between the losses of two models does not depend on the units of the return. Section~\ref{sec:sesoi} translates a loss difference into a proportional error in the forecasts.
+
+\subsection{Estimand}\label{sec:estimand}
+
+Let model R (richer) and model B (baseline) be two forecasting procedures, each a model together with its window and refit schedule (Section~\ref{sec:walkforward}). Define the loss difference on forecast day $t$ as
+\begin{equation}
+d_t=\FZ_t^{R}-\FZ_t^{B},
+\end{equation}
+so that a negative $d_t$ favours the richer model. This sign convention, richer minus baseline with negative meaning better, is used in every table. The estimand is the long-run mean
+\begin{equation}
+\mu=\E[d_t],
+\end{equation}
+the expected loss difference between the two procedures over the evaluation sample. It describes the procedures as they are run, with estimation error in their parameters included. It is not a statement about whether the extra parameters of the richer model are zero in a population. This is the sense of equal predictive ability in \citet{giacomini2006}, who treat the forecasting method, including the finite estimation window, as the object being compared. \citet{mccracken2020} gives a counterexample to asymptotic normality for a fixed estimation window; I read the working-paper version, in which the counterexample concerns a fixed and finite window and the rolling-window case of Giacomini and White remains valid. My design uses a rolling window of 1,260 returns.
+
+\subsection{Estimator and test}\label{sec:test}
+
+The estimator of $\mu$ is the sample mean $\bar d=T^{-1}\sum_{t=1}^{T}d_t$ over the $T$ forecast days of the evaluation sample. Its variance is estimated with a Bartlett-kernel heteroskedasticity- and autocorrelation-consistent (HAC) estimator,
+\begin{equation}
+\widehat{V}=\hat\gamma_0+2\sum_{\ell=1}^{m}\Bigl(1-\frac{\ell}{m+1}\Bigr)\hat\gamma_\ell,\qquad
+\hat\gamma_\ell=\frac1T\sum_{t=\ell+1}^{T}(d_t-\bar d)(d_{t-\ell}-\bar d),\qquad
+\widehat{\mathrm{SE}}=\sqrt{\widehat V/T},
+\end{equation}
+with the lag $m=\lfloor 4\,(T/100)^{2/9}\rfloor$, the rule of thumb associated with \citet{newey1994} and not their data-driven selection. At $T=1{,}508$ this gives $m=7$. The test statistic is
+\begin{equation}
+t_{\mathrm{DM}}=\bar d/\widehat{\mathrm{SE}},
+\end{equation}
+which I compare with the standard normal distribution, without a small-sample correction (the small-sample correction of \citet{harvey1997} has factor $0.9997$ at one step and $T=1{,}508$, and I do not apply it). This is the Diebold--Mariano statistic \citep{diebold1995}. The null hypothesis and its alternative are statements about $\mu$ and are written separately from the statistic:
+\begin{equation}
+H_0:\ \mu\ge 0\qquad\text{against}\qquad H_1:\ \mu<0.
+\end{equation}
+In words, under $H_0$ the richer model does not have a lower expected loss than the baseline. The one-sided $p$-value is $\Phi(t_{\mathrm{DM}})$ and the two-sided $p$-value is $2\{1-\Phi(|t_{\mathrm{DM}}|)\}$. Every table gives the two-sided 95\% interval $\bar d\pm1.96\,\widehat{\mathrm{SE}}$ and labels each $p$-value one- or two-sided.
+
+Normal critical values need not be accurate for out-of-sample comparisons. When one model is a special case of the other and the population null is that the smaller model is correct, the limiting distributions are non-standard \citep{clark2001}, and an adjusted statistic with approximately normal critical values exists for that case \citep{clark2007}. Those results do not carry over to a rolling window with the finite-window null used here. I therefore do not rely on asymptotic theory for the size of the test, and I read it from simulation (Section~\ref{sec:power-design}).
+
+\subsection{Decision rule and interpretation}\label{sec:decision-rule}
+
+The confirmatory test is RSC\_P against CCC, at tail level $\alpha=5\%$ with a Gaussian chain (Section~\ref{sec:ladder-design}). Two levels should not be confused: $\alpha=5\%$ is the tail level of the forecast, and the test is a separate test with its own size, also 5\%. The decision rule is one-sided: reject $H_0$ if $t_{\mathrm{DM}}<-1.6449$. I chose a one-sided test because the substantive question has one direction, and because the simulated power and size reported in Chapter~\ref{ch:results} were computed for exactly this rule. A one-sided test says nothing about harm, so I declare a separate statement: the switching model is called significantly worse if $t_{\mathrm{DM}}>+1.96$, the upper tail of a two-sided 5\% test. In the simulated null the upper-tail rate of this comparison is 5.2\% at 1.96 (Table~\ref{tab:power1508}) and 8.0\% at 1.6449, which is why 1.96 is the threshold. The four possible outcomes are checked in this order and each licenses one sentence, fixed before the run:
+
+\begin{description}
+\item[O1] $t_{\mathrm{DM}}\le-1.6449$. ``The hold-out data provide statistical evidence at the one-sided 5\% level that letting the SPY--IEF correlation switch with the regime lowers expected FZ0 loss relative to constant correlation (difference $\bar d$, 95\% CI $[a,b]$). This is one test on one six-year sample containing a single stock--bond reversal; simulated power was $P\%$.''
+\item[O4] $t_{\mathrm{DM}}\ge+1.96$. ``The hold-out data provide evidence that the switching specification has higher expected FZ0 loss ($\bar d$, 95\% CI $[a,b]$).''
+\item[O3] otherwise, and $\bar d-1.6449\,\widehat{\mathrm{SE}}>-0.002$. ``The data are inconsistent, at the one-sided 5\% level, with an improvement larger than SESOI $=0.002$ FZ0 units. Improvements smaller than this, and any degradation, are not excluded.''
+\item[O2] otherwise. ``The hold-out data neither establish an improvement nor exclude one. The estimate is $\bar d$ (95\% CI $[a,b]$); an improvement of at least $M$ (the minimum detectable difference for the one-sided 5\% test, 80\% power) would have been detected with 80\% probability, and smaller improvements, including none, are consistent with the data.''
+\end{description}
+No outcome is worded as an absence of an effect. The interval and the minimum detectable difference are reported whatever the outcome.
+
+\subsection{Minimum detectable difference and power}\label{sec:mde}
+
+The minimum detectable difference (MDE) is the smallest true difference that a test detects with 80\% probability, given its standard error. For the two-sided 5\% test it is $(1.96+0.8416)\,\widehat{\mathrm{SE}}=2.8016\,\widehat{\mathrm{SE}}$, and for the one-sided 5\% test it is $(1.6449+0.8416)\,\widehat{\mathrm{SE}}=2.4865\,\widehat{\mathrm{SE}}$. Every comparison table gives the two-sided value, labelled as such, and the primary test gives both. The MDE depends on the design (the sample length and the variability of the loss difference) and not on the estimate, so it can be reported next to a result. I never report power computed at the observed estimate: that quantity is a function of the $p$-value and adds no information \citep{hoenig2001}. Power is reported only for stated effect sizes, which are the simulated scenarios below, the smallest effect of interest and the MDE.
+
+\subsection{The power study}\label{sec:power-design}
+
+I simulate a stylised process with the structure of the problem and score the same pipeline on it. A two-state Markov chain (calm persistence $0.99$, stress persistence $0.97$) drives three assets, ordered as an equity-like, a bond-like and a gold-like asset. Calm volatilities are $0.75\%$, $0.30\%$ and $0.90\%$ per day and stress volatilities are $2.0\%$, $0.5\%$ and $1.6\%$. Innovations are multivariate Student-$t$ with six degrees of freedom. Each asset's volatility also follows GARCH(1,1) dynamics (coefficients $0.08$ and $0.90$ on the regime-scaled return, fixed and not estimated). The calm correlations of (equity--bond, equity--gold, bond--gold) are $(-0.30,0.05,0.30)$. The four scenarios set the stress correlations: S0 leaves them unchanged (the null for the correlation steps); S1, a moderate breakdown, sets $(0.00,0.20,0.30)$; S2, a strong breakdown, sets $(0.40,0.40,0.30)$; S3, a flight to quality, sets $(-0.55,-0.10,0.40)$. Each replication simulates 1,260 burn-in days and 1,508 test days (the length of the hold-out), runs the whole pipeline of Chapter~\ref{ch:method} including the HMM on the first asset, and applies the test of Section~\ref{sec:test}. There are 500 replications per scenario, with seeds distinct from an earlier study that used 2,520 test days. Size is the rejection rate in S0. Power is the rejection rate in S1 to S3, with a binomial 95\% interval.
+
+This is an assumption and not a measurement. The process, its parameters and the GARCH coefficients are not estimated from data, and the shift in stress correlation is largest in the stock--bond pair by construction. The choice of RSC\_P as the confirmatory test rested on an earlier run of this simulation, in which switching only the SPY--IEF correlation had equal size and higher power than switching all correlations. That advantage reflects the design of the scenarios and is not a finding about markets. The decision was made before the hold-out was opened and it is not reopened here, whatever the 1,508-day study shows.
+
+\subsection{The smallest effect of interest}\label{sec:sesoi}
+
+A non-significant result does not show that an effect is absent, and the minimum detectable difference says only what the design could find. To give a negative result some content I declare one reference value, the smallest effect of interest (SESOI), and use it as a one-sided bound. I translate it into economic terms by asking what loss difference a given forecast error produces. Suppose a forecaster's VaR and ES both equal a factor $c$ times the true values of a known distribution. The expected loss exceeds that of the true forecast by a penalty that is approximately proportional to $(c-1)^2$. Table~\ref{tab:sesoi} gives the penalty computed by numerical integration for a unit-variance normal and a Student-$t$ distribution with six degrees of freedom (\texttt{scripts/confirm\_04\_sesoi.py}; no market data are used). For the normal at $\alpha=5\%$, understating or overstating both forecasts by 3\% costs about 0.0016 to 0.0018. I therefore declare SESOI $=0.002$, one significant figure of the average of these two penalties, as the difference corresponding to a proportional forecast-scale error of roughly 3\%. That a 3\% error in a capital-relevant quantity is economically meaningful is my assumption and not a fact. With the Student-$t$ distribution the same penalty is about 20\% lower and rounds to 0.001; I report this as a caveat and keep the declared value.
+
+\input{generated/tab_sesoi}
+
+The reference value is used in outcome O3 only. With a standard error of 0.0013 to 0.0015, the one-sided bound $\bar d-1.6449\,\widehat{\mathrm{SE}}$ lies 0.0021 to 0.0025 below the estimate, so O3 requires an estimate near zero or positive and is unlikely. I state this in advance. A two-one-sided-tests equivalence procedure with margin 0.002 is out of reach, since the half-width of its 90\% interval alone, 0.0021 to 0.0025, would exceed the margin, so the thesis does not claim equivalence under any outcome.
+
+\subsection{Calibration tests}\label{sec:calibration}
+
+Next to the loss, I report whether the forecasts have the right coverage, as description and not as part of the decision. The hit rate is the share of days on which $y_t\le\VaR_t$; it should be near $\alpha$. The \citet{kupiec1995} test compares the hit rate with $\alpha$ through a likelihood ratio with a $\chi^2_1$ reference. The \citet{christoffersen1998} independence test asks whether hits cluster in time, using a first-order Markov alternative. Their sum, $LR_{uc}+LR_{ind}$ with a $\chi^2_2$ reference, is the conditional-coverage test. For expected shortfall I use the statistic
+\begin{equation}
+Z_2=\frac{1}{T\alpha}\sum_{t=1}^{T}\frac{\mathbb{1}\{y_t\le\VaR_t\}\,y_t}{\ES_t}-1,
+\end{equation}
+which is zero in expectation if the forecast distribution is correct and positive if risk is underestimated; it is the form attributed to \citet{acerbi2014}.\unverified{} I computed its sign convention and verified it in unit tests on synthetic data, but I could not check the original source and make no claim about critical values. The $p$-value comes from simulation: for each forecast day I draw 5,000 returns from that day's forecast mixture, compute $Z_2$, and report the share of simulated values at or above the observed one.
+
+\subsection{Multiple testing and what is pre-specified}\label{sec:prereg}
+
+The confirmatory family has one member, so no adjustment is needed. Besides it I score six secondary analyses of the same forecasts, none of which adds a model, a sample or a regime signal: the six ladder steps at the hold-out; the calendar year 2022 (interval only, not a test); a Giacomini--White conditional test of the primary pair with the instruments $\{1,\text{ lagged 63-day SPY--IEF correlation}\}$; the same comparison at $\alpha=2.5\%$ and in the Student-$t$ chain; a test of superior predictive ability against GARCH-t (\citealp{hansen2005}; stationary bootstrap, 2,000 draws, seed 0; candidates B, D, RSC, RSC\_P); and the calibration tests above. They are unadjusted and labelled secondary, and none is cited as confirmation. Anything computed that is not on this list is marked POST HOC and carries no inferential weight. The model confidence set is not used on the hold-out.
+
+In the development data, the 214 headline tests of the exploration were treated as one family with the adjustment of \citet{holm1979}, and the pre-declared family of four ETF samples with another. Holm's adjustment assumes valid $p$-values, and the static test of D versus B is oversized under GARCH margins (Chapter~\ref{ch:results}), so its adjusted values are not valid. Nothing was significant after adjustment, so the reading is unchanged.
+
+The specification is registered in \texttt{docs/preregistration\_confirmatory.md} and fixed by an annotated git tag together with the scoring code and the raw-data hash. This follows the logic of pre-registration \citep{nosek2018} but it is a self-registration inside the repository, with no independent timestamp. \pending{The tag exists, the file was committed before the run, and the run followed the protocol.}
+
+\subsection{Limits of the design}\label{sec:limits-design}
+
+The following limits apply to every result in this thesis and are not repeated in each table.
+\begin{itemize}
+\item The test compares forecasting procedures, with their window, refit schedule and the hidden-state chain. It does not test population parameters.
+\item The uncertainty in the estimated regimes is not carried into the test. I did not build a bootstrap of the whole pipeline; the rejection rate in the simulated null stands in as a size check, and it is only as good as the simulated process.
+\item The simulated power does not transfer one-for-one to real data: simulated standard errors of the primary difference are smaller than the real-data ones (Chapter~\ref{ch:results}), so a shift of the simulated size would be tested with a larger standard error.
+\item The regime signal is the SPY return only. A volatility signal and a rolling 1,260-day window may be slow to reflect a change in the stock--bond correlation.
+\item There is one portfolio of three funds, one data vendor and one reversal episode in the hold-out.
+\end{itemize}

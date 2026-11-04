@@ -1,0 +1,17 @@
+\begin{table}[t]
+\centering\setstretch{1}\footnotesize\setlength{\tabcolsep}{3pt}
+\caption{\uc{Regime-specific volatility against a pooled normal (B versus A)}}\label{tab:ladder-vol}
+\begin{tabular}{lrrrcrrr}
+\toprule
+Sample & $n$ & $\bar d$ & SE & 95\% interval & $t$ & $p$ (2-sided) & MDE \\
+\midrule
+\multicolumn{8}{l}{\textbf{B versus A}}\\
+SPY/IEF/GLD & 2,516 & $-$0.0201 & 0.0242 & [$-$0.0675, 0.0274] & $-$0.83 & 0.408 & 0.0679 \\
+SPY/IEF/HYG & 1,944 & $-$0.1659 & 0.0373 & [$-$0.2390, $-$0.0929] & $-$4.45 & $<$0.001 & 0.1044 \\
+Sectors & 2,516 & $-$0.1806 & 0.0252 & [$-$0.2300, $-$0.1312] & $-$7.17 & $<$0.001 & 0.0705 \\
+Risk assets & 1,944 & $-$0.1586 & 0.0217 & [$-$0.2010, $-$0.1161] & $-$7.32 & $<$0.001 & 0.0607 \\
+Funds 1992--2019 & 7,053 & $-$0.1057 & 0.0293 & [$-$0.1630, $-$0.0483] & $-$3.61 & $<$0.001 & 0.0820 \\
+\bottomrule
+\end{tabular}
+\tabnote{Mean FZ0 difference $\bar d$ of the richer model minus the baseline over the forecast days, tail level $\alpha=5\%$, Gaussian chain, pooled mean; negative favours the richer model. SE: Bartlett-kernel HAC standard error. The interval is $\bar d\pm1.96\,\mathrm{SE}$. The $p$-value is two-sided. MDE $=2.8016\,\mathrm{SE}$ is the smallest true difference a two-sided 5\% test detects with 80\% power. Source: \texttt{output/explore/ladder/ladder\_dm\_table.csv}. Forecast days 2010--2019 (ETFs; credit and risk-asset samples start in 2012), 1992--2019 (funds).}
+\end{table}

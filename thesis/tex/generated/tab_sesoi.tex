@@ -1,0 +1,14 @@
+\begin{table}[t]
+\centering\setstretch{1}\footnotesize\setlength{\tabcolsep}{3.5pt}
+\caption{\uc{Expected FZ0 penalty of scaling both VaR and ES by a factor $c$}}\label{tab:sesoi}
+\begin{tabular}{lrrrr}
+\toprule
+True distribution & $c=0.95$ & $c=0.97$ & $c=1.03$ & $c=1.05$ \\
+\midrule
+Normal, $\alpha=5\%$ & 0.0051 & 0.0018 & 0.0016 & 0.0042 \\
+Student-$t$(6), $\alpha=5\%$ & 0.0040 & 0.0014 & 0.0013 & 0.0034 \\
+Normal, $\alpha=2.5\%$ & 0.0067 & 0.0023 & 0.0020 & 0.0055 \\
+\bottomrule
+\end{tabular}
+\tabnote{Analytic expected loss at scale factor $c$ minus the expected loss at $c=1$, for a unit-variance true distribution; no market data are used. Source: \texttt{output/confirm/sesoi.json}.}
+\end{table}

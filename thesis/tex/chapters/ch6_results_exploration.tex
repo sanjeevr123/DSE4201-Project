@@ -1,0 +1,64 @@
+\section{RESULTS: DEVELOPMENT DATA AND POWER}\label{ch:results}
+
+This chapter reports what the development data (forecast days through 2019) show about where regime information helps, and how large an effect the design could reveal. It does not report the hold-out. The development results are descriptive: I examined ten ETF universes, ten regime definitions and two tail levels, and chose specifications after seeing them (Chapter~\ref{ch:data}). The comparisons below were run through the ladder of Chapter~\ref{ch:method}, and each states what it changes (Table~\ref{tab:differs}).
+
+\subsection{How to read the tables}\label{sec:reading}
+
+Every comparison reports the mean FZ0 difference $\bar d$ of the richer model minus the baseline, so negative favours the richer model; the HAC standard error; the two-sided 95\% interval; the two-sided $p$-value; and the minimum detectable difference (MDE), the smallest true difference a two-sided 5\% test detects with 80\% probability. A result inside the MDE is inconclusive for effects below the MDE; it does not show that the effect is absent. The tail level is 5\%, the chain Gaussian and the mean pooled unless stated.
+
+\subsection{Regime-specific volatility against a pooled normal}\label{sec:vol-results}
+
+Table~\ref{tab:ladder-vol} compares model B, which gives each regime its own volatilities, with the pooled normal A. In three of the four ETF samples the improvement is large: $-0.1659$ for SPY/IEF/HYG, $-0.1806$ for the sector funds and $-0.1586$ for the risk assets, each with a two-sided $p$-value below 0.001, and $-0.1057$ in the fund sample. The exception is the main sample, SPY/IEF/GLD, where the estimate is $-0.0201$ (two-sided $p=0.408$) with an MDE of 0.0679, so its interval, from $-0.0676$ to $0.0274$, includes both a large improvement and none. Giving the volatility a regime dependence therefore lowers the loss substantially in three of four ETF samples, and this development sample cannot show it in the fourth.
+
+\input{generated/tab_ladder_vol}
+
+\subsection{A single-regime GARCH model class against static regime covariance}\label{sec:ladder-results}
+
+Table~\ref{tab:ladder-margin} and Figure~\ref{fig:forest} turn to the contrasts that replace block-constant regime volatilities by GARCH(1,1) volatilities. These contrasts compare model classes: the GARCH models have no regime dependence in volatility and also change the correlation input and the mean estimator (Table~\ref{tab:differs}). The pre-declared family is RSC versus D in the four ETF samples. The estimates are negative in all four: $-0.0259$, $-0.0406$, $-0.0396$ and $-0.0760$. After Holm's adjustment over the four, the adjusted $p$-values are 0.2341, 0.2341, 0.2247 and 0.0025. The pre-declared gate required significance after adjustment in at least two samples; it was met in one (the risk assets). The result is therefore reported as suggestive and not as established. I did not reframe the thesis around it.
+
+\input{generated/tab_ladder_margin}
+
+\begin{figure}[t]
+\centering
+\includegraphics[height=0.62\textheight,keepaspectratio]{forest_comparisons_pooled.png}
+\caption{\uc{Mean FZ0 difference, richer minus baseline, for each comparison and sample}}\label{fig:forest}
+\tabnote{Points are $\bar d$; lines are two-sided 95\% intervals; the grey band is $\pm$ the MDE; filled points have a two-sided $p<0.05$ (unadjusted). Negative favours the richer model. Tail level 5\%, Gaussian chain, pooled mean. Source: \texttt{output/explore/ladder/ladder\_dm\_table.csv}, drawn by \texttt{scripts/thesis\_fig\_forest.py}.}
+\end{figure}
+
+The size of the contrast depends on the mean treatment, though not its sign. With a zero mean in both models the RSC-versus-D estimates are $-0.0339$, $-0.0569$, $-0.0504$ and $-0.0814$, larger in absolute value than with the pooled mean; with regime-specific means they are close to the pooled ones ($-0.0263$ in the main sample). I therefore state the contrast with the mean treatment attached, and the zero-mean and regime-mean tables are in the appendix.
+
+Calibration points the same way (Table~\ref{tab:hits}). The static models overstate risk on the ETF samples: the 5\% VaR is breached on only 2.8\% to 4.2\% of days for A, B and D, while the GARCH-margin models breach it on 4.3\% to 5.5\%. In the fund sample the static models are close to nominal (B 5.4\%, D 5.3\%), so this statement is about the ETF samples.
+
+\input{generated/tab_hits}
+
+\subsection{The correlation steps}\label{sec:corr-results}
+
+Table~\ref{tab:ladder-corr} reports the steps that change only the correlation matrix. With GARCH margins fixed, letting all correlations switch (RSC versus CCC) gives estimates of $-0.0040$, $-0.0038$, $-0.0054$ and $-0.0055$ in the four ETF samples and $+0.0014$ in the funds. Their MDEs are 0.0110, 0.0073, 0.0139, 0.0120 and 0.0162, and every interval includes zero (two-sided $p$-values from 0.140 to 0.806). I do not detect a gain from switching correlations in these samples. The data are consistent with gains up to about the MDE, and the estimates are between a third and a half of it. The same comparison with a zero mean gives $-0.0087$ in the sector sample (two-sided $p=0.046$, unadjusted) and $-0.0070$ in the risk-asset sample ($p=0.080$), so the answer for these samples is not the same under every mean treatment. A smooth alternative (DCC versus RSC) has two-sided $p$-values of 0.990, 0.159, 0.888 and 0.210 in the ETF samples. In the fund sample DCC is better than RSC by $0.0209$ ($p=0.004$, unadjusted).
+
+\input{generated/tab_ladder_corr}
+
+The static step D versus B needs a caution. Under the simulated process with GARCH margins and no change in correlation (scenario S0), the one-sided test of D against B rejects in 9.6\% of replications (95\% interval 7.0\% to 12.2\%) at 1,508 test days, in 11.0\% (6.7\% to 15.3\%) at 2,520 days, and in 14.8\% and 17.0\% of replications at $|t|>1.96$ (Table~\ref{tab:power1508}). The test is oversized when volatility clusters. In the exploration grid, 37 of the 214 headline D-versus-B tests have a raw $p<0.05$ (17.3\%), 18 favouring D and 19 favouring B, and none survives a Holm adjustment (smallest adjusted $p=0.1413$). That rate matches the simulated null rate, so the raw count is not evidence of an effect, and the adjusted values are not valid for these $p$-values. The simulated process is stylised and the 214 tests are not independent, so the match is suggestive, not proof.
+
+\subsection{The primary pair on the development data}\label{sec:pair-dev}
+
+Table~\ref{tab:real-pair} gives the confirmatory comparison, RSC\_P against CCC, on the development data. Over 2010 to 2019 the estimate is $-0.0015$ (two-sided $p=0.136$, MDE 0.0028); in the early part, 2010 to 2015, it is $-0.0012$ ($p=0.371$), and in the dry-run part, 2016 to 2019, $-0.0019$ ($p=0.198$). The implied standard errors, $0.0010$, $0.0013$ and $0.0015$, are the ones relevant to the hold-out, which has 1,508 days. These estimates are small and consistent with a zero difference and with a gain of the size of the SESOI of 0.002; they do not support a claim either way, and because the pair, the model and the test were chosen with these days in view they are not validation.
+
+\input{generated/tab_real_pair}
+
+\subsection{Power at the hold-out length}\label{sec:power-results}
+
+Table~\ref{tab:power1508} shows the simulated size and power of the primary test at 1,508 test days. The size, the rejection rate in S0, is 3.6\% (95\% interval 2.0\% to 5.2\%), so there is no sign of oversizing. The power for the primary test is 18.2\% (14.8\% to 21.6\%) in the moderate scenario S1 and 35.2\% (31.0\% to 39.4\%) in the strong scenario S2, and 2.4\% in the flight-to-quality scenario S3, where correlations move the other way. The two-sided rates are 14.2\% and 24.2\% in S1 and S2. At 2,520 test days the corresponding one-sided power was 27.0\% and 53.5\%. Shortening the sample lowers power substantially. The pre-declared low-power rule, which would make the first sentence of the hold-out chapter say that the test cannot be expected to detect any simulated shift, applies if S2 power is below 30\%; at 35.2\% it does not apply. But a moderate shift would be detected about one time in five, and I report that in the abstract and the hold-out table.
+
+\input{generated/tab_power1508}
+
+Simulated power does not transfer one-for-one to the real data. The mean standard error of the primary difference in the simulation is 0.0006 in S0 and 0.0026 in S2, while the real-data standard errors above are 0.0010 to 0.0015. A true difference of the size produced in S2 (mean $-0.0034$) would be tested with the larger real-data standard error, for which the one-sided MDE is about $2.4865\times0.0014=0.0035$. The simulated numbers describe the simulated process and not markets. The choice of the primary test over the all-pairs version was made from the earlier 2,520-day run, and the test is not changed by the 1,508-day result.
+
+\subsection{Why the motivating regime is absent from the development period}\label{sec:eras}
+
+The question is motivated by the stock--bond correlation turning positive in 2022. Table~\ref{tab:eras} shows with fund proxies that the 252-day correlation was positive on 90.6\% of days in 1987--1999, on 23.7\% in 2000--2009 and on 0.0\% in 2010--2019. No ETF development sample contains the regime the thesis is about, so the development data cannot say whether a correlation-switching model detects it. Only the hold-out can.
+
+\input{generated/tab_eras}
+
+\subsection{Summary of the development evidence}\label{sec:dev-summary}
+
+Regime-dependent volatility lowers the loss in three of four ETF samples; a single-regime GARCH class does better again than static regime covariance in the same direction in all four samples but is established in one; and the correlation steps are small, with estimates inside the MDE and intervals that include zero. What these data cannot say is whether switching correlations matters when the stock--bond correlation is positive, because that state is absent. The power study says that, at the hold-out length, a moderate simulated shift in the SPY--IEF correlation would be detected about 18\% of the time and a strong one about 35\%. The thesis is therefore a decomposition that reports for each step what the design can and cannot detect, and it does not claim a better model.
