@@ -14,6 +14,7 @@ Output: output/confirm/<mode>_forecasts.pkl. Run with OMP_NUM_THREADS=1.
 """
 from __future__ import annotations
 
+import hashlib
 import pickle
 import subprocess
 import sys
@@ -35,10 +36,41 @@ TICKERS = ["SPY", "IEF", "GLD"]
 ALPHAS, WINDOW, REFIT = (0.05, 0.025), 1260, 21
 PERIODS = {"pseudo": ("2016-01-01", "2019-12-31", "2019-12-31"), "holdout": ("2020-01-01", "2025-12-31", "2025-12-31")}
 PAIR = (0, 1)
+EXPECTED_DAYS = {"pseudo": 1006, "holdout": 1508}     # forecast dates 2016-01-01..2019-12-31 / 2020-01-01..2025-12-31
+LAG_RETURNS = 64                                       # returns before the first forecast day (63-day lagged correlation)
+PRIMARY_ARMS = ("RSC_P_N", "CCC_S_N")
 
 
 def _git(*a):
     return subprocess.run(["git", *a], cwd=ROOT, capture_output=True, text=True).stdout.strip()
+
+
+def freeze_tag_commit() -> str | None:
+    """Commit of the tag spec-freeze-v1, or None when the tag does not exist (rev-parse --verify prints nothing then)."""
+    return _git("rev-parse", "--verify", "--quiet", "spec-freeze-v1^{commit}") or None
+
+
+def sha256_file(path: Path) -> str:
+    h = hashlib.sha256()
+    with open(path, "rb") as f:
+        for chunk in iter(lambda: f.read(1 << 20), b""):
+            h.update(chunk)
+    return h.hexdigest()
+
+
+def validate_output(res: dict, mode: str) -> None:
+    """Checks run before anything is written: expected number of forecast days, and finite VaR/ES with ES <= VaR < 0
+    for both primary arms at both tail levels. Raises AssertionError with the first failure."""
+    n = len(res["y"])
+    assert n == EXPECTED_DAYS[mode], f"{mode}: {n} forecast days, expected {EXPECTED_DAYS[mode]}"
+    assert len(res["dates"]) == n and len(res["returns"]) == n, "dates/returns length differ from forecast days"
+    for a in ALPHAS:
+        for arm in PRIMARY_ARMS:
+            v, e = res["L2"]["V"][a][arm], res["L2"]["E"][a][arm]
+            assert len(v) == n and len(e) == n, f"{arm} alpha {a}: wrong length"
+            assert np.all(np.isfinite(v)) and np.all(np.isfinite(e)), f"{arm} alpha {a}: non-finite VaR/ES"
+            assert np.all(v < 0), f"{arm} alpha {a}: VaR not negative"
+            assert np.all(e <= v), f"{arm} alpha {a}: ES above VaR"
 
 
 def check_freeze():
@@ -80,11 +112,17 @@ def main(mode: str):
                           mean_modes=("pooled",))
     l2 = run_rs_corr(R, w, mk(), ALPHAS, start, window=WINDOW, refit=REFIT, pair=PAIR)
     bm = run_benchmarks(R, w, ALPHAS, start, window=WINDOW, refit=REFIT, dcc=True)
+    l2_diag = {k: (v[start:] if k.startswith("mix_") else v) for k, v in l2["diag"].items()}
+    pip = subprocess.run([sys.executable, "-m", "pip", "freeze"], capture_output=True, text=True).stdout
     res = {"mode": mode, "assets": TICKERS, "dates": r.index[start:], "y": (R @ w)[start:], "returns": R[start:],
+           "prior_returns": R[start - LAG_RETURNS:start], "prior_dates": r.index[start - LAG_RETURNS:start],
            "S": {"V": cut(s["V"]), "E": cut(s["E"]), "stress": s["stress_prob"][start:], "nu": s["nu"]},
-           "L2": {"V": cut(l2["V"]), "E": cut(l2["E"]), "stress": l2["stress_prob"][start:], "nu": l2["nu"]},
-           "B": {"V": cut(bm["V"]), "E": cut(bm["E"])}, "runtime_s": time.time() - t0,
-           "git_head": _git("rev-parse", "HEAD"), "freeze_tag": _git("rev-parse", "spec-freeze-v1^{commit}") or None}
+           "L2": {"V": cut(l2["V"]), "E": cut(l2["E"]), "stress": l2["stress_prob"][start:], "nu": l2["nu"],
+                  "diag": l2_diag},
+           "B": {"V": cut(bm["V"]), "E": cut(bm["E"]), "diag": bm["diag"]}, "runtime_s": time.time() - t0,
+           "git_head": _git("rev-parse", "HEAD"), "freeze_tag": freeze_tag_commit(),
+           "raw_sha256": sha256_file(RAW), "pip_freeze": pip, "python": sys.version}
+    validate_output(res, mode)
     OUT.mkdir(parents=True, exist_ok=True)
     with open(out_path, "wb") as f:
         pickle.dump(res, f)

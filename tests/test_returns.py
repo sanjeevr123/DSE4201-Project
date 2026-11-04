@@ -126,6 +126,7 @@ MANUAL_PORTFOLIO_RETURN_CHECKS = [
 
 
 @pytest.mark.skipif(not PILOT_DATA_AVAILABLE, reason="pilot data not downloaded")
+@pytest.mark.holdout_data
 def test_simple_returns_match_manual_calculation_on_pilot_data():
     prices = pd.read_csv(
         PROCESSED_DIR / "pilot_adjusted_prices.csv", index_col="Date", parse_dates=True
@@ -139,6 +140,7 @@ def test_simple_returns_match_manual_calculation_on_pilot_data():
 
 
 @pytest.mark.skipif(not PILOT_DATA_AVAILABLE, reason="pilot data not downloaded")
+@pytest.mark.holdout_data
 def test_log_return_matches_manual_calculation_on_pilot_data():
     prices = pd.read_csv(
         PROCESSED_DIR / "pilot_adjusted_prices.csv", index_col="Date", parse_dates=True
@@ -151,6 +153,7 @@ def test_log_return_matches_manual_calculation_on_pilot_data():
 
 
 @pytest.mark.skipif(not PILOT_DATA_AVAILABLE, reason="pilot data not downloaded")
+@pytest.mark.holdout_data
 def test_equal_weight_portfolio_matches_manual_calculation_on_pilot_data():
     simple_returns = pd.read_csv(
         PROCESSED_DIR / "pilot_simple_returns.csv", index_col="Date", parse_dates=True
