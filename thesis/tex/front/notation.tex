@@ -1,0 +1,36 @@
+\section*{LIST OF ABBREVIATIONS AND NOTATION}
+\addcontentsline{toc}{section}{LIST OF ABBREVIATIONS AND NOTATION}
+\begin{singlespace}
+\renewcommand{\arraystretch}{1.3}
+\noindent\begin{tabular}{@{}p{0.2\textwidth}p{0.75\textwidth}@{}}
+\multicolumn{2}{@{}l}{\textbf{Abbreviations}}\\
+CCC & constant conditional correlation model\\
+DCC & dynamic conditional correlation model\\
+DM & Diebold-Mariano test\\
+ES & expected shortfall\\
+ETF & exchange-traded fund\\
+FZ0 & the Fissler-Ziegel-type joint loss for VaR and ES used here (Chapter~\ref{ch:eval})\\
+GARCH & generalised autoregressive conditional heteroskedasticity\\
+GW & Giacomini-White test of conditional predictive ability\\
+HAC & heteroskedasticity- and autocorrelation-consistent (variance estimator)\\
+HMM & hidden Markov model\\
+MDE & minimum detectable difference\\
+PSD & positive semi-definite\\
+QML & quasi-maximum likelihood\\
+RSC & regime-switching correlation model\\
+SESOI & smallest effect size of interest\\
+VaR & value-at-risk\\[6pt]
+\multicolumn{2}{@{}l}{\textbf{Notation} (full definitions at first use in Chapters~\ref{ch:method} and~\ref{ch:eval})}\\
+$t$ & forecast day; the forecast for day $t$ uses returns through day $t-1$\\
+$y_t$ & portfolio simple return on day $t$\\
+$r_t$ & vector of the three asset returns (SPY, IEF, GLD)\\
+$w$ & portfolio weights, $(1/3,1/3,1/3)$, constant\\
+$\alpha$ & tail level of the VaR and ES forecasts (5\%, secondary 2.5\%)\\
+$\VaR_t,\ \ES_t$ & forecast value-at-risk and expected shortfall of $y_t$ (negative numbers)\\
+$S_t$ & hidden regime, $1$ calm, $2$ stress\\
+$d_t$ & loss difference, richer minus baseline: $d_t=L_t^{\text{rich}}-L_t^{\text{base}}$; negative favours the richer model\\
+$\bar d,\ \widehat{\mathrm{SE}}$ & mean loss difference and its HAC standard error\\
+$T$ & number of forecast days in an evaluation sample\\
+\end{tabular}
+\end{singlespace}
+\clearpage
