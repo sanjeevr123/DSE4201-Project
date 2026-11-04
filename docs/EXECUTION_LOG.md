@@ -102,3 +102,7 @@ The dry-run comparison is a pipeline check and enters no argument for the hypoth
 ## Library items received (2026-11-04)
 - User supplied Giacomini-White (published Econometrica text) and Acerbi-Szekely (MSCI Research Insight, 27 Oct 2014); both read in full; `notes/literature_matrix.csv`, `literature_audit.md` and `outbox/05_library_requests.md` updated.
 - **Correction:** my Z2 has the opposite sign to Acerbi-Szekely's (they use positive ES); Chapter 5 now states this and cites the white paper (the Risk 27(11) article stays unchecked). The Chapter 5 `[UNVERIFIED]` on Z2 is removed; UNVERIFIED marks left: 2 (Chapter 2 pointers). The GW conditional test in `src/explore_inference.py` uses a HAC variance, which GW Comment 5 permits; stated in Chapter 5.
+
+## Second batch of papers (2026-11-04)
+- Read in full: Clark-West (published), Clark-McCracken (June 2000 working paper), Paolella-Polak-Walker (SFI 19-27 working paper). Matrix, audit and library requests updated. Chapter 5: Clark-West/Clark-McCracken statement narrowed to nested linear models with squared error, near-normality from tabulated quantiles, not proved. Chapter 2 skeleton: Paolella et al. described from the working paper only; the earlier plan claim that they "do not separately test volatility vs correlation" is replaced by what the paper shows.
+- Still open library items: published texts of Clark-McCracken and Paolella et al., Pelletier (2006), Fortin et al., Christoffersen (1998), Holm (1979).
