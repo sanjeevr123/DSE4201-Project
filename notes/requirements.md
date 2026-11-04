@@ -7,16 +7,16 @@ Status: no official NUS or course document has been consulted. The items below a
 | Item | Value |
 |---|---|
 | Paper | A4 (210 x 297 mm) |
-| Margins | 1 in (2.54 cm) on all sides |
+| Margins | 2.5 cm on all sides |
 | Font | Latin Modern Roman (the LaTeX default family), 11 pt |
-| Line spacing | Double in the body; single in tables, table notes (8 pt) and the reference list |
+| Line spacing | Double (baseline stretch 2) in the body; single in tables, table notes (8 pt) and the reference list |
 | Paragraphs | First-line indent, no extra space between paragraphs |
-| Headings | Chapter titles centred, bold, capitals, numbered (1 INTRODUCTION); sections centred, bold (3.1); sub-sections left-aligned, bold (3.2.1) |
-| Page numbers | Roman numerals for the front matter, arabic numerals for the body from the Introduction |
+| Headings | Chapter titles centred, bold, capitals, numbered (1 INTRODUCTION), run on without a page break after the first; sections centred, bold (3.1); sub-sections left-aligned, bold (3.2.1); all at body size |
+| Page numbers | Lower-case roman numerals, centred at the foot, for the front matter; arabic numerals from the Introduction, at the top right, except on pages where a chapter starts, where they are centred at the foot |
 | Front matter | Title page, abstract with keywords, acknowledgements, contents, list of figures, list of tables, list of abbreviations and notation |
 | Tables and figures | Numbered by chapter; table captions above and figure captions below, in capitals; a "Note:" line under each table |
 | Equations | Numbered continuously at the right margin |
-| Citations | Author-date in the text; alphabetical reference list; BibTeX |
+| Citations | Author-date in the text (natbib, AER bibliography style); alphabetical reference list, single spaced with a hanging indent; BibTeX |
 | Planned length | About 12,000 words as a planning figure, before tables, equations, front matter, references and appendices; the page count will be reported |
 
 ## Not known
