@@ -106,3 +106,10 @@ The dry-run comparison is a pipeline check and enters no argument for the hypoth
 ## Second batch of papers (2026-11-04)
 - Read in full: Clark-West (published), Clark-McCracken (June 2000 working paper), Paolella-Polak-Walker (SFI 19-27 working paper). Matrix, audit and library requests updated. Chapter 5: Clark-West/Clark-McCracken statement narrowed to nested linear models with squared error, near-normality from tabulated quantiles, not proved. Chapter 2 skeleton: Paolella et al. described from the working paper only; the earlier plan claim that they "do not separately test volatility vs correlation" is replaced by what the paper shows.
 - Still open library items: published texts of Clark-McCracken and Paolella et al., Pelletier (2006), Fortin et al., Christoffersen (1998), Holm (1979).
+
+## Phase 5 steps 1-4 (2026-11-04). Status: DONE up to the gate. Hold-out NOT run.
+- `docs/preregistration_confirmatory.md` written (frozen-file hashes inside), decisions-log entry added, `notes/outbox/03_frozen_spec_note.md` written. Commit 694639c.
+- **Dry run re-run from the clean committed code (D12):** `confirm_00_run.py pseudo` 18 s, single process; `confirm_01_score.py pseudo`: outcome O2, mean -0.00199, SE 0.00146, t -1.364, identical to the earlier dry run. Pickle `git_head` 694639c. Committed with the scorer outputs.
+- **Tag** `spec-freeze-v1` (annotated) on the commit after the dry-run outputs (commit b2cbbaac). `check_freeze()` passes without running the hold-out; `output/confirm/holdout_forecasts.pkl` does not exist.
+- **GATE.** `HOLD-OUT GO-AHEAD: NOT YET GIVEN`. Waiting for the user to send notes 01 and 03, let the 3-working-day window pass and reply "go". Any change after the tag means a log entry and tag `spec-freeze-v1.1`.
+- Remaining before the run: the pre-run checklist (plan 5.5) at "go". Phase 4 gate item still open: tag `prewrite-v1` (chapters 3-6 are committed; ask before tagging because chapter placeholders and `\pending` marks remain).
