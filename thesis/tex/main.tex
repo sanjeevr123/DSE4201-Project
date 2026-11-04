@@ -1,0 +1,43 @@
+\input{preamble}
+\begin{document}
+
+% ---- front matter: title page (no number), then roman numerals from the abstract -------------
+\input{front/titlepage}
+\pagenumbering{roman}
+\pagestyle{plain}
+\input{front/abstract}
+\input{front/acknowledgements}
+\tableofcontents
+\clearpage
+\listoffigures
+\listoftables
+\clearpage
+\input{front/notation}
+
+% ---- body: arabic numerals from the Introduction ---------------------------------------------
+\clearpage
+\pagenumbering{arabic}
+\pagestyle{body}
+\input{chapters/ch1_introduction}
+\input{chapters/ch2_literature}
+\input{chapters/ch3_data}
+\input{chapters/ch4_methodology}
+\input{chapters/ch5_evaluation}
+\input{chapters/ch6_results_exploration}
+\input{chapters/ch7_results_holdout}
+\input{chapters/ch8_discussion}
+\input{chapters/ch9_conclusion}
+
+% ---- references and appendices ---------------------------------------------------------------
+\clearpage
+\begin{singlespace}
+\addcontentsline{toc}{section}{REFERENCES}
+\bibliography{references}
+\end{singlespace}
+
+\clearpage
+\appendix
+\renewcommand{\thesection}{\Alph{section}}
+\input{chapters/appendix}
+
+\end{document}

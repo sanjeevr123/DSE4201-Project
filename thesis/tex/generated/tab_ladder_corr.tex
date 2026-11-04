@@ -1,0 +1,31 @@
+\begin{table}[t]
+\centering\setstretch{1}\footnotesize\setlength{\tabcolsep}{3pt}
+\caption{\uc{Correlation steps}}\label{tab:ladder-corr}
+\begin{tabular}{lrrrcrrr}
+\toprule
+Sample & $n$ & $\bar d$ & SE & 95\% interval & $t$ & $p$ (2-sided) & MDE \\
+\midrule
+\multicolumn{8}{l}{\textbf{D versus B (nested in the correlation matrix; size unreliable under GARCH margins)}}\\
+SPY/IEF/GLD & 2,516 & $-$0.0028 & 0.0037 & [$-$0.0101, 0.0045] & $-$0.75 & 0.452 & 0.0104 \\
+SPY/IEF/HYG & 1,944 & $-$0.0035 & 0.0028 & [$-$0.0089, 0.0019] & $-$1.26 & 0.207 & 0.0078 \\
+Sectors & 2,516 & $-$0.0124 & 0.0064 & [$-$0.0249, 0.0002] & $-$1.93 & 0.053 & 0.0179 \\
+Risk assets & 1,944 & $-$0.0097 & 0.0043 & [$-$0.0182, $-$0.0013] & $-$2.27 & 0.023 & 0.0120 \\
+Funds 1992--2019 & 7,053 & 0.0005 & 0.0066 & [$-$0.0125, 0.0135] & 0.08 & 0.939 & 0.0185 \\
+\midrule
+\multicolumn{8}{l}{\textbf{RSC versus CCC (nested in the correlation matrix)}}\\
+SPY/IEF/GLD & 2,516 & $-$0.0040 & 0.0039 & [$-$0.0117, 0.0037] & $-$1.02 & 0.305 & 0.0110 \\
+SPY/IEF/HYG & 1,944 & $-$0.0038 & 0.0026 & [$-$0.0089, 0.0013] & $-$1.48 & 0.140 & 0.0073 \\
+Sectors & 2,516 & $-$0.0054 & 0.0050 & [$-$0.0151, 0.0044] & $-$1.08 & 0.278 & 0.0139 \\
+Risk assets & 1,944 & $-$0.0055 & 0.0043 & [$-$0.0139, 0.0029] & $-$1.29 & 0.198 & 0.0120 \\
+Funds 1992--2019 & 7,053 & 0.0014 & 0.0058 & [$-$0.0099, 0.0128] & 0.25 & 0.806 & 0.0162 \\
+\midrule
+\multicolumn{8}{l}{\textbf{DCC versus RSC (non-nested)}}\\
+SPY/IEF/GLD & 2,516 & $-$0.0001 & 0.0106 & [$-$0.0209, 0.0207] & $-$0.01 & 0.990 & 0.0297 \\
+SPY/IEF/HYG & 1,944 & $-$0.0115 & 0.0082 & [$-$0.0276, 0.0045] & $-$1.41 & 0.159 & 0.0229 \\
+Sectors & 2,516 & 0.0011 & 0.0081 & [$-$0.0147, 0.0169] & 0.14 & 0.888 & 0.0226 \\
+Risk assets & 1,944 & 0.0079 & 0.0063 & [$-$0.0045, 0.0203] & 1.25 & 0.210 & 0.0177 \\
+Funds 1992--2019 & 7,053 & $-$0.0209 & 0.0072 & [$-$0.0351, $-$0.0068] & $-$2.90 & 0.004 & 0.0202 \\
+\bottomrule
+\end{tabular}
+\tabnote{Mean FZ0 difference $\bar d$ of the richer model minus the baseline over the forecast days, tail level $\alpha=5\%$, Gaussian chain, pooled mean; negative favours the richer model. SE: Bartlett-kernel HAC standard error. The interval is $\bar d\pm1.96\,\mathrm{SE}$. The $p$-value is two-sided. MDE $=2.8016\,\mathrm{SE}$ is the smallest true difference a two-sided 5\% test detects with 80\% power. Source: \texttt{output/explore/ladder/ladder\_dm\_table.csv}. Forecast days 2010--2019 (ETFs; credit and risk-asset samples start in 2012), 1992--2019 (funds).}
+\end{table}

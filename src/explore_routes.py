@@ -42,6 +42,11 @@ def nearest_corr(R: np.ndarray, eps: float = EPS_EIG) -> np.ndarray:
     return R2
 
 
+def needs_repair(R: np.ndarray, eps: float = EPS_EIG) -> bool:
+    """True when nearest_corr would change R, i.e. its smallest eigenvalue is below eps (same test as nearest_corr)."""
+    return bool(np.linalg.eigvalsh((R + R.T) / 2).min() < eps)
+
+
 def weighted_kendall_corr(X: np.ndarray, w: np.ndarray) -> np.ndarray:
     """Weighted Kendall's-tau correlation matrix, sin(pi*tau/2), PSD-repaired.
 
@@ -62,11 +67,15 @@ def weighted_kendall_corr(X: np.ndarray, w: np.ndarray) -> np.ndarray:
     return nearest_corr(R)
 
 
-def pair_variant(R_pool: np.ndarray, R_regime: np.ndarray, pair: tuple[int, int]) -> np.ndarray:
-    """Pooled correlation matrix with only the (i, j) entry taken from the regime-specific matrix."""
+def pair_variant(R_pool: np.ndarray, R_regime: np.ndarray, pair: tuple[int, int],
+                 repairs: list | None = None) -> np.ndarray:
+    """Pooled correlation matrix with only the (i, j) entry taken from the regime-specific matrix.
+    If a list is passed, one bool is appended: whether the PSD repair in nearest_corr fired for this matrix."""
     i, j = pair
     R = R_pool.copy()
     R[i, j] = R[j, i] = R_regime[i, j]
+    if repairs is not None:
+        repairs.append(needs_repair(R))
     return nearest_corr(R)
 
 
@@ -145,9 +154,19 @@ RS_MODELS = ("CCC_S", "CCC_M", "RSC_S", "RSC_M", "RSC_P")
 
 
 def run_rs_corr(R: np.ndarray, w: np.ndarray, provider, alphas, start: int, window: int = 1260,
-                refit: int = 21, margin_refit: int = 63, pair: tuple[int, int] = (0, 1)) -> dict:
+                refit: int = 21, margin_refit: int = 63, pair: tuple[int, int] = (0, 1),
+                zero_mean: bool = False) -> dict:
     """Layer 2 walk-forward. Models (each with _N and _t): CCC_S / CCC_M (pooled sample / Kendall
-    correlation of GARCH residuals), RSC_S / RSC_M (regime-specific), RSC_P (only `pair` switches)."""
+    correlation of GARCH residuals), RSC_S / RSC_M (regime-specific), RSC_P (only `pair` switches).
+    zero_mean=True sets the forecast location to zero (control for the mean treatment; the GARCH
+    recursions still use the fitted constant mean, as before).
+
+    Besides the forecasts the result carries "diag", which records without changing any forecast: per refit
+    t0, the PSD repair flags of the RSC_P component matrices ("psd_repairs", one bool per state), the margin
+    parameters ("margin_params": mu, omega, alpha, beta) and the pooled, regime-specific and RSC_P
+    correlations of `pair` ("corr_pair"); the refit dates where a margin fit failed and the previous
+    parameters were kept ("margin_fallbacks"); and, per forecast day, the mixture of the two primary arms
+    RSC_P_N and CCC_S_N ("mix_w", "mix_sd_rscp", "mix_sd_ccc", "mix_mu"; sd and mu in return units)."""
     T, N = R.shape
     rp = R @ w
     names = [f"{m}_{d}" for m in RS_MODELS for d in ("N", "t")]
@@ -155,6 +174,8 @@ def run_rs_corr(R: np.ndarray, w: np.ndarray, provider, alphas, start: int, wind
     E = {a: {m: np.full(T, np.nan) for m in names} for a in alphas}
     stress = np.full(T, np.nan)
     nus = {}
+    diag = {"psd_repairs": {}, "margin_params": {}, "margin_fallbacks": [], "corr_pair": {},
+            "mix_w": None, "mix_sd_rscp": None, "mix_sd_ccc": np.full(T, np.nan), "mix_mu": np.full(T, np.nan)}
     params = None
     for t0 in range(start, T, refit):
         t1 = min(t0 + refit, T)
@@ -165,6 +186,8 @@ def run_rs_corr(R: np.ndarray, w: np.ndarray, provider, alphas, start: int, wind
             except Exception:
                 if params is None:
                     raise
+                diag["margin_fallbacks"].append(t0)
+        diag["margin_params"][t0] = tuple(np.array(x, float) for x in params)
         eps, sig2 = garch_filter(R[win], params)
         z = eps / np.sqrt(sig2[:-1])
         s2 = sig2[-1].copy()
@@ -174,9 +197,15 @@ def run_rs_corr(R: np.ndarray, w: np.ndarray, provider, alphas, start: int, wind
         Rs_pool, Rm_pool = weighted_corr(z, ones), weighted_kendall_corr(z, ones)
         Rs_k = [weighted_corr(z, gamma[:, k] + 1e-12) for k in range(K)]
         Rm_k = [weighted_kendall_corr(z, gamma[:, k] + 1e-12) for k in range(K)]
-        Rp_k = [pair_variant(Rs_pool, Rs_k[k], pair) for k in range(K)]
+        rep = []
+        Rp_k = [pair_variant(Rs_pool, Rs_k[k], pair, repairs=rep) for k in range(K)]
+        diag["psd_repairs"][t0] = rep
+        diag["corr_pair"][t0] = {"pooled": float(Rs_pool[pair]), "regime": [float(Rk[pair]) for Rk in Rs_k],
+                                 "rscp": [float(Rk[pair]) for Rk in Rp_k]}
+        if diag["mix_w"] is None:
+            diag["mix_w"], diag["mix_sd_rscp"] = np.full((T, K), np.nan), np.full((T, K), np.nan)
         sets = {"CCC_S": [Rs_pool], "CCC_M": [Rm_pool], "RSC_S": Rs_k, "RSC_M": Rm_k, "RSC_P": Rp_k}
-        mu_p = float(w @ params[0]) / 100
+        mu_p = 0.0 if zero_mean else float(w @ params[0]) / 100
         A_in = (np.sqrt(sig2[:-1]) / 100) * w
         sd_in = np.sqrt(np.einsum("ti,ij,tj->t", A_in, Rs_pool, A_in))
         nu = fit_t_df((rp[win] - mu_p) / sd_in)
@@ -189,9 +218,13 @@ def run_rs_corr(R: np.ndarray, w: np.ndarray, provider, alphas, start: int, wind
                 sd = np.array([np.sqrt(A @ Rk @ A) for Rk in Rlist])
                 pm = np.array([1.0]) if len(Rlist) == 1 else p
                 mu_arr = np.full(len(sd), mu_p)
+                if m == "RSC_P":
+                    diag["mix_w"][t], diag["mix_sd_rscp"][t] = pm, sd
+                elif m == "CCC_S":
+                    diag["mix_sd_ccc"][t], diag["mix_mu"][t] = sd[0], mu_p
                 for a in alphas:
                     V[a][f"{m}_N"][t], E[a][f"{m}_N"][t] = mix_var_es(pm, mu_arr, sd, a)
                     V[a][f"{m}_t"][t], E[a][f"{m}_t"][t] = mix_var_es_t(pm, mu_arr, sd, nu, a)
             e_t = 100 * R[t] - params[0]
             s2 = params[1] + params[2] * e_t ** 2 + params[3] * s2
-    return {"V": V, "E": E, "stress_prob": stress, "nu": nus}
+    return {"V": V, "E": E, "stress_prob": stress, "nu": nus, "diag": diag}

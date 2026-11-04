@@ -261,7 +261,8 @@ def fit_dcc(Rw: np.ndarray, w: np.ndarray, prev_ab=None) -> dict:
     res = optimize.minimize(_dcc_negll, x0, args=(z, Qbar), method="Nelder-Mead",
                             options={"xatol": 1e-4, "fatol": 1e-4, "maxiter": 120})
     a, b = res.x
-    if not (a >= 0 and b >= 0 and a + b < 0.9995):
+    fallback = not (a >= 0 and b >= 0 and a + b < 0.9995)
+    if fallback:
         a, b = 0.0, 0.0
     Rs, Q_next = _dcc_filter(z, a, b, Qbar)
     sig2_next = omega + alpha * eps[-1] ** 2 + beta * sig[-1] ** 2
@@ -272,7 +273,7 @@ def fit_dcc(Rw: np.ndarray, w: np.ndarray, prev_ab=None) -> dict:
     u = (Rw @ w - mu @ w / 100) / sd_p
     nu = fit_t_df(u)
     return dict(mu=mu, omega=omega, alpha=alpha, beta=beta, a=a, b=b, Qbar=Qbar,
-                Q=Q_next, sig2=sig2_next, nu=nu)
+                Q=Q_next, sig2=sig2_next, nu=nu, fallback=fallback)
 
 
 def fit_t_df(u: np.ndarray) -> float:
@@ -300,6 +301,7 @@ def run_benchmarks(R: np.ndarray, w: np.ndarray, alphas, start: int, window: int
         ew = lam * ew + (1 - lam) * rp[t] ** 2
 
     g, gvar, d, prev_ab = None, None, None, None
+    diag = {"dcc_refits": 0, "dcc_fallbacks": 0}
     for t0 in range(start, T, refit):
         t1 = min(t0 + refit, T)
         if (t0 - start) % garch_refit == 0:
@@ -308,6 +310,8 @@ def run_benchmarks(R: np.ndarray, w: np.ndarray, alphas, start: int, window: int
         if dcc and (t0 - start) % dcc_refit == 0:
             d = fit_dcc(R[t0 - window:t0], w, prev_ab)
             prev_ab = (d["a"], d["b"])
+            diag["dcc_refits"] += 1
+            diag["dcc_fallbacks"] += int(d["fallback"])
             sig2, Q = d["sig2"].copy(), d["Q"].copy()
         for t in range(t0, t1):
             for a in alphas:
@@ -339,4 +343,4 @@ def run_benchmarks(R: np.ndarray, w: np.ndarray, alphas, start: int, window: int
             ew = lam * ew + (1 - lam) * rp[t] ** 2
             eps_p = 100 * rp[t] - g["mu"] * 100
             gvar = g["omega"] + g["alpha"] * eps_p ** 2 + g["beta"] * gvar
-    return {"V": V, "E": E}
+    return {"V": V, "E": E, "diag": diag}

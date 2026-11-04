@@ -1,0 +1,24 @@
+\section{LITERATURE REVIEW}\label{ch:lit}
+
+\todo{Skeleton. The chapter is an argument in six steps (plan 6.3). Only statements read at abstract or full-text level in \texttt{notes/literature\_matrix.csv} are written out; every other finding stays marked and is added after reading. This skeleton must not be taken as the finished review.}
+
+\subsection{Regime-switching volatility and risk forecasting}
+Markov switching goes back to \citet{hamilton1989}, and regime shifts matter for asset allocation \citep{ang2002}. For risk forecasts, \citet{ardia2018} report that Markov-switching GARCH models give more accurate VaR, ES and left-tail forecasts than single-regime counterparts, especially for stock returns, and that the improvement is larger when switching is added to simple specifications such as a normal GARCH. \todo{what they use as benchmarks and how large the gains are; read the results sections beyond p.~735.}
+
+\subsection{Gains relative to the strength of the baseline}
+\todo{Argue that a single-regime GARCH is a strong benchmark and that the gain from regimes depends on the benchmark. Source after the full-text read; no claim is made here.}
+
+\subsection{Correlation modelling and multivariate against univariate forecasts}
+Constant \citep{bollerslev1990}, dynamic \citep{engle2002} and regime-switching correlation \citep{pelletier2006,paolella2019} are the main ways to let dependence move. The closest design to this thesis that I have read is the working-paper version of \citet{paolella2019}: GARCH(1,1) margins that do not depend on the regime, regime-specific correlation matrices, and a forecast that mixes the regime densities with predicted regime probabilities. In 29 Dow Jones stocks they report better density forecasts from regime-switching correlation than from constant correlation, but for value-at-risk they report that accuracy is largely determined by the heavy tails of the return distribution and not by the correlation dynamics, and that regime switching does not generally improve the backtest outcome (Christoffersen tests at 95\% to 99.9\%) while giving lower VaR forecasts in crises. They score with log scores and coverage tests and not with a joint VaR and ES loss, and they use equities only. I have not read the published version. \citet{santos2013} report that multivariate models outperformed univariate ones for portfolio VaR out of sample, with DCC and Student-$t$ errors the most appropriate for their real portfolios. \citet{fortin2023} study univariate against multivariate expected shortfall for stock-market factors. \todo{state the Fortin et al.\ finding from the abstract and read both evaluation designs; the content of Pelletier (2006) beyond the abstract, and of the published Paolella et al., remains \unverified.}
+
+\subsection{The sign and drivers of the stock--bond correlation}
+\todo{Why the correlation channel is motivated and why a fast volatility regime may be the wrong tool for a slow macro state: \citet{baele2010}, \citet{campbell2020}; \citet{forbes2002} on correlation and volatility. Read before writing; the claim that the stock--bond correlation is a slow macro state is \unverified\ until then.}
+
+\subsection{Forecast evaluation and tests of predictive ability}
+Joint elicitability of VaR and ES \citep{fissler2016} underlies the loss of \citet{patton2019}. Coverage is tested by \citet{kupiec1995} and \citet{christoffersen1998}. Equal predictive ability is tested by \citet{diebold1995}; the finite-sample, conditional and nested-model literatures are \citet{giacomini2006}, \citet{clark2001}, \citet{clark2007}, \citet{west1996} and \citet{mccracken2020}; superior predictive ability is \citet{hansen2005}. \todo{one paragraph on what each establishes for rolling windows, taken from the full texts already read.}
+
+\subsection{Negative results, power and pre-registration}
+\citet{hoenig2001} on observed power, \citet{lakens2017} on equivalence tests, \citet{nosek2018} on pre-registration. \todo{add \citet{abadie2020}, \citet{altman1995} and \citet{ioannidis2017} after reading.}
+
+\subsection{What this thesis adds}
+\todo{Contribution paragraph, written with ``I did not find a study that separates the volatility and the correlation treatment under one regime signal and reports minimum detectable differences'', never ``no study has''. Novelty is not established.}

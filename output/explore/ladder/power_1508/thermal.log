@@ -1,0 +1,38 @@
+2026-11-03 21:16:56 state=0 speed_limit=100 warning=0 gpu=34
+2026-11-03 21:20:51 check state=0 speed_limit=100 warning=0 gpu=30
+2026-11-03 21:28:51 check state=1 speed_limit=100 warning=0 gpu=1
+2026-11-03 21:31:58 paused by user request (felt hot)
+2026-11-03 21:32:51 check state=0 speed_limit=100 warning=0 gpu=32
+2026-11-03 21:35:52 check state=0 speed_limit=100 warning=0 gpu=0
+2026-11-03 21:42:04 resumed after user-requested 10 min rest, state=0 limit=100
+2026-11-03 21:56:58 job stopped at user request to restart with 4 workers
+2026-11-03 21:57:06 restart: 4 workers,      275 reps already saved
+2026-11-03 21:59:20 check state=0 speed_limit=100 warning=0 gpu=37
+2026-11-03 22:14:21 check state=0 speed_limit=100 warning=0 gpu=30
+2026-11-03 22:28:21 check state=1 speed_limit=100 warning=0 gpu=28
+2026-11-03 22:29:21 check state=1 speed_limit=100 warning=0 gpu=23
+2026-11-03 22:38:20 PAUSED at user request until told to continue; watcher killed (SIGKILL, so it cannot auto-resume);      500+     209 reps saved
+2026-11-03 22:38:26 watcher processes killed; job stays stopped
+2026-11-03 23:05:55 RESUMED at user request
+2026-11-03 23:07:59 check state=0 speed_limit=100 warning=0 gpu=38
+2026-11-03 23:17:00 check state=1 speed_limit=100 warning=0 gpu=34
+2026-11-03 23:23:00 check state=1 speed_limit=100 warning=0 gpu=47
+2026-11-03 23:30:43 PAUSED at user request until told to continue; watcher killed;      966 reps saved
+2026-11-03 23:49:41 RESUMED at user request
+2026-11-04 00:02:01 check state=0 speed_limit=100 warning=0 gpu=42
+2026-11-04 00:16:14 PAUSED at user request until told to continue; watcher killed;     1248 reps saved
+2026-11-04 00:36:42 RESUMED at user request, to be paused at 1500 reps
+2026-11-04 00:42:52 check state=0 speed_limit=100 warning=0 gpu=37
+2026-11-04 00:57:53 check state=0 speed_limit=100 warning=0 gpu=48
+2026-11-04 01:00:46 PAUSED at the 1500-rep target; watcher killed;     1500 reps saved
+2026-11-04 01:23:53 RESUMED at user request (S3 remaining)
+2026-11-04 01:26:10 check state=0 speed_limit=100 warning=0 gpu=47
+2026-11-04 01:36:10 check state=1 speed_limit=100 warning=0 gpu=24
+2026-11-04 01:39:24 PAUSED at user request until told to continue; watcher killed;     1660 reps saved
+2026-11-04 10:32:07 RESUMED at user request (S3 remaining)
+2026-11-04 10:32:10 check state=0 speed_limit=100 warning=0 gpu=46
+2026-11-04 10:47:11 check state=0 speed_limit=100 warning=0 gpu=33
+2026-11-04 10:53:29 PAUSED at the 1800-rep mark for the planned 5 min break; watcher killed;     1898 reps saved
+2026-11-04 10:58:29 RESUMED after planned break,     1898 reps saved; running to the end
+2026-11-04 10:58:29 check state=0 speed_limit=100 warning=0 gpu=27
+2026-11-04 11:08:30 job ended; watcher exiting state=0 speed_limit=100 warning=0 gpu=0

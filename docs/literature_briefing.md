@@ -1,3 +1,9 @@
+> **Verification notes, 2026-11-04.** This briefing was written from search summaries. It is not a source. Status of its specific claims, from `notes/literature_audit.md`:
+> - **Removed:** Itou & Yoshiba (2025): no registry record or search hit; do not cite.
+> - **Unsupported by the abstract, do not use:** Santos et al. "constant-correlation multivariate usually worse than univariate" (the abstract says multivariate models outperform univariate ones and that DCC with Student-t errors looks best); Paolella et al. "does not separately test volatility vs correlation" (the abstract does not say); Brooks & Persand and McAleer & da Veiga as "no clear preference between multivariate and univariate" (their abstracts are about sensitivity to the evaluation measure and about too many or too few VaR violations); the Chua et al. figures of +76% and -17% (not in the abstract); the "first year since 1977" claim (secondary web commentary).
+> - **Supported at abstract level:** Fortin et al. (no statistically significant difference in most cases, one-week-ahead ES); Paolella et al. (Markov-switching correlation dynamics give accurate risk forecasts); Engle & Colacito (about 60 basis points a year on average); Kole et al. (daily returns best; asset-level better than full aggregation).
+> - **Not checked:** whether Fortin et al. score VaR and ES jointly; the Kinlaw et al. description beyond its abstract.
+
 I'll research similar studies, whether the key results hold up, data sources and tooling, then give you a feasibility verdict.The idea holds up. It's feasible, it sits in a genuinely unsettled part of the literature, and I couldn't find a study that runs your exact test. Details below.
 
 ## 1. Verdict

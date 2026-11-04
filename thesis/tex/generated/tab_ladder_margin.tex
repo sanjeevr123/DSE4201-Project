@@ -1,0 +1,24 @@
+\begin{table}[t]
+\centering\setstretch{1}\scriptsize\setlength{\tabcolsep}{3pt}
+\caption{\uc{GARCH margins against static regime covariance}}\label{tab:ladder-margin}
+\begin{tabular}{lrrrcrrrr}
+\toprule
+Sample & $n$ & $\bar d$ & SE & 95\% interval & $t$ & $p$ (2-sided) & MDE & Holm $p$ \\
+\midrule
+\multicolumn{8}{l}{\textbf{CCC versus B (non-nested)}}\\
+SPY/IEF/GLD & 2,516 & $-$0.0247 & 0.0173 & [$-$0.0586, 0.0093] & $-$1.43 & 0.154 & 0.0485 \\
+SPY/IEF/HYG & 1,944 & $-$0.0403 & 0.0269 & [$-$0.0931, 0.0125] & $-$1.49 & 0.135 & 0.0755 \\
+Sectors & 2,516 & $-$0.0466 & 0.0235 & [$-$0.0926, $-$0.0006] & $-$1.99 & 0.047 & 0.0658 \\
+Risk assets & 1,944 & $-$0.0803 & 0.0230 & [$-$0.1254, $-$0.0351] & $-$3.49 & $<$0.001 & 0.0645 \\
+Funds 1992--2019 & 7,053 & $-$0.0315 & 0.0159 & [$-$0.0627, $-$0.0003] & $-$1.98 & 0.048 & 0.0446 \\
+\midrule
+\multicolumn{9}{l}{\textbf{RSC versus D (non-nested; pre-declared family)}}\\
+SPY/IEF/GLD & 2,516 & $-$0.0259 & 0.0173 & [$-$0.0599, 0.0081] & $-$1.49 & 0.135 & 0.0486 & 0.2341 \\
+SPY/IEF/HYG & 1,944 & $-$0.0406 & 0.0259 & [$-$0.0914, 0.0102] & $-$1.57 & 0.117 & 0.0726 & 0.2341 \\
+Sectors & 2,516 & $-$0.0396 & 0.0223 & [$-$0.0832, 0.0040] & $-$1.78 & 0.075 & 0.0623 & 0.2247 \\
+Risk assets & 1,944 & $-$0.0760 & 0.0222 & [$-$0.1195, $-$0.0325] & $-$3.43 & $<$0.001 & 0.0622 & 0.0025 \\
+Funds 1992--2019 & 7,053 & $-$0.0306 & 0.0198 & [$-$0.0693, 0.0081] & $-$1.55 & 0.122 & 0.0554 & -- \\
+\bottomrule
+\end{tabular}
+\tabnote{Mean FZ0 difference $\bar d$ of the richer model minus the baseline over the forecast days, tail level $\alpha=5\%$, Gaussian chain, pooled mean; negative favours the richer model. SE: Bartlett-kernel HAC standard error. The interval is $\bar d\pm1.96\,\mathrm{SE}$. The $p$-value is two-sided. MDE $=2.8016\,\mathrm{SE}$ is the smallest true difference a two-sided 5\% test detects with 80\% power. Source: \texttt{output/explore/ladder/ladder\_dm\_table.csv}. Forecast days 2010--2019 (ETFs; credit and risk-asset samples start in 2012), 1992--2019 (funds). Holm $p$: the pre-declared family is RSC versus D in the four ETF samples, Holm-adjusted over the four; the fund sample is not in the family.}
+\end{table}

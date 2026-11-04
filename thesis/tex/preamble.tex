@@ -1,0 +1,97 @@
+% Preamble: every layout setting lives here. Measured values and their source are in
+% notes/reference_thesis_analysis.md; the build check is scripts/check_format.py.
+\documentclass[11pt,a4paper]{article}   % 11pt class: 10.95 pt text, 13.6 pt baseline, 17 pt parindent
+
+% ---- page (A4 chosen by the author; margins, font size and spacing as measured) -------------
+\usepackage[a4paper,margin=2.5cm,headheight=14pt,headsep=23.4pt,footskip=30pt]{geometry}
+
+% ---- fonts ----------------------------------------------------------------------------------
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}                      % Latin Modern Roman
+\usepackage{amsmath,amssymb,bm}
+\usepackage{microtype}
+
+% ---- spacing: double in the body (baseline stretch 2), single in tables, notes, references ----
+\usepackage{setspace}
+\setstretch{2}
+\setlength{\parindent}{17pt}
+\setlength{\parskip}{0pt}
+
+% ---- headings: chapter = \section (centred bold, upper case, no page break), section = \subsection
+%      (centred bold), sub-section = \subsubsection (left bold); all at body size ---------------
+\usepackage{titlesec}
+\titleformat{\section}[block]{\thispagestyle{plain}\centering\normalsize\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}[block]{\centering\normalsize\bfseries}{\thesubsection}{1em}{}
+\titleformat{\subsubsection}[block]{\normalsize\bfseries}{\thesubsubsection}{1em}{}
+\titlespacing*{\section}{0pt}{17.7pt}{11pt}
+\titlespacing*{\subsection}{0pt}{0pt}{7.6pt}
+\titlespacing*{\subsubsection}{0pt}{0pt}{7pt}
+\setcounter{secnumdepth}{3}
+\setcounter{tocdepth}{2}
+
+% ---- page numbers: top right on ordinary pages, centred at the foot on chapter-opening pages
+%      and in the front matter ------------------------------------------------------------------
+\usepackage{fancyhdr}
+\fancypagestyle{plain}{\fancyhf{}\fancyfoot[C]{\thepage}\renewcommand{\headrulewidth}{0pt}}
+\fancypagestyle{body}{\fancyhf{}\fancyhead[R]{\thepage}\renewcommand{\headrulewidth}{0pt}}
+\pagestyle{plain}
+
+% ---- tables and figures: numbered within the chapter, captions in capitals --------------------
+\usepackage{booktabs,array,tabularx,multirow,graphicx,float}
+\usepackage[labelsep=colon,justification=centering,singlelinecheck=on,font=normalsize]{caption}
+\usepackage{etoolbox}
+\numberwithin{table}{section}
+\numberwithin{figure}{section}
+\newcommand{\uc}[1]{\MakeUppercase{#1}}
+\newcommand{\tabnote}[1]{\par\vspace{4pt}{\setstretch{1}\footnotesize\noindent\hspace{0.05\textwidth}\begin{minipage}{0.9\textwidth}\scriptsize\textbf{Note:} #1\end{minipage}\par}\vspace{6pt}}
+\renewcommand{\arraystretch}{1.25}
+\graphicspath{{figures/}{../../output/figures/}{../../output/confirm/pseudo/}}
+
+% ---- contents and lists: dotted leaders, upper-case captions in the lists --------------------
+\usepackage[titles]{tocloft}
+\renewcommand{\contentsname}{TABLE OF CONTENTS}
+\renewcommand{\listfigurename}{LIST OF FIGURES}
+\renewcommand{\listtablename}{LIST OF TABLES}
+\renewcommand{\cfttoctitlefont}{\Large\bfseries}
+\renewcommand{\cftloftitlefont}{\Large\bfseries}
+\renewcommand{\cftlottitlefont}{\Large\bfseries}
+\setlength{\cftbeforetoctitleskip}{0pt}\setlength{\cftaftertoctitleskip}{12pt}
+\setlength{\cftbeforeloftitleskip}{12pt}\setlength{\cftafterloftitleskip}{12pt}
+\setlength{\cftbeforelottitleskip}{12pt}\setlength{\cftafterlottitleskip}{12pt}
+\renewcommand{\cftdotsep}{1.5}
+\renewcommand{\cftsecfont}{\bfseries}\renewcommand{\cftsecpagefont}{\bfseries}
+\renewcommand{\cftsecleader}{\bfseries\cftdotfill{\cftdotsep}}
+\setlength{\cftbeforesecskip}{16pt}\setlength{\cftbeforesubsecskip}{6pt}
+\setlength{\cftsecindent}{0pt}\setlength{\cftsecnumwidth}{1.5em}
+\setlength{\cftsubsecindent}{1.5em}\setlength{\cftsubsecnumwidth}{2.4em}
+\setlength{\cftfigindent}{1.5em}\setlength{\cfttabindent}{1.5em}
+\setlength{\cftfignumwidth}{2.6em}\setlength{\cfttabnumwidth}{2.6em}
+\setlength{\cftbeforefigskip}{4pt}\setlength{\cftbeforetabskip}{4pt}
+
+% ---- citations: author-date (natbib), AER bibliography style ---------------------------------
+\usepackage[round,authoryear]{natbib}
+\bibliographystyle{aer}
+\renewcommand{\refname}{REFERENCES}
+\setlength{\bibsep}{8pt}
+\setlength{\bibhang}{10.8pt}
+
+% ---- cross references; no coloured links in print ---------------------------------------------
+\usepackage[hidelinks]{hyperref}
+
+% ---- project macros (notation: see front/notation.tex) ---------------------------------------
+\newcommand{\VaR}{\mathrm{VaR}}
+\newcommand{\ES}{\mathrm{ES}}
+\newcommand{\FZ}{\mathrm{FZ0}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\Prob}{\mathbb{P}}
+\newcommand{\unverified}{\textsuperscript{[UNVERIFIED]}}
+\newcommand{\pending}[1]{#1\textsuperscript{[PENDING]}}
+\newcommand{\todo}[1]{\textbf{[TO WRITE: #1]}}
+\DeclareMathOperator*{\argmin}{arg\,min}
+
+% ---- title-page details to confirm (see notes/outbox/02_requirements_questions.md) ------------
+\newcommand{\thesisauthor}{[AUTHOR NAME]}
+\newcommand{\thesisdegree}{Bachelor of Science (Data Science and Economics) [confirm wording]}
+\newcommand{\thesisdept}{[confirm department or programme]}
+\newcommand{\thesisyear}{2026/2027}
+\newcommand{\thesistitle}{REGIME-SWITCHING RISK MODELS FOR ETF PORTFOLIOS: DO MARKET-STATE SHIFTS IMPROVE TAIL-RISK FORECASTING?}

@@ -56,11 +56,13 @@ def calculate_equal_weight_portfolio_returns(
 
         portfolio_return_t = w' r_t,  w = [1/n, ..., 1/n]
 
-    This is a TEMPORARY / PILOT portfolio construction: fixed equal
-    weights, no rebalancing logic, no optimisation. It is built directly
-    from each asset's own simple return series (not by averaging log
-    returns), so the result is the exact equal-weight simple portfolio
-    return.
+    The weights are constant (1/n each) on every day, which means the
+    portfolio is rebalanced to equal weights every day. It is NOT a
+    buy-and-hold portfolio whose weights drift with relative performance,
+    and the turnover that daily rebalancing implies is ignored. No
+    optimisation. It is built directly from each asset's own simple return
+    series (not by averaging log returns), so the result is the exact
+    constant-weight simple portfolio return.
 
     Input:
         asset_returns: DataFrame of per-asset SIMPLE returns, one column

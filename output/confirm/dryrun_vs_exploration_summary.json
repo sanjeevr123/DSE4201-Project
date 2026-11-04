@@ -1,0 +1,29 @@
+{
+  "n_days": 1006,
+  "first": "2016-01-04",
+  "last": "2019-12-31",
+  "max_abs_portfolio_return_diff": 7.518879120800223e-07,
+  "primary_alpha0.05": {
+    "mean_diff_dryrun": -0.001991133259701792,
+    "mean_diff_exploration": -0.0018942327543233935,
+    "t_dryrun": -1.363680419938345,
+    "t_exploration": -1.2863053293082916
+  },
+  "primary_alpha0.025": {
+    "mean_diff_dryrun": -0.0027783138547063735,
+    "mean_diff_exploration": -0.0026542777026134067,
+    "t_dryrun": -1.2623682725971002,
+    "t_exploration": -1.1984421224828739
+  },
+  "median_abs_var_diff_by_block": {
+    "B": 1.2685182862747857e-05,
+    "L2": 1.482180836457573e-05,
+    "S": 7.709340908845048e-06
+  },
+  "max_abs_var_diff_by_block": {
+    "B": 0.00032068835554322633,
+    "L2": 0.0004836247811645933,
+    "S": 0.004912390363308728
+  },
+  "max_abs_mean_fz0_diff": 0.004041321874465709
+}

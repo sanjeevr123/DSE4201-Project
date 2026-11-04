@@ -17,6 +17,16 @@ is genuinely valuable.
 Use this section only for decisions that should actually be discussed
 with my supervisor.
 
+### Open as of 2026-11-03
+
+- **Milestones and form of the next update.** Asked in the update of 27 October, not answered. Asked again in `notes/outbox/01_correction_note.md`.
+- **Frozen specification.** To be sent with a 3-working-day window (`notes/outbox/03_frozen_spec_note.md`).
+- **CRSP.** "You don't need CRSP at this stage (or: check if NUS library has it)." Read as not required; the same-vendor limitation is stated.
+
+### Pilot-era items, resolved by her November feedback
+
+She approved the direction and said no additional macro-regime models or robustness checks are necessary (`notes/supervisor_feedback_2026-11.md`). The universe, two regimes, the equity-only signal and the power caveat below stay as they are and are reported as limitations. The allocation extension is dropped. The items are kept for the record.
+
 Populated from the pilot study's go/no-go verdict (all six criteria pass
 -> PROCEED, see `output/PILOT_REPORT.md`) and the open items already
 tracked in `notes/decision_log.md`:

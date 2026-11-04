@@ -1,0 +1,12 @@
+{
+  "psd_repairs": 0,
+  "psd_matrices": 96,
+  "margin_fallbacks": [],
+  "dcc_refits": 16,
+  "dcc_fallbacks": 0,
+  "git_head": "694639cc66e1aca027e8a85ad0554f98eb03a286",
+  "freeze_tag": null,
+  "raw_sha256": "0ab8c7f353a7223e154cc3ee4cc3656c465dded45c19269fc24efba371150e29",
+  "runtime_s": 17.55703902244568,
+  "python": "3.9.6"
+}

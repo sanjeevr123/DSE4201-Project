@@ -1,0 +1,25 @@
+{
+  "files": {
+    "hold-out source": "spy_ief_gld_raw_2026-09-26.csv",
+    "exploration": "explore_etfs_2004_2019.csv"
+  },
+  "sha256": {
+    "spy_ief_gld_raw_2026-09-26.csv": "0ab8c7f353a7223e154cc3ee4cc3656c465dded45c19269fc24efba371150e29",
+    "explore_etfs_2004_2019.csv": "a9453c944fa62de5cf026ec7b635809c9ee92ea6bae03a66c05dbe709e1881ec"
+  },
+  "n_dates_holdout_source": 3804,
+  "n_dates_exploration": 3804,
+  "same_dates": true,
+  "n_common": 3804,
+  "first": "2004-11-19",
+  "last": "2019-12-31",
+  "max_abs_return_diff": {
+    "SPY": 1.4030485737670517e-06,
+    "IEF": 2.489574388420124e-06,
+    "GLD": 0.0
+  },
+  "max_abs_return_diff_all": 2.489574388420124e-06,
+  "median_abs_return_diff_all": 1.413982917419787e-07,
+  "portfolio_max_abs_diff": 9.254272271090862e-07,
+  "note": "same vendor (Yahoo Finance via yfinance); two pulls, not a second source"
+}
