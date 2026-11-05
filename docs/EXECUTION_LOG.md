@@ -186,3 +186,13 @@ Source PDFs are not in the repository, so checks were against the matrix and aud
 - **5, 14 (Zhu-Timmermann; Connolly et al. in the matrix but uncited): CONFIRMED.** Both now cited (bib entries added); Zhu-Timmermann at the conditional GW test, Connolly et al. in 2.4.
 - **13, 14 (further missing references, Guidolin-Timmermann etc.): NOT ADDED.** I have not read them; listed in `notes/outbox/05_library_requests.md`. The thesis does not claim the survey is exhaustive.
 - **15 (novelty claim), 16, 17, 18, 8, 9, 10, 12: not changed;** low or medium wording points already hedged ("a statement about what I read"); open as low severity.
+
+## Phase 10, reviewer 3 of 4: clarity reader (2026-11-05)
+Acted on (each checked against the text; edits are wording, no result changed):
+- **H1 scale of 0.0013: CONFIRMED.** Ch1 now translates it (penalty of a 2-3 per cent scale error, Table 5.1 / Section 5.7).
+- **H2 motivation vs design (stress correlation learned from a window with almost no positive correlation): CONFIRMED as a plausible limit,** stated with hedging ("unlikely to deliver") in Ch1 and Ch8.
+- **H3 calibration emphasis: CONFIRMED.** Ch8 superlative toned down; not promoted. The t-chain and GARCH-t calibration were not added (would be a new analysis).
+- **H4 abstract omitted that GARCH beat regime volatility: CONFIRMED.** Abstract and Ch1 corrected.
+- **M10/M12 power in the abstract: CONFIRMED** (the abstract still carried 18-35%): now the effect-based 48%; Ch1 says the test was known in advance to be low power; Ch8 "only O1 or O2" corrected to include O4.
+- **M11 post hoc labelling: CONFIRMED.** Ch7 says the 17/85% figures were computed after the result. **M14 real SE twice that of S0: CONFIRMED,** sentence added in Ch6.
+- **Not done (open, medium/low):** glossary and git vocabulary (M1), A/B/D lettering and table labels with _N/_S suffixes (M2), sample table and the derivation of 214 (M3), Ch4/Ch5 density (M4, M5, M6), Table 6.5 explanation (M7), "ladder/decomposition" wording (M8), "fixed in advance" vs "chosen from power" in Ch4 (M9), repeated result paragraph and length cuts (section 4 of the review), M13, L1-L6. These affect readability, not correctness; the repeated material is the route to the page guideline if you want it cut.
