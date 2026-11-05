@@ -176,7 +176,7 @@ def main():
                    ("normal_alpha0.025", "Normal, $\\alpha=2.5\\%$")):
         rows.append(f"{lab} & " + " & ".join(f4(s[k][c]) for c in cs) + " \\\\")
     write("tab_sesoi.tex",
-          "\\begin{table}[t]\n\\centering\\setstretch{1}\\footnotesize\\setlength{\\tabcolsep}{3.5pt}\n\\caption{\\uc{Expected FZ0 penalty of scaling both VaR and ES by a factor $c$}}\\label{tab:sesoi}\n"
+          "\\begin{table}[t]\n\\centering\\setstretch{1}\\footnotesize\\setlength{\\tabcolsep}{3.5pt}\n\\caption{\\uc{Expected FZ0 penalty of scaling both VaR and ES by a constant factor}}\\label{tab:sesoi}\n"
           "\\begin{tabular}{lrrrr}\n\\toprule\nTrue distribution & $c=0.95$ & $c=0.97$ & $c=1.03$ & $c=1.05$ \\\\\n\\midrule\n"
           + "\n".join(rows) + "\n\\bottomrule\n\\end{tabular}\n"
           "\\tabnote{Analytic expected loss at scale factor $c$ minus the expected loss at $c=1$, for a unit-variance true distribution; "

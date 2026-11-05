@@ -1976,11 +1976,11 @@
   fmt: .0f
 - id: pw_ch7_s2
   chapter: ch7_results_holdout.tex
-  text: '85'
+  text: '86'
   kind: power_effect
   file: output/confirm/holdout/primary.json
   path: se
-  effect: 0.0034
+  effect: 0.003443
   fmt: .0f
 - id: pw_ch8_s1
   chapter: ch8_discussion.tex
@@ -1992,11 +1992,11 @@
   fmt: .0f
 - id: pw_ch8_s2
   chapter: ch8_discussion.tex
-  text: '85'
+  text: '86'
   kind: power_effect
   file: output/confirm/holdout/primary.json
   path: se
-  effect: 0.0034
+  effect: 0.003443
   fmt: .0f
 - id: pw48_ch1
   chapter: ch1_introduction.tex
