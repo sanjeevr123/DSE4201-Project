@@ -1,2 +1,49 @@
 \section{RESULTS: THE HOLD-OUT TEST}\label{ch:holdout}
-\todo{Placeholder only. The hold-out (2020-01-02 to 2025-12-31, 1,508 forecast days) has not been run and nothing in this thesis interprets it. After the run this chapter reports the single pre-specified test with the frozen wording of the outcome that occurred (Section~\ref{sec:decision-rule}), simulated power (Table~\ref{tab:power1508}), then the labelled secondary analyses. Anything not pre-registered is marked POST HOC.}
+
+This chapter reports the single pre-specified test on the hold-out, 2 January 2020 to 31 December 2025 (1,508 forecast days), with the sentence that Section~\ref{sec:decision-rule} fixed for the outcome that occurred. Secondary results follow, labelled as such. Nothing in this chapter was chosen after seeing the result, except where a paragraph says so.
+
+\subsection{The record of the run}\label{sec:holdout-record}
+
+The forecasts were produced once, on 5 November 2026, by \texttt{scripts/confirm\_00\_run.py} from the code fixed by the tag \texttt{spec-freeze-v1}. The runner printed 1,508 forecast days from 2020-01-02 to 2025-12-31 and took 27 seconds on one thread. Before the run the file hashes in the preregistration matched the files, the tests passed, and no earlier hold-out output existed. The supervisor had been sent the hypothesis, the sidedness and the exact SPY--IEF specification, and had replied that the test looked appropriate.
+
+The scorer then refused to score. Its first check required the commit recorded in the forecast file to equal the tagged commit, and the recorded commit was two commits later: they changed an ignore file and the execution log, and none of the forecast code. No number from the run had been computed or seen. I replaced the check with one that requires the recorded commit to descend from the tagged commit and the forecast code to be identical in both, wrote the change and its reason into the preregistration (its section 8), and tagged it \texttt{spec-freeze-v1.1}. The forecasts were not produced again. I state this because the original rule was part of the specification, and the amendment, although it cannot depend on a result that did not yet exist, is a departure from it.
+
+The run itself was clean. None of the 144 covariance matrices needed a positive-semidefinite repair, no GARCH fit fell back to a simpler model, and none of the 24 DCC refits failed.
+
+\subsection{The pre-specified test}\label{sec:holdout-primary}
+
+Table~\ref{tab:holdout-primary} gives the test of Section~\ref{sec:test}: letting the SPY--IEF correlation switch with the regime (RSC\_P) against constant correlation (CCC), at tail level 5\% with a Gaussian chain. The mean loss difference is $-0.0013$, so the switching model had the lower loss on average, with a HAC standard error of 0.0013 and $t=-1.00$. The pre-declared one-sided $p$-value is 0.158, and the test did not reject at the 5\% level (the critical value is $-1.6449$). The two-sided 95\% interval is from $-0.0037$ to $+0.0012$. The upper tail did not come near $+1.96$, so the statement that the switching model is significantly worse does not apply either.
+
+\input{generated/tab_holdout_primary}
+
+This is outcome O2, because the one-sided lower bound, $-0.0033$, is below the smallest effect of interest ($-0.0020$), so O3 is not reached. The frozen sentence is:
+
+\begin{quote}
+The hold-out data neither establish an improvement nor exclude one. The estimate is $-0.0013$ (95\% CI $[-0.0037,+0.0012]$); an improvement of at least 0.0031 (the minimum detectable difference for the one-sided 5\% test, 80\% power) would have been detected with 80\% probability, and smaller improvements, including none, are consistent with the data.
+\end{quote}
+
+Three further facts belong with that sentence. First, the estimate is 0.4 times the minimum detectable difference, so the design was not able to detect an improvement of this size with any useful probability. The standard error, 0.0013, lies within the range of 0.0010 to 0.0015 that the development data had suggested (Section~\ref{sec:pair-dev}). Second, the simulated power of this test at 1,508 days was 18.2\% for the moderate shift and 35.2\% for the strong shift (Table~\ref{tab:power1508}), so a modest true improvement would more often than not have gone undetected. Third, the interval contains zero and also contains improvements well above the smallest effect of interest, up to $-0.0037$, and a degradation up to $+0.0012$. I do not claim equivalence with constant correlation, and I do not claim the improvement either. This is one test on one six-year sample, containing a single stock--bond reversal, and the specification was chosen with the development data in view.
+
+\subsection{Secondary comparisons}\label{sec:holdout-secondary}
+
+The comparisons below are the secondary analyses declared in Section~\ref{sec:prereg}. They are unadjusted, they are not confirmatory, and none of them changes the outcome above.
+
+\input{generated/tab_holdout_secondary}
+
+The ladder (the first panel of Table~\ref{tab:holdout-secondary}) can be read against the development results of Chapter~\ref{ch:results}. Letting all correlations switch (RSC against CCC) gives $-0.0037$ with an interval from $-0.0101$ to $+0.0028$ (two-sided $p=0.265$, MDE 0.0092), and the smooth alternative (DCC against RSC) gives $-0.0060$ ($p=0.683$). The three comparisons that involve the pooled-normal and static models (B against A, CCC against B, RSC against D) have estimates between $-0.095$ and $-0.130$, with standard errors of 0.082 to 0.092 and MDEs of 0.23 to 0.26; their intervals contain zero. Their standard errors are more than twenty times those of the correlation steps, so the hold-out says very little about them: the losses of the static models include large values on a few days, most plausibly in 2020, but I did not examine which days, and that statement is conjecture. The static step D against B has a positive estimate of $+0.0155$ ($p=0.186$); the same oversizing caution as in Chapter~\ref{ch:results} applies to it.
+
+Two variants of the primary comparison change only the tail level or the chain. At $\alpha=2.5\%$ the estimate is $-0.0026$ ($p=0.233$), and with a Student-$t$ chain at $\alpha=5\%$ it is $-0.0012$ ($p=0.339$); the estimates have the same sign as the primary one, and all intervals include zero. For the calendar year 2022 alone, the year of the stock--bond reversal, the estimate is $-0.0009$ over 251 days, with an interval from $-0.0089$ to $+0.0070$. It is reported as an interval only: a single year is too short to test, and the interval is wide enough to include a large gain and a large loss.
+
+The Giacomini--White conditional test asks whether the loss difference depends on the lagged 63-day SPY--IEF correlation. It gives a Wald statistic of 1.40 on two degrees of freedom ($p=0.498$). In the data, 667 of 1,508 days (44.2\%) had a positive lagged correlation; the mean loss difference was $-0.0004$ on those days and $-0.0019$ on the others. Those two means are descriptive and untested, and the test does not reject that the difference is predictable from the lagged correlation. The test of superior predictive ability against GARCH-$t$, with the candidates B, D, RSC and RSC\_P, does not reject (consistent $p=0.477$).
+
+\subsection{Calibration}\label{sec:holdout-calibration}
+
+Table~\ref{tab:holdout-calib} describes whether the forecasts of the two primary models had the right coverage. It is a description, not part of the decision rule.
+
+\input{generated/tab_holdout_calib}
+
+Both models were breached more often than intended. At the 5\% level the VaR was breached on 6.9\% of days by RSC\_P and 6.8\% by CCC (104 and 103 days, against 75 expected), and the Kupiec test rejects correct coverage for both ($p=0.001$ and $0.002$). The independence tests do not reject ($p=0.480$ and $0.444$), so the breaches were not detectably clustered. At 2.5\% the breach rates were 4.4\% and 4.3\%, and the Kupiec $p$-values are below 0.001. For expected shortfall, $Z_2$ is positive for both models (0.62 and 0.61) with a simulated $p$-value of 0.0002, the smallest the 5,000 simulated draws can give; the average return on breach days was about 1.17 to 1.18 times the forecast shortfall. In this hold-out, therefore, both models underestimated tail risk to a similar degree. This contrasts with the development data, where the static models overstated risk and the GARCH-margin models were close to nominal (Table~\ref{tab:hits}). The comparison tested above is a comparison between two forecasts that were miscalibrated in the same direction and by similar amounts, so a small loss difference between them says little about whether either is adequate for risk management.
+
+\subsection{What the hold-out shows}\label{sec:holdout-summary}
+
+The pre-specified test did not reject, and its outcome is O2. The estimate favoured the switching model, by a difference smaller than the test could detect, and the data are consistent with an improvement as large as 0.0037 and with a small degradation. The secondary analyses neither contradict nor strengthen that reading: every interval contains zero, and the conditional test does not find that the difference depends on the lagged correlation. All three of these statements are about the power of this design to detect a difference, which was low by design (Chapter~\ref{ch:eval}). They are not statements that a difference is absent. The calibration results are a separate finding, and they apply to both models.

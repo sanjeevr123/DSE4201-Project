@@ -1114,3 +1114,564 @@
   path: portfolio_max_abs_diff
   fmt: .1f
   scale: 10000000.0
+- id: h_d
+  chapter: ch7_results_holdout.tex
+  text: '0.0013'
+  kind: json
+  file: output/confirm/holdout/primary.json
+  path: mean_diff
+  fmt: .4f
+  abs: true
+- id: h_se
+  chapter: ch7_results_holdout.tex
+  text: '0.0013'
+  kind: json
+  file: output/confirm/holdout/primary.json
+  path: se
+  fmt: .4f
+- id: h_t
+  chapter: ch7_results_holdout.tex
+  text: '1.00'
+  kind: json
+  file: output/confirm/holdout/primary.json
+  path: t
+  fmt: .2f
+  abs: true
+- id: h_p1
+  chapter: ch7_results_holdout.tex
+  text: '0.158'
+  kind: json
+  file: output/confirm/holdout/primary.json
+  path: p_one_sided
+  fmt: .3f
+- id: h_cilo
+  chapter: ch7_results_holdout.tex
+  text: '0.0037'
+  kind: json
+  file: output/confirm/holdout/primary.json
+  path: ci_lo
+  fmt: .4f
+  abs: true
+- id: h_cihi
+  chapter: ch7_results_holdout.tex
+  text: '0.0012'
+  kind: json
+  file: output/confirm/holdout/primary.json
+  path: ci_hi
+  fmt: .4f
+- id: h_lb
+  chapter: ch7_results_holdout.tex
+  text: '0.0033'
+  kind: json
+  file: output/confirm/holdout/primary.json
+  path: lower_bound_one_sided
+  fmt: .4f
+  abs: true
+- id: h_mde1
+  chapter: ch7_results_holdout.tex
+  text: '0.0031'
+  kind: json
+  file: output/confirm/holdout/primary.json
+  path: mde_one_sided
+  fmt: .4f
+- id: h_n
+  chapter: ch7_results_holdout.tex
+  text: '1508'
+  kind: json
+  file: output/confirm/holdout/primary.json
+  path: n
+  fmt: .0f
+- id: h_ratio
+  chapter: ch7_results_holdout.tex
+  text: '0.4'
+  kind: json
+  file: output/confirm/holdout/primary.json
+  path: mean_diff
+  fmt: .1f
+  abs: true
+  div: 0.0031367101812369963
+- id: h_pow_s1
+  chapter: ch7_results_holdout.tex
+  text: '18.2'
+  kind: csv
+  file: output/explore/ladder/power_1508_summary.csv
+  where:
+    scenario: S1_moderate_breakdown
+    alpha: 0.05
+    step: pair_with_margins
+  column: one_sided
+  fmt: .1f
+  scale: 100
+- id: h_pow_s2
+  chapter: ch7_results_holdout.tex
+  text: '35.2'
+  kind: csv
+  file: output/explore/ladder/power_1508_summary.csv
+  where:
+    scenario: S2_strong_breakdown
+    alpha: 0.05
+    step: pair_with_margins
+  column: one_sided
+  fmt: .1f
+  scale: 100
+- id: h_rc_d
+  chapter: ch7_results_holdout.tex
+  text: '0.0037'
+  kind: csv
+  file: output/confirm/holdout/secondary_ladder.csv
+  where:
+    step: RSC vs CCC
+  column: mean_diff
+  fmt: .4f
+  abs: true
+- id: h_rc_lo
+  chapter: ch7_results_holdout.tex
+  text: '0.0101'
+  kind: csv
+  file: output/confirm/holdout/secondary_ladder.csv
+  where:
+    step: RSC vs CCC
+  column: ci_lo
+  fmt: .4f
+  abs: true
+- id: h_rc_hi
+  chapter: ch7_results_holdout.tex
+  text: '0.0028'
+  kind: csv
+  file: output/confirm/holdout/secondary_ladder.csv
+  where:
+    step: RSC vs CCC
+  column: ci_hi
+  fmt: .4f
+- id: h_rc_p
+  chapter: ch7_results_holdout.tex
+  text: '0.265'
+  kind: csv
+  file: output/confirm/holdout/secondary_ladder.csv
+  where:
+    step: RSC vs CCC
+  column: p_two_sided
+  fmt: .3f
+- id: h_rc_mde
+  chapter: ch7_results_holdout.tex
+  text: '0.0092'
+  kind: csv
+  file: output/confirm/holdout/secondary_ladder.csv
+  where:
+    step: RSC vs CCC
+  column: mde_two_sided
+  fmt: .4f
+- id: h_dcc_d
+  chapter: ch7_results_holdout.tex
+  text: '0.0060'
+  kind: csv
+  file: output/confirm/holdout/secondary_ladder.csv
+  where:
+    step: DCC vs RSC
+  column: mean_diff
+  fmt: .4f
+  abs: true
+- id: h_dcc_p
+  chapter: ch7_results_holdout.tex
+  text: '0.683'
+  kind: csv
+  file: output/confirm/holdout/secondary_ladder.csv
+  where:
+    step: DCC vs RSC
+  column: p_two_sided
+  fmt: .3f
+- id: h_ba_d
+  chapter: ch7_results_holdout.tex
+  text: '0.095'
+  kind: csv
+  file: output/confirm/holdout/secondary_ladder.csv
+  where:
+    step: B vs A
+  column: mean_diff
+  fmt: .3f
+  abs: true
+- id: h_rd_d
+  chapter: ch7_results_holdout.tex
+  text: '0.130'
+  kind: csv
+  file: output/confirm/holdout/secondary_ladder.csv
+  where:
+    step: RSC vs D
+  column: mean_diff
+  fmt: .3f
+  abs: true
+- id: h_cb_se
+  chapter: ch7_results_holdout.tex
+  text: '0.082'
+  kind: csv
+  file: output/confirm/holdout/secondary_ladder.csv
+  where:
+    step: CCC vs B
+  column: se
+  fmt: .3f
+- id: h_rd_se
+  chapter: ch7_results_holdout.tex
+  text: '0.092'
+  kind: csv
+  file: output/confirm/holdout/secondary_ladder.csv
+  where:
+    step: RSC vs D
+  column: se
+  fmt: .3f
+- id: h_mde_lo
+  chapter: ch7_results_holdout.tex
+  text: '0.23'
+  kind: csv
+  file: output/confirm/holdout/secondary_ladder.csv
+  where:
+    step: CCC vs B
+  column: mde_two_sided
+  fmt: .2f
+- id: h_mde_hi
+  chapter: ch7_results_holdout.tex
+  text: '0.26'
+  kind: csv
+  file: output/confirm/holdout/secondary_ladder.csv
+  where:
+    step: RSC vs D
+  column: mde_two_sided
+  fmt: .2f
+- id: h_db_d
+  chapter: ch7_results_holdout.tex
+  text: '0.0155'
+  kind: csv
+  file: output/confirm/holdout/secondary_ladder.csv
+  where:
+    step: D vs B
+  column: mean_diff
+  fmt: .4f
+- id: h_db_p
+  chapter: ch7_results_holdout.tex
+  text: '0.186'
+  kind: csv
+  file: output/confirm/holdout/secondary_ladder.csv
+  where:
+    step: D vs B
+  column: p_two_sided
+  fmt: .3f
+- id: h_a25_d
+  chapter: ch7_results_holdout.tex
+  text: '0.0026'
+  kind: csv
+  file: output/confirm/holdout/secondary_alpha_and_t_chain.csv
+  where:
+    alpha: 0.025
+    richer: RSC_P_N
+  column: mean_diff
+  fmt: .4f
+  abs: true
+- id: h_a25_p
+  chapter: ch7_results_holdout.tex
+  text: '0.233'
+  kind: csv
+  file: output/confirm/holdout/secondary_alpha_and_t_chain.csv
+  where:
+    alpha: 0.025
+    richer: RSC_P_N
+  column: p_two_sided
+  fmt: .3f
+- id: h_t_d
+  chapter: ch7_results_holdout.tex
+  text: '0.0012'
+  kind: csv
+  file: output/confirm/holdout/secondary_alpha_and_t_chain.csv
+  where:
+    alpha: 0.05
+    richer: RSC_P_t
+  column: mean_diff
+  fmt: .4f
+  abs: true
+- id: h_t_p
+  chapter: ch7_results_holdout.tex
+  text: '0.339'
+  kind: csv
+  file: output/confirm/holdout/secondary_alpha_and_t_chain.csv
+  where:
+    alpha: 0.05
+    richer: RSC_P_t
+  column: p_two_sided
+  fmt: .3f
+- id: h_y_d
+  chapter: ch7_results_holdout.tex
+  text: '0.0009'
+  kind: csv
+  file: output/confirm/holdout/secondary_focus_year.csv
+  where:
+    year: 2022
+  column: mean_diff
+  fmt: .4f
+  abs: true
+- id: h_y_lo
+  chapter: ch7_results_holdout.tex
+  text: '0.0089'
+  kind: csv
+  file: output/confirm/holdout/secondary_focus_year.csv
+  where:
+    year: 2022
+  column: ci_lo
+  fmt: .4f
+  abs: true
+- id: h_y_hi
+  chapter: ch7_results_holdout.tex
+  text: '0.0070'
+  kind: csv
+  file: output/confirm/holdout/secondary_focus_year.csv
+  where:
+    year: 2022
+  column: ci_hi
+  fmt: .4f
+- id: h_y_n
+  chapter: ch7_results_holdout.tex
+  text: '251'
+  kind: csv
+  file: output/confirm/holdout/secondary_focus_year.csv
+  where:
+    year: 2022
+  column: n
+  fmt: .0f
+- id: h_gw_stat
+  chapter: ch7_results_holdout.tex
+  text: '1.40'
+  kind: csv
+  file: output/confirm/holdout/secondary_gw_conditional.csv
+  where:
+    n: 1508
+  column: gw_stat
+  fmt: .2f
+- id: h_gw_p
+  chapter: ch7_results_holdout.tex
+  text: '0.498'
+  kind: csv
+  file: output/confirm/holdout/secondary_gw_conditional.csv
+  where:
+    n: 1508
+  column: gw_p
+  fmt: .3f
+- id: h_gw_npos
+  chapter: ch7_results_holdout.tex
+  text: '667'
+  kind: csv
+  file: output/confirm/holdout/secondary_gw_conditional.csv
+  where:
+    n: 1508
+  column: n_pos
+  fmt: .0f
+- id: h_gw_share
+  chapter: ch7_results_holdout.tex
+  text: '44.2'
+  kind: csv
+  file: output/confirm/holdout/secondary_gw_conditional.csv
+  where:
+    n: 1508
+  column: share_pos_corr
+  fmt: .1f
+  scale: 100
+- id: h_gw_dpos
+  chapter: ch7_results_holdout.tex
+  text: '0.0004'
+  kind: csv
+  file: output/confirm/holdout/secondary_gw_conditional.csv
+  where:
+    n: 1508
+  column: mean_d_pos
+  fmt: .4f
+  abs: true
+- id: h_gw_dnon
+  chapter: ch7_results_holdout.tex
+  text: '0.0019'
+  kind: csv
+  file: output/confirm/holdout/secondary_gw_conditional.csv
+  where:
+    n: 1508
+  column: mean_d_nonpos
+  fmt: .4f
+  abs: true
+- id: h_spa
+  chapter: ch7_results_holdout.tex
+  text: '0.477'
+  kind: csv
+  file: output/confirm/holdout/secondary_spa.csv
+  where:
+    benchmark: GARCHt
+  column: p_consistent
+  fmt: .3f
+- id: h_cal_r5
+  chapter: ch7_results_holdout.tex
+  text: '6.9'
+  kind: csv
+  file: output/confirm/holdout/calibration.csv
+  where:
+    arm: RSC_P_N
+    alpha: 0.05
+  column: hit_rate
+  fmt: .1f
+  scale: 100
+- id: h_cal_c5
+  chapter: ch7_results_holdout.tex
+  text: '6.8'
+  kind: csv
+  file: output/confirm/holdout/calibration.csv
+  where:
+    arm: CCC_S_N
+    alpha: 0.05
+  column: hit_rate
+  fmt: .1f
+  scale: 100
+- id: h_cal_rh
+  chapter: ch7_results_holdout.tex
+  text: '104'
+  kind: csv
+  file: output/confirm/holdout/calibration.csv
+  where:
+    arm: RSC_P_N
+    alpha: 0.05
+  column: hits
+  fmt: .0f
+- id: h_cal_ch
+  chapter: ch7_results_holdout.tex
+  text: '103'
+  kind: csv
+  file: output/confirm/holdout/calibration.csv
+  where:
+    arm: CCC_S_N
+    alpha: 0.05
+  column: hits
+  fmt: .0f
+- id: h_cal_kr
+  chapter: ch7_results_holdout.tex
+  text: '0.001'
+  kind: csv
+  file: output/confirm/holdout/calibration.csv
+  where:
+    arm: RSC_P_N
+    alpha: 0.05
+  column: kupiec_p
+  fmt: .3f
+- id: h_cal_kc
+  chapter: ch7_results_holdout.tex
+  text: '0.002'
+  kind: csv
+  file: output/confirm/holdout/calibration.csv
+  where:
+    arm: CCC_S_N
+    alpha: 0.05
+  column: kupiec_p
+  fmt: .3f
+- id: h_cal_ir
+  chapter: ch7_results_holdout.tex
+  text: '0.480'
+  kind: csv
+  file: output/confirm/holdout/calibration.csv
+  where:
+    arm: RSC_P_N
+    alpha: 0.05
+  column: independence_p
+  fmt: .3f
+- id: h_cal_ic
+  chapter: ch7_results_holdout.tex
+  text: '0.444'
+  kind: csv
+  file: output/confirm/holdout/calibration.csv
+  where:
+    arm: CCC_S_N
+    alpha: 0.05
+  column: independence_p
+  fmt: .3f
+- id: h_cal_r25
+  chapter: ch7_results_holdout.tex
+  text: '4.4'
+  kind: csv
+  file: output/confirm/holdout/calibration.csv
+  where:
+    arm: RSC_P_N
+    alpha: 0.025
+  column: hit_rate
+  fmt: .1f
+  scale: 100
+- id: h_cal_c25
+  chapter: ch7_results_holdout.tex
+  text: '4.3'
+  kind: csv
+  file: output/confirm/holdout/calibration.csv
+  where:
+    arm: CCC_S_N
+    alpha: 0.025
+  column: hit_rate
+  fmt: .1f
+  scale: 100
+- id: h_cal_zr
+  chapter: ch7_results_holdout.tex
+  text: '0.62'
+  kind: csv
+  file: output/confirm/holdout/calibration.csv
+  where:
+    arm: RSC_P_N
+    alpha: 0.05
+  column: z2
+  fmt: .2f
+- id: h_cal_zc
+  chapter: ch7_results_holdout.tex
+  text: '0.61'
+  kind: csv
+  file: output/confirm/holdout/calibration.csv
+  where:
+    arm: CCC_S_N
+    alpha: 0.05
+  column: z2
+  fmt: .2f
+- id: h_cal_er
+  chapter: ch7_results_holdout.tex
+  text: '1.17'
+  kind: csv
+  file: output/confirm/holdout/calibration.csv
+  where:
+    arm: RSC_P_N
+    alpha: 0.05
+  column: mean_es_exceedance_ratio
+  fmt: .2f
+- id: h_cal_ec
+  chapter: ch7_results_holdout.tex
+  text: '1.18'
+  kind: csv
+  file: output/confirm/holdout/calibration.csv
+  where:
+    arm: CCC_S_N
+    alpha: 0.05
+  column: mean_es_exceedance_ratio
+  fmt: .2f
+- id: h_cal_zp
+  chapter: ch7_results_holdout.tex
+  text: '0.0002'
+  kind: csv
+  file: output/confirm/holdout/calibration.csv
+  where:
+    arm: RSC_P_N
+    alpha: 0.05
+  column: z2_p_underestimated
+  fmt: .4f
+- id: h_psd
+  chapter: ch7_results_holdout.tex
+  text: '144'
+  kind: json
+  file: output/confirm/holdout/diagnostics.json
+  path: psd_matrices
+  fmt: .0f
+- id: h_dcc
+  chapter: ch7_results_holdout.tex
+  text: '24'
+  kind: json
+  file: output/confirm/holdout/diagnostics.json
+  path: dcc_refits
+  fmt: .0f
+- id: h_rt
+  chapter: ch7_results_holdout.tex
+  text: '27'
+  kind: json
+  file: output/confirm/holdout/diagnostics.json
+  path: runtime_s
+  fmt: .0f

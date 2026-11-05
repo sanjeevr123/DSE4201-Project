@@ -1,0 +1,24 @@
+\begin{table}[t]
+\centering\setstretch{1}\footnotesize\setlength{\tabcolsep}{3.5pt}
+\caption{\uc{The pre-specified hold-out test: switching SPY--IEF correlation against constant correlation}}\label{tab:holdout-primary}
+\begin{tabular}{lr}
+\toprule
+Quantity & Value \\
+\midrule
+Forecast days $n$ & 1,508 \\
+Mean difference $\bar d$ (RSC\_P\_N minus CCC\_S\_N) & $-$0.0013 \\
+HAC standard error (7 lags) & 0.0013 \\
+$t$ statistic & $-$1.00 \\
+One-sided $p$-value (pre-declared test) & 0.158 \\
+Two-sided $p$-value & 0.316 \\
+95\% interval, two-sided & [$-$0.0037, 0.0012] \\
+One-sided 95\% lower bound $\bar d-1.6449\,\mathrm{SE}$ & $-$0.0033 \\
+Smallest effect of interest (SESOI) & $-$0.0020 \\
+MDE, one-sided 5\% test, 80\% power & 0.0031 \\
+MDE, two-sided 5\% test, 80\% power & 0.0035 \\
+Simulated power, moderate shift S1 / strong shift S2 & 18.2\% / 35.2\% \\
+Outcome & O2 \\
+\bottomrule
+\end{tabular}
+\tabnote{Forecast days 2 January 2020 to 31 December 2025, tail level $\alpha=5\%$, Gaussian chain, pooled mean. Negative $\bar d$ favours switching the SPY--IEF correlation. The interval is $\bar d\pm1.96\,\mathrm{SE}$. Power is the simulated one-sided rejection rate at 1,508 days (Table~\ref{tab:power1508}), not a property of this estimate. Source: \texttt{output/confirm/holdout/primary.json}.}
+\end{table}

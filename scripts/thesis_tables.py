@@ -1,6 +1,7 @@
 """Generate the LaTeX tables of Chapters 5 and 6 from saved result files (no manual numbers).
 
-Reads only exploration, simulation and confirm/ files that stop at 2019-12-31 or are simulations. Writes
+Reads exploration, simulation and confirm/ files. Until 2026-11-05 only files that stop at 2019-12-31 or are simulations; the
+hold-out tables (tab_holdout_*.tex) read output/confirm/holdout/ and exist only after the single scored run. Writes
 thesis/tex/generated/*.tex. Every table reports: richer-minus-baseline mean loss difference (negative favours the
 richer model), HAC standard error, two-sided 95% interval d +/- 1.96 SE, t, a labelled two-sided p-value, n, and the
 minimum detectable difference MDE = 2.8016 SE (two-sided 5% test, 80% power).
@@ -189,7 +190,79 @@ def main():
           "\\begin{tabular}{lr}\n\\toprule\nEra & Share of days \\\\\n\\midrule\n" + "\n".join(rows) + "\n\\bottomrule\n\\end{tabular}\n"
           "\\tabnote{Mutual-fund proxies for stocks and long Treasuries (VFINX, VUSTX), not ETFs. Source: "
           "\\texttt{output/explore/longhistory\\_summary.json}.}\n\\end{table}\n")
+    holdout_tables()
     print("wrote", sorted(p.name for p in OUT.glob("*.tex")))
+
+
+def holdout_tables():
+    """Tables of Chapter 7 from the single scored hold-out run (output/confirm/holdout/)."""
+    H = ROOT / "output" / "confirm" / "holdout"
+    if not (H / "primary.json").exists():
+        return
+    pj = json.loads((H / "primary.json").read_text())
+    p15 = pd.read_csv(LAD / "power_1508_summary.csv")
+    pw = {sc: p15[(p15.scenario == sc) & (p15.alpha == 0.05) & (p15.step == "pair_with_margins")].iloc[0].one_sided
+          for sc in ("S1_moderate_breakdown", "S2_strong_breakdown")}
+    d, se = pj["mean_diff"], pj["se"]
+    rows = [("Forecast days $n$", f"{pj['n']:,}"), ("Mean difference $\\bar d$ (RSC\\_P\\_N minus CCC\\_S\\_N)", f4(d)),
+            ("HAC standard error (7 lags)", f4(se)), ("$t$ statistic", f2(pj["t"])),
+            ("One-sided $p$-value (pre-declared test)", f"{pj['p_one_sided']:.3f}"),
+            ("Two-sided $p$-value", f"{pj['p_two_sided']:.3f}"),
+            ("95\\% interval, two-sided", f"[{f4(pj['ci_lo'])}, {f4(pj['ci_hi'])}]"),
+            ("One-sided 95\\% lower bound $\\bar d-1.6449\\,\\mathrm{SE}$", f4(pj["lower_bound_one_sided"])),
+            ("Smallest effect of interest (SESOI)", f4(-pj["sesoi"])),
+            ("MDE, one-sided 5\\% test, 80\\% power", f4(pj["mde_one_sided"])),
+            ("MDE, two-sided 5\\% test, 80\\% power", f4(pj["mde_two_sided"])),
+            ("Simulated power, moderate shift S1 / strong shift S2", f"{pct(pw['S1_moderate_breakdown'])} / {pct(pw['S2_strong_breakdown'])}"),
+            ("Outcome", pj["outcome"])]
+    body = "\n".join(f"{a} & {b} \\\\" for a, b in rows)
+    write("tab_holdout_primary.tex",
+          "\\begin{table}[t]\n\\centering\\setstretch{1}\\footnotesize\\setlength{\\tabcolsep}{3.5pt}\n\\caption{\\uc{The pre-specified hold-out test: switching SPY--IEF correlation against constant correlation}}\\label{tab:holdout-primary}\n"
+          "\\begin{tabular}{lr}\n\\toprule\nQuantity & Value \\\\\n\\midrule\n" + body + "\n\\bottomrule\n\\end{tabular}\n"
+          "\\tabnote{Forecast days 2 January 2020 to 31 December 2025, tail level $\\alpha=5\\%$, Gaussian chain, pooled mean. Negative $\\bar d$ favours "
+          "switching the SPY--IEF correlation. The interval is $\\bar d\\pm1.96\\,\\mathrm{SE}$. Power is the simulated one-sided rejection rate at 1,508 days "
+          "(Table~\\ref{tab:power1508}), not a property of this estimate. Source: \\texttt{output/confirm/holdout/primary.json}.}\n\\end{table}\n")
+
+    # secondary comparisons ------------------------------------------------------------------------------------
+    lad = pd.read_csv(H / "secondary_ladder.csv")
+    names = {"B vs A": "B versus A", "D vs B": "D versus B", "CCC vs B": "CCC versus B", "RSC vs D": "RSC versus D",
+             "RSC vs CCC": "RSC versus CCC", "DCC vs RSC": "DCC versus RSC"}
+
+    def drow(lab, r):
+        return (f"{lab} & {int(r.n):,} & {f4(r.mean_diff)} & {f4(r.se)} & [{f4(r.ci_lo)}, {f4(r.ci_hi)}] & {f2(r.t)} & "
+                f"{pfmt(r.p_two_sided)} & {f4(r.mde_two_sided)} \\\\")
+    rows = ["\\multicolumn{8}{l}{\\textbf{Ladder steps (all pairs switch where stated)}}\\\\"]
+    rows += [drow(names[r.step], r) for r in lad.itertuples()]
+    ac = pd.read_csv(H / "secondary_alpha_and_t_chain.csv")
+    rows += ["\\midrule", "\\multicolumn{8}{l}{\\textbf{Primary pair at other settings}}\\\\"]
+    rows += [drow(r.analysis.replace("alpha", "$\\alpha$").replace("%", "\\%").replace("Student-t", "Student-$t$"), r) for r in ac.itertuples()]
+    fy = pd.read_csv(H / "secondary_focus_year.csv").iloc[0]
+    rows += ["\\midrule", "\\multicolumn{8}{l}{\\textbf{Calendar year 2022 (interval only, not a test)}}\\\\",
+             f"RSC\\_P\\_N versus CCC\\_S\\_N, 2022 & {int(fy.n):,} & {f4(fy.mean_diff)} & {f4(fy.se)} & [{f4(fy.ci_lo)}, {f4(fy.ci_hi)}] & -- & -- & -- \\\\"]
+    write("tab_holdout_secondary.tex",
+          "\\begin{table}[t]\n\\centering\\setstretch{1}\\scriptsize\\setlength{\\tabcolsep}{3pt}\n\\caption{\\uc{Secondary comparisons on the hold-out (unadjusted; not confirmatory)}}\\label{tab:holdout-secondary}\n"
+          "\\begin{tabular}{lrrrcrrr}\n\\toprule\nComparison & $n$ & $\\bar d$ & SE & 95\\% interval & $t$ & $p$ (2-sided) & MDE \\\\\n\\midrule\n"
+          + "\n".join(rows) + "\n\\bottomrule\n\\end{tabular}\n"
+          "\\tabnote{Mean FZ0 difference of the richer model minus the baseline; negative favours the richer model. Panel 1 is the ladder of "
+          "Chapter~\\ref{ch:method} on the hold-out, with tail level 5\\%, Gaussian chain, pooled mean. The interval is $\\bar d\\pm1.96\\,\\mathrm{SE}$ and the MDE is "
+          "$2.8016\\,\\mathrm{SE}$ (two-sided 5\\%, 80\\% power). None of these $p$-values is adjusted and none is cited as confirmation. "
+          "Source: \\texttt{output/confirm/holdout/secondary\\_ladder.csv}, \\texttt{secondary\\_alpha\\_and\\_t\\_chain.csv}, \\texttt{secondary\\_focus\\_year.csv}.}\n\\end{table}\n")
+
+    # calibration ----------------------------------------------------------------------------------------------
+    cal = pd.read_csv(H / "calibration.csv")
+    rows = []
+    for a in (0.05, 0.025):
+        for r in cal[cal.alpha == a].itertuples():
+            rows.append(f"{pct(a)} & {r.arm.replace('_', chr(92) + '_')} & {int(r.hits)} & {pct(r.hit_rate)} & {pfmt(r.kupiec_p)} & {pfmt(r.independence_p)} & "
+                        f"{pfmt(r.cc_p)} & {f3(r.z2)} & {pfmt(r.z2_p_underestimated)} & {f2(r.mean_es_exceedance_ratio)} \\\\")
+    write("tab_holdout_calib.tex",
+          "\\begin{table}[t]\n\\centering\\setstretch{1}\\scriptsize\\setlength{\\tabcolsep}{3pt}\n\\caption{\\uc{Coverage and expected-shortfall calibration of the two primary models on the hold-out}}\\label{tab:holdout-calib}\n"
+          "\\begin{tabular}{llrrrrrrrr}\n\\toprule\n$\\alpha$ & Model & Hits & Hit rate & Kupiec $p$ & Indep. $p$ & Cond. cov. $p$ & $Z_2$ & $Z_2$ $p$ & ES ratio \\\\\n\\midrule\n"
+          + "\n".join(rows) + "\n\\bottomrule\n\\end{tabular}\n"
+          "\\tabnote{1,508 forecast days. A hit is a day with $y_t\\le\\mathrm{VaR}_t$. Kupiec: unconditional coverage; Indep.: Christoffersen independence; "
+          "Cond. cov.: their sum. $Z_2$ is positive when risk is underestimated (my sign, opposite to Acerbi and Szekely); its $p$-value is the simulated "
+          "share of $Z_2$ values at or above the observed one. ES ratio: mean of $y_t/\\mathrm{ES}_t$ over hit days, above one when exceedances are larger than the "
+          "forecast shortfall. Descriptive, not part of the decision. Source: \\texttt{output/confirm/holdout/calibration.csv}.}\n\\end{table}\n")
 
 
 if __name__ == "__main__":
