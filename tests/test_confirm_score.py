@@ -230,15 +230,21 @@ def test_validate_run_refuses_bad_runs(small_run):
         sc.validate_run(r, "pseudo")
 
 
-def test_validate_run_holdout_needs_the_tag_and_the_tagged_commit(small_run, monkeypatch):
+def test_validate_run_holdout_needs_the_tag_and_a_descendant_commit_with_unchanged_forecast_code(small_run, monkeypatch):
     r = dict(small_run, mode="holdout")
     monkeypatch.setattr(sc, "freeze_tag_commit", lambda: None)
     with pytest.raises(AssertionError, match="does not exist"):
         sc.validate_run(r, "holdout")
-    monkeypatch.setattr(sc, "freeze_tag_commit", lambda: "tagcommit")
-    with pytest.raises(AssertionError, match="tagged commit"):
-        sc.validate_run(dict(r, git_head="other", freeze_tag="tagcommit"), "holdout")
-    sc.validate_run(dict(r, git_head="tagcommit", freeze_tag="tagcommit"), "holdout")
+    tag = sc._git("rev-list", "--max-parents=0", "HEAD")   # the root commit: an ancestor of every later commit
+    head = sc._git("rev-parse", "HEAD")
+    monkeypatch.setattr(sc, "freeze_tag_commit", lambda: tag)
+    with pytest.raises(AssertionError, match="different freeze-tag"):
+        sc.validate_run(dict(r, git_head=head, freeze_tag="other"), "holdout")
+    with pytest.raises(AssertionError, match="does not descend"):
+        sc.validate_run(dict(r, git_head="0" * 40, freeze_tag=tag), "holdout")
+    monkeypatch.setattr(sc, "_git", lambda *a: "src/engine.py" if a[0] == "diff" else "")
+    with pytest.raises(AssertionError, match="determine the forecasts"):
+        sc.validate_run(dict(r, git_head=head, freeze_tag=tag), "holdout")
 
 
 def test_score_end_to_end_writes_everything_and_is_reproducible(small_run, tmp_path):
