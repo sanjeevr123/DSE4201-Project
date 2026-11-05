@@ -1,3 +1,24 @@
 \begin{center}\textbf{APPENDIX}\end{center}
 \section{SPECIFICATION LOG AND REPRODUCIBILITY}\label{app:log}
-\todo{Pointer to \texttt{docs/decisions\_log.md}, the exploration grid summary (10 universes, 10 regime definitions, 214 headline tests), the controls and sub-period tables, the pre-registration text, and the reproducibility instructions. Written in Phase 4 onward.}
+
+\subsection{Where the record is}
+
+Every methodological decision, with its date and status, is in \texttt{docs/decisions\_log.md}, including the exploration grid (10 ETF universes, 10 regime definitions, 214 headline tests) and the family tests. The confirmatory specification is \texttt{docs/preregistration\_confirmatory.md}, fixed by the annotated tags \texttt{spec-freeze-v1} and \texttt{spec-freeze-v1.1}; its section 8 records the one amendment, made after the forecasts were written and before they were scored (Section~\ref{sec:holdout-record}). \texttt{docs/EXECUTION\_LOG.md} lists each step of the work in order, with the hashes of the hold-out forecast file and of the scored tables. The hold-out forecast file has SHA-256 \texttt{9537bb5d6008028076126d0166bb2edc1f643e5a9f496cb852d7872f8485f974}; the scored tables are in \texttt{output/confirm/holdout/} with a manifest of their hashes. Tables of the development controls and sub-periods are in the repository under \texttt{output/explore/}; I did not reprint them.
+
+\subsection{Rebuilding the thesis from saved results}
+
+The command \texttt{.venv/bin/python scripts/build\_all.py} rebuilds every table of Chapters 5 to 7 (\texttt{scripts/thesis\_tables.py}) and the forest plots (\texttt{scripts/thesis\_fig\_forest.py}), checks every registered number against its source file (\texttt{scripts/check\_numbers.py}, 157 numbers), and builds the PDF with tectonic. It reads the saved result files and refits nothing, runs on one thread, and takes a few seconds. The script \texttt{scripts/verify\_clean\_clone.py} clones the committed repository into a temporary directory, runs the same build there, and compares each generated table byte for byte, each figure pixel by pixel, and the text of the PDF; a match shows that the build uses nothing that is not committed.
+
+\subsection{Recomputing the results}
+
+The saved results can be recomputed from the raw data \texttt{data/raw/spy\_ief\_gld\_raw\_2026-09-26.csv} (SHA-256 \texttt{0ab8c7f3\ldots150e29}) in the order below. The run times are those I recorded; where none is given, I did not record one.
+\begin{itemize}
+\item The exploration grid, the ladder and the development power study: \texttt{scripts/explore\_00} to \texttt{explore\_20}.
+\item Power at the hold-out length: \texttt{scripts/explore\_21\_power\_holdout\_length.py} with at most five workers, 500 replications in each of four scenarios. The estimate was 19 seconds per replication, about 2.1 hours with five workers; I ran it with four, resuming from saved replications, and \texttt{scripts/explore\_22\_power\_summary.py} summarises it.
+\item The confirmatory dry run and hold-out: \texttt{scripts/confirm\_00\_run.py pseudo} (18 seconds) and \texttt{holdout} (27 seconds), then \texttt{scripts/confirm\_01\_score.py}. The runner refuses to run the hold-out unless the frozen files match the tag, and refuses to overwrite an existing output; the hold-out was run once.
+\end{itemize}
+The test suite (\texttt{pytest}; 110 tests in about one minute, plus three that read the hold-out period and are excluded until the run is complete) checks the models, the scorer and the helper scripts.
+
+\subsection{Environment}
+
+Python 3.9.6 on macOS 26.6 (Apple M5, 10 cores, 16 GB), with numpy 2.0.2, pandas 2.3.3, scipy 1.13.1, arch 7.2.0, statsmodels 0.14.6, hmmlearn 0.3.3 and matplotlib 3.9.4; the full list is in \texttt{requirements.txt}. The text is typeset with tectonic 0.17.0. BLAS threads are set to one, so the numbers should not depend on the core count; I did not test this on another machine.
