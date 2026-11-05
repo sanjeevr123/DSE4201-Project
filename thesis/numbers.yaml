@@ -1829,3 +1829,96 @@
   column: hit_rate
   fmt: .1f
   scale: 100
+- id: c3_n_dev
+  chapter: ch3_data.tex
+  text: 2,516
+  kind: csv
+  file: output/explore/ladder/ladder_dm_table.csv
+  where:
+    alpha: 0.05
+    period: full
+    mean_set: pooled
+    chain: N
+    step: regime_vol
+    universe: U1_pilot
+  column: n
+  fmt: ',.0f'
+- id: c3_n_hyg
+  chapter: ch3_data.tex
+  text: 1,944
+  kind: csv
+  file: output/explore/ladder/ladder_dm_table.csv
+  where:
+    alpha: 0.05
+    period: full
+    mean_set: pooled
+    chain: N
+    step: regime_vol
+    universe: U3_credit
+  column: n
+  fmt: ',.0f'
+- id: c3_n_early
+  chapter: ch3_data.tex
+  text: 1,510
+  kind: csv
+  file: output/explore/routes/routes_dm_table.csv
+  where:
+    provider: HMM_SPY2
+    first: RSC_P_N
+    second: CCC_S_N
+    alpha: 0.05
+    period: dev_2010_2015
+  column: n
+  fmt: ',.0f'
+- id: c3_n_late
+  chapter: ch3_data.tex
+  text: 1,006
+  kind: csv
+  file: output/explore/routes/routes_dm_table.csv
+  where:
+    provider: HMM_SPY2
+    first: RSC_P_N
+    second: CCC_S_N
+    alpha: 0.05
+    period: pseudo_2016_2019
+  column: n
+  fmt: ',.0f'
+- id: c3_n_hold
+  chapter: ch3_data.tex
+  text: 1,508
+  kind: json
+  file: output/confirm/holdout/primary.json
+  path: n
+  fmt: ',.0f'
+- id: c3_dry_lo
+  chapter: ch3_data.tex
+  text: '1.3'
+  kind: csv
+  file: output/confirm/dryrun_vs_exploration.csv
+  where:
+    block: L2
+    alpha: 0.05
+    arm: CCC_S_N
+  column: median_abs_var_diff
+  fmt: .1f
+  scale: 100000.0
+- id: c3_dry_hi
+  chapter: ch3_data.tex
+  text: '1.4'
+  kind: csv
+  file: output/confirm/dryrun_vs_exploration.csv
+  where:
+    block: L2
+    alpha: 0.05
+    arm: RSC_P_N
+  column: median_abs_var_diff
+  fmt: .1f
+  scale: 100000.0
+- id: h_power_sesoi
+  chapter: ch7_results_holdout.tex
+  text: '48'
+  kind: power_effect
+  file: output/confirm/holdout/primary.json
+  path: se
+  effect: 0.002
+  fmt: .0f

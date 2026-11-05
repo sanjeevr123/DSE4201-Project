@@ -6,7 +6,7 @@ This chapter defines how forecasts are scored and how two models are compared. I
 
 A forecast of $(\VaR_t,\ES_t)$ is scored against the realised return $y_t$ with the loss
 \begin{equation}
-\FZ(y_t,\VaR_t,\ES_t;\alpha)=-\frac{\mathbb{1}\{y_t\le \VaR_t\}\,(\VaR_t-y_t)}{\alpha\,\ES_t}+\frac{\VaR_t}{\ES_t}+\log(-\ES_t)-1,
+\FZ(y_t,\VaR_t,\ES_t;\alpha)=-\frac{\mathbf{1}\{y_t\le \VaR_t\}\,(\VaR_t-y_t)}{\alpha\,\ES_t}+\frac{\VaR_t}{\ES_t}+\log(-\ES_t)-1,
 \end{equation}
 where $\VaR_t<0$ and $\ES_t<0$ are return quantiles. Lower is better. This is the member of the Fissler--Ziegel family \citep{fissler2016} that \citet{patton2019} call FZ0; I checked its definition and the conditions it needs in the arXiv version of their paper. The family is built on the result that VaR and ES are jointly elicitable, which means that there are losses whose expected value is smallest at the true pair. That property is the reason to use such a loss: a forecaster who reports the true VaR and ES does not lose in expectation to one who reports something else.\footnote{I did not re-derive the elicitability result and rely on the cited papers for it. I use the loss as a formula; a unit test checks that on simulated normal data the true VaR and ES have lower mean loss than biased ones.} Scaling the return and both forecasts by $c>0$ adds $\log c$ to the loss, so a difference between the losses of two models does not depend on the units of the return. Section~\ref{sec:sesoi} translates a loss difference into a proportional error in the forecasts.
 
@@ -76,9 +76,9 @@ The reference value is used in outcome O3 only. With a standard error of 0.0013 
 
 Next to the loss, I report whether the forecasts have the right coverage, as description and not as part of the decision. The hit rate is the share of days on which $y_t\le\VaR_t$; it should be near $\alpha$. The \citet{kupiec1995} test compares the hit rate with $\alpha$ through a likelihood ratio with a $\chi^2_1$ reference. The \citet{christoffersen1998} independence test asks whether hits cluster in time, using a first-order Markov alternative. Their sum, $LR_{uc}+LR_{ind}$ with a $\chi^2_2$ reference, is the conditional-coverage test. For expected shortfall I use the statistic
 \begin{equation}
-Z_2=\frac{1}{T\alpha}\sum_{t=1}^{T}\frac{\mathbb{1}\{y_t\le\VaR_t\}\,y_t}{\ES_t}-1,
+Z_2=\frac{1}{T\alpha}\sum_{t=1}^{T}\frac{\mathbf{1}\{y_t\le\VaR_t\}\,y_t}{\ES_t}-1,
 \end{equation}
-which is zero in expectation if the forecast distribution is correct and positive if risk is underestimated. It is the statistic that \citet{acerbi2014} call $Z_2$ with its sign reversed: they write the expected shortfall as a positive loss, so their statistic has expectation zero under a correct forecast and is negative when risk is underestimated, and they test the lower tail. They show that this statistic does not require independent observations for its expectation result, and they obtain its $p$-value by simulating returns from each day's forecast distribution. I follow that simulation: for each forecast day I draw 5,000 returns from that day's forecast mixture, compute $Z_2$, and report the share of simulated values at or above the observed one. I do not use their tabulated critical values (about $-0.7$ at 5\%, in their sign convention), which I did not need. A unit test on synthetic data checks the sign convention of my version.
+which is zero in expectation if the forecast distribution is correct and positive if risk is underestimated. It is the statistic that \citet{acerbi2014} call $Z_2$ with its sign reversed: they write the expected shortfall as a positive loss, so their statistic has expectation zero under a correct forecast and is negative when risk is underestimated, and they test the lower tail. They show that this statistic does not require independent observations for its expectation result, and they obtain its $p$-value by simulating returns from each day's forecast distribution. I follow that simulation: I draw 5,000 simulated samples, each containing one return for every forecast day drawn from that day's forecast mixture, compute $Z_2$ for each sample, and report the share of simulated values at or above the observed one. I do not use their tabulated critical values (about $-0.7$ at 5\%, in their sign convention), which I did not need. A unit test on synthetic data checks the sign convention of my version.
 
 \subsection{Multiple testing and what is pre-specified}\label{sec:prereg}
 
@@ -94,7 +94,7 @@ The following limits apply to every result in this thesis and are not repeated i
 \begin{itemize}
 \item The test compares forecasting procedures, with their window, refit schedule and the hidden-state chain. It does not test population parameters.
 \item The uncertainty in the estimated regimes is not carried into the test. I did not build a bootstrap of the whole pipeline; the rejection rate in the simulated null stands in as a size check, and it is only as good as the simulated process.
-\item The simulated power does not transfer one-for-one to real data: simulated standard errors of the primary difference are smaller than the real-data ones (Chapter~\ref{ch:results}), so a shift of the simulated size would be tested with a larger standard error.
+\item The simulated power does not transfer one-for-one to real data: the simulated standard error of the primary difference depends on the scenario and differs from the real-data one (Chapter~\ref{ch:results}), so the power in a scenario is not the power that the same difference would have at the standard error of the real data.
 \item The regime signal is the SPY return only. A volatility signal and a rolling 1,260-day window may be slow to reflect a change in the stock--bond correlation.
 \item There is one portfolio of three funds, one data vendor and one reversal episode in the hold-out.
 \end{itemize}
