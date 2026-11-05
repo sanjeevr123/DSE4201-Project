@@ -1747,3 +1747,85 @@
   column: hit_rate
   fmt: .1f
   scale: 100
+- id: c1_gw_share
+  chapter: ch1_introduction.tex
+  text: '44.2'
+  kind: csv
+  file: output/confirm/holdout/secondary_gw_conditional.csv
+  where:
+    n: 1508
+  column: share_pos_corr
+  fmt: .1f
+  scale: 100
+- id: c1_d
+  chapter: ch1_introduction.tex
+  text: '0.0013'
+  kind: json
+  file: output/confirm/holdout/primary.json
+  path: mean_diff
+  fmt: .4f
+  abs: true
+- id: c1_cilo
+  chapter: ch1_introduction.tex
+  text: '0.0037'
+  kind: json
+  file: output/confirm/holdout/primary.json
+  path: ci_lo
+  fmt: .4f
+  abs: true
+- id: c1_cihi
+  chapter: ch1_introduction.tex
+  text: '0.0012'
+  kind: json
+  file: output/confirm/holdout/primary.json
+  path: ci_hi
+  fmt: .4f
+- id: c1_p1
+  chapter: ch1_introduction.tex
+  text: '0.158'
+  kind: json
+  file: output/confirm/holdout/primary.json
+  path: p_one_sided
+  fmt: .3f
+- id: c1_mde1
+  chapter: ch1_introduction.tex
+  text: '0.0031'
+  kind: json
+  file: output/confirm/holdout/primary.json
+  path: mde_one_sided
+  fmt: .4f
+- id: c1_pow_s1
+  chapter: ch1_introduction.tex
+  text: '18.2'
+  kind: csv
+  file: output/explore/ladder/power_1508_summary.csv
+  where:
+    scenario: S1_moderate_breakdown
+    alpha: 0.05
+    step: pair_with_margins
+  column: one_sided
+  fmt: .1f
+  scale: 100
+- id: c1_pow_s2
+  chapter: ch1_introduction.tex
+  text: '35.2'
+  kind: csv
+  file: output/explore/ladder/power_1508_summary.csv
+  where:
+    scenario: S2_strong_breakdown
+    alpha: 0.05
+    step: pair_with_margins
+  column: one_sided
+  fmt: .1f
+  scale: 100
+- id: c1_cal_r5
+  chapter: ch1_introduction.tex
+  text: '6.9'
+  kind: csv
+  file: output/confirm/holdout/calibration.csv
+  where:
+    arm: RSC_P_N
+    alpha: 0.05
+  column: hit_rate
+  fmt: .1f
+  scale: 100

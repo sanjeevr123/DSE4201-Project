@@ -9,9 +9,9 @@ Needed to keep claims in the thesis at full-text level. In priority order. For e
 
 **Medium: closed-access papers I can only describe from the abstract**
 4. ~~Paolella, M.S., Polak, P. and Walker, P.S. (2019). *Journal of Econometrics* 213(2), 493-515. Needed to say whether it separates volatility from correlation effects.~~ **Received 2026-11-04 as the SFI working paper 19-27; the published Journal of Econometrics text is still unread.**
-5. Pelletier, D. (2006). *Journal of Econometrics* 131(1-2), 445-473.
-6. Fortin, A.-P., Simonato, J.-G. and Dionne, G. (2023). *International Journal of Forecasting* 39(1), 314-331. Needed to say whether they score VaR and ES jointly (an open accepted version may exist at HEC Montreal; I can look).
-7. Christoffersen, P.F. (1998). Evaluating interval forecasts. *International Economic Review* 39(4), 841-862 (JSTOR).
+5. ~~Pelletier, D. (2006). *Journal of Econometrics* 131(1-2), 445-473.~~ **Received 2026-11-05 as the May 2003 working paper (read in full); the published text is still unread.**
+6. ~~Fortin, A.-P., Simonato, J.-G. and Dionne, G. (2023). *International Journal of Forecasting* 39(1), 314-331. Needed to say whether they score VaR and ES jointly (an open accepted version may exist at HEC Montreal; I can look).~~ **Received 2026-11-05 as two working-paper versions (2018, 2021; read in full); the published IJF text is still unread.**
+7. ~~Christoffersen, P.F. (1998). Evaluating interval forecasts. *International Economic Review* 39(4), 841-862 (JSTOR).~~ **Received 2026-11-05 (published text; read in full).**
 8. Harvey, D., Leybourne, S. and Newbold, P. (1997). *International Journal of Forecasting* 13(2), 281-291. No abstract exists on any index I could reach.
 
 **Low: nice to have**
@@ -21,3 +21,5 @@ Needed to keep claims in the thesis at full-text level. In priority order. For e
 12. Brooks and Persand (2003) and McAleer and da Veiga (2008), only if the thesis is to characterise them beyond their abstracts.
 
 **Already open, I can read them myself if you want**: Santos et al. (2013, SSRN 2110297), Kole et al. (2017), Hansen (2005), Kupiec (1995, Fed working paper 95-24), Fissler and Ziegel (2016, arXiv 1503.08123), Nolde and Ziegel (2017, Project Euclid).
+
+**Added and received 2026-11-05:** Baele, Bekaert and Inghelbrecht (2010) and Campbell, Pflueger and Viceira (2020), both read in full. They disagree about the drivers of the stock-bond correlation; see `notes/literature_audit.md`.

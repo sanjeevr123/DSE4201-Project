@@ -140,3 +140,10 @@ The dry-run comparison is a pipeline check and enters no argument for the hypoth
 ## Phase 8: reproducibility package (2026-11-05). Status: DONE
 - `scripts/build_all.py` (tables, forest figures, number check, PDF; serial, BLAS threads 1) and `scripts/verify_clean_clone.py` (clone HEAD to a temp dir, build there, compare). Clean-clone result: 11 tables byte-identical, 3 figures pixel-identical, PDF text identical (19,688 words). Appendix written (record locations, rebuild, recompute route with recorded run times only, environment). Long computations are not repeated by the build; the clone does not contain the untracked hold-out pickle and does not need it.
 - Not tested: another machine. Full recompute of the exploration grid was not re-run (times not recorded).
+
+## Chapters 1 and 2 drafted (2026-11-05)
+- Author supplied Fortin et al. (2018 and 2021 working papers), Pelletier (2003 working paper), Christoffersen (1998), Baele et al. (2010), Campbell-Pflueger-Viceira (2020). All read; matrix, audit and library requests updated.
+- Chapter 2 written in full (six themes plus what this thesis adds). **Correction found:** the earlier claim that the stock-bond correlation is "a slow macro state" is not supported: the two sources disagree. Chapter 2 reports the disagreement and chapter 8's section on a slow signal is hedged to match (a wording change, not a change of result). Bibliography: Fortin first name corrected; Christoffersen pages added; four entries added.
+- Chapter 1 written (hook, question, design list, result, contribution, roadmap); 9 numbers registered (166 in total, 0 problems). Wording check clean; citation audit: none missing or unused; [UNVERIFIED] 0; builds to 60 pages (about 49 numbered body pages): watch length, the guideline was about 50.
+- Still unwritten: acknowledgements; appendix is written; published texts of Fortin et al. and Pelletier unread (stated in chapter 2).
+- Next: Phase 9 verification (code-versus-text, discipline audit, consistency, render check), then Phase 10 reviews.
