@@ -160,3 +160,20 @@ The dry-run comparison is a pipeline check and enters no argument for the hypoth
 - `check_numbers.py` gains kind `power_effect`; 174 numbers registered, 0 problems. Wording check clean on all chapters and front matter; pytest 110 passed; clean-clone rebuild MATCH (11 tables, 3 figures, 22,045 words). Committed.
 - Page count: 60 PDF pages, about 50 numbered pages including references and appendix; within the guideline.
 - Still not done: a viewing of every rendered page (pages 41-42, 47-48, 53-54, 56-58 were not viewed this pass); unregistered numbers in Ch3-5 remain traced by reading rather than by the checker.
+
+## Phase 10, reviewer 1 of 4: hostile econometrics examiner (2026-11-05)
+Each finding was checked by me against files or by recomputation (scratch script, then `scripts/thesis_posthoc.py`, which reads the stored forecasts only; nothing refit, hold-out not re-run).
+- **1 (high) power figures 18.2/35.2% vs MDE: CONFIRMED.** The scenario SE differs (S2 simulated SE 0.0026 vs observed 0.0013). Fix: abstract/Ch1/Ch9 now quote the effect-based figure (48% at SESOI at the observed SE); Ch7 and Ch8 state that scenario power depends on the scenario SE and give 17% and 85% for the two simulated shifts at the observed SE (registered, `power_effect`).
+- **2 (prereg low-power rule vacuous when written): CONFIRMED, preregistration is frozen.** The rule is not in the thesis; disclosed here. Known issue.
+- **3 (MDE > SESOI, O3 nearly unreachable): CONFIRMED but already stated in advance in Ch5.** Ch8 limitations now say the design could in practice return only O1 or O2.
+- **4 (SESOI rounding up): not changed.** The declared 0.002 is the pre-specified value; noted as a viva point.
+- **5 (where the difference arises): CONFIRMED** (2021 sum -1.56, COVID window +1.05, mean excluding it -0.0020). New Ch7 subsection of post hoc checks, labelled as such.
+- **6 (HAC lag): CONFIRMED** (SE 0.00121/0.00126/0.00140/0.00151 at lags 0/7/21/42). In Ch7 post hoc subsection.
+- **7 (framing of estimand/nesting/estimation uncertainty): PARTLY.** Ch8 Inference bullet rewritten for the GW estimand and the interior null; "nested" not used as a size argument.
+- **8 (size evidence weak): CONFIRMED.** Ch6 and Ch8 softened.
+- **9 (post-result edits not disclosed): CONFIRMED.** Ch7 intro now lists them and says no `prewrite-v1` tag exists.
+- **10 (v1.1 amendment outside the letter of 6a; coverage of check): CONFIRMED.** Ch7 section 7.1 now says so. The preregistration's duplicate section number 8 is left (frozen file).
+- **11 (ES claim rests on VaR hit rate): CONFIRMED.** Abstract, Ch7-9 reworded to "breaches too frequent; breach-day losses exceeded the forecast shortfall"; first-order independence test caveat added.
+- **12 (GW direction): CONFIRMED,** noted in Ch7.
+- **13, 14, 15, 16 (low): not changed;** open low-severity items (substantive justification of one-sided choice; warm-start vs finite window; dev and hold-out agree but cannot be pooled; hold-out contamination tone).
+- Length: 62 PDF pages after additions (about 52 numbered); slightly over the guideline. Gates re-run: 191 numbers 0 problems, wording clean, pytest 110 passed.
