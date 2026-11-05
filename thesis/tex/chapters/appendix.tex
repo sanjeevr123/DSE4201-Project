@@ -11,7 +11,7 @@ The command \texttt{.venv/bin/python scripts/build\_all.py} rebuilds every table
 
 \subsection{Recomputing the results}
 
-The saved results can be recomputed from the raw data \texttt{data/raw/spy\_ief\_gld\_raw\_2026-09-26.csv} (SHA-256 \texttt{0ab8c7f3\ldots150e29}) in the order below. The run times are those I recorded; where none is given, I did not record one.
+The saved results can be recomputed from the raw data \texttt{data/raw/spy\_\allowbreak ief\_\allowbreak gld\_\allowbreak raw\_\allowbreak 2026-09-26.csv} (SHA-256 \texttt{0ab8c7f3\ldots150e29}) in the order below. The run times are those I recorded; where none is given, I did not record one.
 \begin{itemize}
 \item The exploration grid, the ladder and the development power study: \texttt{scripts/explore\_00} to \texttt{explore\_20}.
 \item Power at the hold-out length: \texttt{scripts/explore\_21\_power\_holdout\_length.py} with at most five workers, 500 replications in each of four scenarios. The estimate was 19 seconds per replication, about 2.1 hours with five workers; I ran it with four, resuming from saved replications, and \texttt{scripts/explore\_22\_power\_summary.py} summarises it.

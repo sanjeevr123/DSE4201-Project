@@ -33,26 +33,26 @@ def p_label(p: float) -> str:
 
 def forest(d: pd.DataFrame, out: Path):
     steps = [(s, t) for s, t in STEPS if (d.step == s).any()]
-    fig, axes = plt.subplots(len(steps), 1, figsize=(8.2, 1.62 * len(steps) + 0.7), sharex=True)
+    fig, axes = plt.subplots(len(steps), 1, figsize=(6.3, 1.15 * len(steps) + 0.6), sharex=True)
     for ax, (step, title) in zip(axes, steps):
         for i, (u, label) in enumerate(UNIS):
             r = d[(d.universe == u) & (d.step == step)].iloc[0]
             y = len(UNIS) - 1 - i
             ax.barh(y, 2 * r.mde80, left=-r.mde80, height=0.62, color=BAND, zorder=1)
             ax.plot([r.mean_diff - 1.96 * r.se, r.mean_diff + 1.96 * r.se], [y, y], color=INK, lw=1.4, zorder=2)
-            ax.plot(r.mean_diff, y, "o", ms=6.5, mfc=INK if r.p < 0.05 else "white", mec=INK, mew=1.4, zorder=3)
-            ax.text(0.205, y, f"{r.mean_diff:+.4f}  ({p_label(r.p)})", va="center", ha="right", fontsize=8, color=INK)
+            ax.plot(r.mean_diff, y, "o", ms=5, mfc=INK if r.p < 0.05 else "white", mec=INK, mew=1.4, zorder=3)
+            ax.text(0.205, y, f"{r.mean_diff:+.4f}  ({p_label(r.p)})", va="center", ha="right", fontsize=6.5, color=INK)
         ax.axvline(0, color=MUTED, lw=0.8, zorder=0)
         ax.set_yticks(range(len(UNIS)))
-        ax.set_yticklabels([l for _, l in UNIS][::-1], fontsize=8.5, color=INK)
-        ax.set_title(title, loc="left", fontsize=9, color=INK, pad=3)
+        ax.set_yticklabels([l for _, l in UNIS][::-1], fontsize=7, color=INK)
+        ax.set_title(title, loc="left", fontsize=7, color=INK, pad=3)
         ax.grid(axis="x", color=GRID, lw=0.6)
         ax.set_axisbelow(True)
         for s in ("top", "right", "left"):
             ax.spines[s].set_visible(False)
         ax.tick_params(axis="y", length=0)
         ax.set_xlim(-0.30, 0.21)
-    axes[-1].set_xlabel("Mean FZ0 loss difference, richer minus baseline (negative: richer model better)", fontsize=9, color=INK)
+    axes[-1].set_xlabel("Mean FZ0 loss difference, richer minus baseline (negative: richer model better)", fontsize=7, color=INK)
     fig.tight_layout()
     fig.savefig(out, dpi=300)
     plt.close(fig)
