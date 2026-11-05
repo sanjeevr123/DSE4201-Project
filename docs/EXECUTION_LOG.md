@@ -206,3 +206,6 @@ Headline numbers, Tables 7.1-7.3, Table 6.x, calibration, post hoc, data counts 
 ## Phase 10 closed, Phase 11 done (2026-11-05)
 - Phase 10: one round of four reviews, each finding verified and acted on or logged. After the fixes: 191 numbers 0 problems, wording clean, pytest 110 passed, clean-clone MATCH. No round 2 was run: the reviewers' remaining findings are low or medium wording and readability items listed above; no high-severity finding is open except the author-only placeholders (title page, acknowledgements). A second review round would be the next step if time allows.
 - Phase 11: `thesis/final/` (PDF, docx export), `notes/submission_checklist.md`, `notes/viva_prep.md`, `notes/ai_statement_draft.md`, `notes/outbox/04_full_draft_note.md`; tag `thesis-submission-candidate` (local only; nothing pushed or submitted).
+
+## Length trim (2026-11-05)
+Repeated headline-result paragraphs in Chapters 8 and 9 shortened to a statement plus a pointer to Chapter 7 (the abstract, Chapter 1 and Chapter 7 keep the full statement). Seven registered numbers that no longer appear were removed from `numbers.yaml`; no result or number changed. Effect: 63 PDF pages, about 53 numbered (one page recovered, not the three estimated). Further cuts would remove substantive content (limits, method detail) and were not made.

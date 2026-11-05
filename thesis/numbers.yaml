@@ -1683,35 +1683,6 @@
   path: mean_diff
   fmt: .4f
   abs: true
-- id: c9_cilo
-  chapter: ch9_conclusion.tex
-  text: '0.0037'
-  kind: json
-  file: output/confirm/holdout/primary.json
-  path: ci_lo
-  fmt: .4f
-  abs: true
-- id: c9_cihi
-  chapter: ch9_conclusion.tex
-  text: '0.0012'
-  kind: json
-  file: output/confirm/holdout/primary.json
-  path: ci_hi
-  fmt: .4f
-- id: c9_p1
-  chapter: ch9_conclusion.tex
-  text: '0.158'
-  kind: json
-  file: output/confirm/holdout/primary.json
-  path: p_one_sided
-  fmt: .3f
-- id: c9_mde1
-  chapter: ch9_conclusion.tex
-  text: '0.0031'
-  kind: json
-  file: output/confirm/holdout/primary.json
-  path: mde_one_sided
-  fmt: .4f
 - id: c9_cal_r5
   chapter: ch9_conclusion.tex
   text: '6.9'
@@ -1982,32 +1953,8 @@
   path: se
   effect: 0.003443
   fmt: .0f
-- id: pw_ch8_s1
-  chapter: ch8_discussion.tex
-  text: '17'
-  kind: power_effect
-  file: output/confirm/holdout/primary.json
-  path: se
-  effect: 0.00086
-  fmt: .0f
-- id: pw_ch8_s2
-  chapter: ch8_discussion.tex
-  text: '86'
-  kind: power_effect
-  file: output/confirm/holdout/primary.json
-  path: se
-  effect: 0.003443
-  fmt: .0f
 - id: pw48_ch1
   chapter: ch1_introduction.tex
-  text: '48'
-  kind: power_effect
-  file: output/confirm/holdout/primary.json
-  path: se
-  effect: 0.002
-  fmt: .0f
-- id: pw48_ch9
-  chapter: ch9_conclusion.tex
   text: '48'
   kind: power_effect
   file: output/confirm/holdout/primary.json
