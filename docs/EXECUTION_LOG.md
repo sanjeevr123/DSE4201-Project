@@ -202,3 +202,7 @@ Headline numbers, Tables 7.1-7.3, Table 6.x, calibration, post hoc, data counts 
 - **Not changed (open, low):** notation collisions B/R/mu/A (item 9: rename if time allows), capitalisation and "pre-registration"/"preregistration" mixing, abbreviation list gaps (CI, SPA), hyphen vs en dash in names in the abbreviation list, bib URLs, underfull boxes in Tables 3.1 and 4.1.
 - **Only the author can fix:** title-page placeholders (author, degree, department) and the acknowledgements page.
 - Page count after Phase 10 edits: 64 PDF pages, 54 numbered pages; over the guideline of about 50. Cutting the repeated result paragraph and limitations (see reviewer 3, section 4) would recover about 3 pages.
+
+## Phase 10 closed, Phase 11 done (2026-11-05)
+- Phase 10: one round of four reviews, each finding verified and acted on or logged. After the fixes: 191 numbers 0 problems, wording clean, pytest 110 passed, clean-clone MATCH. No round 2 was run: the reviewers' remaining findings are low or medium wording and readability items listed above; no high-severity finding is open except the author-only placeholders (title page, acknowledgements). A second review round would be the next step if time allows.
+- Phase 11: `thesis/final/` (PDF, docx export), `notes/submission_checklist.md`, `notes/viva_prep.md`, `notes/ai_statement_draft.md`, `notes/outbox/04_full_draft_note.md`; tag `thesis-submission-candidate` (local only; nothing pushed or submitted).
