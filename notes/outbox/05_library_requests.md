@@ -23,3 +23,6 @@ Needed to keep claims in the thesis at full-text level. In priority order. For e
 **Already open, I can read them myself if you want**: Santos et al. (2013, SSRN 2110297), Kole et al. (2017), Hansen (2005), Kupiec (1995, Fed working paper 95-24), Fissler and Ziegel (2016, arXiv 1503.08123), Nolde and Ziegel (2017, Project Euclid).
 
 **Added and received 2026-11-05:** Baele, Bekaert and Inghelbrecht (2010) and Campbell, Pflueger and Viceira (2020), both read in full. They disagree about the drivers of the stock-bond correlation; see `notes/literature_audit.md`.
+
+## Added after the Phase 10 literature review (2026-11-05)
+Candidates a reviewer suggested; none read, none cited. Fetch from the NUS library only if you want the claims they would support: Guidolin and Timmermann (2006, J. Applied Econometrics, regime switching in joint stock-bond returns); Diebold (2015, JBES, comparing predictive accuracy twenty years later); White (2000, Econometrica); Engle and Manganelli (2004, JBES, dynamic quantile test); Fissler, Ziegel and Gneiting (2016, joint elicitability of VaR and ES); Du and Escanciano (2017, Management Science); Cappiello, Engle and Sheppard (2006); Colacito, Engle and Ghysels (2011). Verify each reference before use.

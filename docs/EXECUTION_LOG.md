@@ -177,3 +177,12 @@ Each finding was checked by me against files or by recomputation (scratch script
 - **12 (GW direction): CONFIRMED,** noted in Ch7.
 - **13, 14, 15, 16 (low): not changed;** open low-severity items (substantive justification of one-sided choice; warm-start vs finite window; dev and hold-out agree but cannot be pooled; hold-out contamination tone).
 - Length: 62 PDF pages after additions (about 52 numbered); slightly over the guideline. Gates re-run: 191 numbers 0 problems, wording clean, pytest 110 passed.
+
+## Phase 10, reviewer 2 of 4: literature reviewer (2026-11-05)
+Source PDFs are not in the repository, so checks were against the matrix and audit (the author's own record).
+- **1 (Ch2 per-study findings for Brooks, McAleer, Santos, Kole): CONFIRMED against audit item 7.** Replaced by the abstract-supported statements plus Fortin et al.'s characterisation of the earlier literature as mixed.
+- **2 (Paolella "equities only"): CONFIRMED.** Reworded (Ch1, Ch2). **3 (Fortin abstract sentence): CONFIRMED unrecorded,** reworded to "differences mostly not significant". **11:** "(2021 working paper)" added in section 2.2.
+- **4 (Clark attribution): CONFIRMED,** split between Clark-McCracken 2001 and Clark-West 2007. **6 (Hoenig, Abadie): CONFIRMED,** narrowed to abstract wording. **7 (reading-level gap): CONFIRMED,** one blanket sentence added.
+- **5, 14 (Zhu-Timmermann; Connolly et al. in the matrix but uncited): CONFIRMED.** Both now cited (bib entries added); Zhu-Timmermann at the conditional GW test, Connolly et al. in 2.4.
+- **13, 14 (further missing references, Guidolin-Timmermann etc.): NOT ADDED.** I have not read them; listed in `notes/outbox/05_library_requests.md`. The thesis does not claim the survey is exhaustive.
+- **15 (novelty claim), 16, 17, 18, 8, 9, 10, 12: not changed;** low or medium wording points already hedged ("a statement about what I read"); open as low severity.
