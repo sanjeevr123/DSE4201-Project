@@ -10,7 +10,7 @@
 ## YOU
 - [ ] Title page: author name, degree wording, department or programme (placeholders in `thesis/tex/front/titlepage.tex`).
 - [ ] Acknowledgements (`thesis/tex/front/acknowledgements.tex` still reads "TO WRITE").
-- [ ] Confirm the official format, page limit (the thesis has about 54 numbered pages against a guideline of about 50), deadline, title change, and any AI-use declaration with the programme office.
+- [ ] Confirm the official format, page limit (the thesis has about 53 numbered pages against a guideline of about 50), deadline, title change, and any AI-use declaration with the programme office.
 - [ ] Decide the final wording of the AI-assistance statement (`notes/ai_statement_draft.md`) and where it goes.
 - [ ] Send `notes/outbox/04_full_draft_note.md` (and the earlier outbox notes) to Prof. Seo.
 - [ ] Read the whole thesis yourself; read `notes/viva_prep.md`.
