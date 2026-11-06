@@ -13,3 +13,16 @@ notes/literature/cache/
 
 # third-party reference thesis, kept local only
 notes/reference/
+
+# internal working material and regenerable intermediates, kept outside the repository
+notes/
+starter/
+outputs/
+notebooks/
+docs/*_PROMPT.md
+docs/sent/
+output/explore/**/*.pkl
+output/explore/**/*.jsonl
+*.log
+output/confirm/archive/
+thesis/tex/build/

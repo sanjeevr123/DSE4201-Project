@@ -1,0 +1,15 @@
+\begin{table}[t]
+\centering\setstretch{1}\scriptsize\setlength{\tabcolsep}{3pt}
+\caption{\uc{Coverage and expected-shortfall calibration of the two primary models on the hold-out}}\label{tab:holdout-calib}
+\begin{tabular}{llrrrrrrrr}
+\toprule
+$\alpha$ & Model & Hits & Hit rate & Kupiec $p$ & Indep. $p$ & Cond. cov. $p$ & $Z_2$ & $Z_2$ $p$ & ES ratio \\
+\midrule
+5.0\% & RSC\_P\_N & 104 & 6.9\% & 0.001 & 0.480 & 0.005 & 0.616 & $<$0.001 & 1.17 \\
+5.0\% & CCC\_S\_N & 103 & 6.8\% & 0.002 & 0.444 & 0.006 & 0.606 & $<$0.001 & 1.18 \\
+2.5\% & RSC\_P\_N & 66 & 4.4\% & $<$0.001 & 0.947 & $<$0.001 & 1.083 & $<$0.001 & 1.19 \\
+2.5\% & CCC\_S\_N & 65 & 4.3\% & $<$0.001 & 0.903 & $<$0.001 & 1.064 & $<$0.001 & 1.20 \\
+\bottomrule
+\end{tabular}
+\tabnote{1,508 forecast days. A hit is a day with $y_t\le\mathrm{VaR}_t$. Kupiec: unconditional coverage; Indep.: Christoffersen independence; Cond. cov.: their sum. $Z_2$ is positive when risk is underestimated (my sign, opposite to Acerbi and Szekely); its $p$-value is the simulated share of $Z_2$ values at or above the observed one. ES ratio: mean of $y_t/\mathrm{ES}_t$ over hit days, above one when exceedances are larger than the forecast shortfall. Descriptive, not part of the decision. Source: \texttt{output/confirm/holdout/calibration.csv}.}
+\end{table}

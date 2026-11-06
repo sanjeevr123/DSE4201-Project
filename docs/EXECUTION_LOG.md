@@ -113,3 +113,99 @@ The dry-run comparison is a pipeline check and enters no argument for the hypoth
 - **Tag** `spec-freeze-v1` (annotated) on the commit after the dry-run outputs (commit b2cbbaac). `check_freeze()` passes without running the hold-out; `output/confirm/holdout_forecasts.pkl` does not exist.
 - **GATE.** `HOLD-OUT GO-AHEAD: NOT YET GIVEN`. Waiting for the user to send notes 01 and 03, let the 3-working-day window pass and reply "go". Any change after the tag means a log entry and tag `spec-freeze-v1.1`.
 - Remaining before the run: the pre-run checklist (plan 5.5) at "go". Phase 4 gate item still open: tag `prewrite-v1` (chapters 3-6 are committed; ask before tagging because chapter placeholders and `\pending` marks remain).
+
+## Phase 5 step 6: hold-out run (2026-11-05). Status: RUN WRITTEN, NOT YET SCORED; validity assertion failed
+- User gave "go" 2026-11-05 after the supervisor's reply (test appropriate; asked for hypothesis, sidedness, exact SPY-IEF specification, and that non-significance is not absence of an effect). Pre-run checklist 1-8 passed (file hashes match section 7 of the preregistration, 110 tests passed, no earlier pickle, `OMP_NUM_THREADS=1`).
+- `confirm_00_run.py holdout`: 1508 forecast days 2020-01-02..2025-12-31, 27 s. Pickle SHA-256 `9537bb5d6008028076126d0166bb2edc1f643e5a9f496cb852d7872f8485f974`.
+- `confirm_01_score.py holdout` stopped at its first assertion, before computing anything: pickle `git_head` is c4495da (HEAD, two commits after the tag, changing only `.gitignore` and this log), the tag commit is b2cbbaa. All frozen files are byte-identical to the tag (`check_freeze()` passed). No performance figure was computed or seen.
+- Cause: the scorer's validity rule demands `git_head == tag commit` exactly; the two post-tag commits were not anticipated. Decision on how to proceed is the user's (see message).
+- **Resolution (2026-11-05, user chose the recommended route):** scorer validity rule changed to "descendant of the tag, frozen forecast-determining files unchanged" (preregistration section 8), tag `spec-freeze-v1.1`; hold-out not repeated; pseudo scorer output unchanged (O2, t -1.364). Scoring of the existing pickle follows.
+
+## Phase 5 step 6-7: hold-out scored (2026-11-05). Status: DONE. Outcome O2.
+- Scored once from the single hold-out pickle (SHA-256 `9537bb5d6008028076126d0166bb2edc1f643e5a9f496cb852d7872f8485f974`; read-only copy in `output/confirm/archive/`, pickle not committed). Validity passed under the amended rule (preregistration section 8, tag `spec-freeze-v1.1`).
+- Primary (RSC_P_N vs CCC_S_N, 5% tail, FZ0, one-sided 5% DM/HAC, 7 lags, n = 1,508): mean d = -0.001264, SE 0.001261, t = -1.002, one-sided p = 0.158, two-sided p = 0.316, 95% CI [-0.00374, +0.00121]. Outcome **O2**: not significant; the 80%-power detectable difference is 0.0031 and the SESOI-based lower bound (-0.00334) does not exclude an improvement larger than 0.002. Frozen sentence in `output/confirm/holdout/RESULT.md`. Non-significance is not evidence of no effect.
+- Diagnostics: PSD repairs 0 of 144 matrices, margin fallbacks none, DCC fallbacks 0 of 24 refits, runtime 27 s.
+- Hashes of the scorer outputs are in `output/confirm/holdout/manifest.json`; primary.json `277a091c...5d`.
+- After-run checklist: runner printed the 1508-day line; scorer asserted validity first; `pytest -m holdout_data` 3 passed; full pytest passed after updating `tests/test_confirm_score.py` to the amended validity rule (the old test asserted the superseded rule; test-only change).
+- Anything further is POST HOC. Next: Phase 7 (Chapter 7 with the frozen O2 wording), then the `prewrite-v1` question.
+
+## Phase 7 step 1: Chapter 7 written (2026-11-05)
+- `scripts/thesis_tables.py` now also writes `tab_holdout_primary/secondary/calib.tex` from `output/confirm/holdout/` (after the scored run only). Chapter 7 drafted with the frozen O2 sentence verbatim; 60 prose numbers registered (`thesis/numbers.yaml`, 149 total, `check_numbers.py` 0 problems); wording check clean on chapters 3, 5, 7; build OK; rendered pages 38-42 inspected.
+- **Error corrections to chapters 3 and 5 (permitted: errors only, not reframing):** the two `\pending` statements are replaced by true ones, and chapter 3's sentence "the scorer rejects a run whose recorded commit is not the tagged one" is replaced by the actual rule plus the account of the `spec-freeze-v1.1` amendment (chapter 7, Section 7.1).
+- **`prewrite-v1` was not tagged.** The plan wanted it before the run; creating it now would be misleading. Chapters 3-6 as they stood at the run are in commit c4495da (and earlier commits), before any hold-out output existed; the only later edits are the two corrections above.
+- Findings worth carrying to chapter 8 (descriptive): both primary models breached the 5% VaR on about 6.9% of days (Kupiec p 0.001-0.002; Z2 p 0.0002), i.e. both underestimated tail risk; dev data showed overstated risk for static models. Static-model loss differences have SEs more than 20 times those of the correlation steps; the cause (likely 2020) was NOT examined and is labelled conjecture.
+- Open: chapter 8, 9, 1, abstract, acknowledgements, rest of chapter 2, appendix; Phase 8 reproducibility package; phases 9-11.
+- Chapters 8 and 9 and the abstract drafted (2026-11-05); wording check clean; build OK. Abstract numbers (front matter, outside `check_numbers.py`'s chapter folder) were checked by hand against `output/confirm/holdout/`; chapter 9 numbers registered. Chapter 8 contains no new numbers except those already registered in chapters 6-7 (3.6% size, 18.2/35.2% power, 0.0031 MDE, -0.0033/-0.0020 bounds, 2022 interval). Remaining: chapter 1, rest of chapter 2 (needs library items), acknowledgements, appendix; then Phases 8-11.
+
+## Phase 8: reproducibility package (2026-11-05). Status: DONE
+- `scripts/build_all.py` (tables, forest figures, number check, PDF; serial, BLAS threads 1) and `scripts/verify_clean_clone.py` (clone HEAD to a temp dir, build there, compare). Clean-clone result: 11 tables byte-identical, 3 figures pixel-identical, PDF text identical (19,688 words). Appendix written (record locations, rebuild, recompute route with recorded run times only, environment). Long computations are not repeated by the build; the clone does not contain the untracked hold-out pickle and does not need it.
+- Not tested: another machine. Full recompute of the exploration grid was not re-run (times not recorded).
+
+## Chapters 1 and 2 drafted (2026-11-05)
+- Author supplied Fortin et al. (2018 and 2021 working papers), Pelletier (2003 working paper), Christoffersen (1998), Baele et al. (2010), Campbell-Pflueger-Viceira (2020). All read; matrix, audit and library requests updated.
+- Chapter 2 written in full (six themes plus what this thesis adds). **Correction found:** the earlier claim that the stock-bond correlation is "a slow macro state" is not supported: the two sources disagree. Chapter 2 reports the disagreement and chapter 8's section on a slow signal is hedged to match (a wording change, not a change of result). Bibliography: Fortin first name corrected; Christoffersen pages added; four entries added.
+- Chapter 1 written (hook, question, design list, result, contribution, roadmap); 9 numbers registered (166 in total, 0 problems). Wording check clean; citation audit: none missing or unused; [UNVERIFIED] 0; builds to 60 pages (about 49 numbered body pages): watch length, the guideline was about 50.
+- Still unwritten: acknowledgements; appendix is written; published texts of Fortin et al. and Pelletier unread (stated in chapter 2).
+- Next: Phase 9 verification (code-versus-text, discipline audit, consistency, render check), then Phase 10 reviews.
+
+## Phase 9 verification, first pass (2026-11-05)
+- **Discipline audit (item 6):** tag `spec-freeze-v1` 2026-11-04 15:18; amendment tag `spec-freeze-v1.1` 2026-11-05 11:27; hold-out forecasts written 11:23, scored after the tag; chapter 7 first committed 11:37; the pickle was committed afterwards (11:48). Chapters 3-6 are unchanged since 2026-11-04 except the two corrections logged above. No test in the thesis is unlabelled: confirmatory test pre-declared; secondary list pre-declared; nothing POST HOC has been added.
+- **Code-vs-text (item 5), chapter 4 and chapter 5.2:** HMM settings (diag covariance, tol 1e-4, seed 0, cold start 100 iterations with the stated initial values, warm start 50, ordering by variance), 21-day blocks, 1,260 window, GARCH refit every 63 days from the first block, re-filter from the window sample variance, the 1e-12 weight floor, mixture weights from the filtered predictive probabilities, mixture VaR/ES formulae, RSC_P definition, the PSD repair rule, DCC recursion and fallback rule, GARCH-t on the portfolio, HAC lag rule (7 at T = 1,508): all match `src/`. No discrepancy found. Not re-derived: the Student-t chain details beyond the degrees-of-freedom fit, the Kupiec/Christoffersen/Z2 code (covered by tests), and chapter 6 prose numbers beyond the registered ones.
+- **Render and layout (item 7), partial:** inspected pages with chapter 7 tables, the forest figure, the bibliography tail. Found and fixed: forest-plot text was about 4.6 pt after scaling (now 6.3 in wide at 7 pt fonts); three bibliography entries lacked pages (Hamilton, Bollerslev, West). Remaining LaTeX warnings are underfull boxes in the chapter 4 table. Not inspected page by page: front matter, chapters 2-5, 8-9. 
+- **Gates:** `check_numbers` 166 registered, 0 problems; wording clean on all chapters; citations none missing or unused; `pytest` 110 passed (3 hold-out data tests deselected by default; they passed in full run earlier); clean-clone rebuild matches (11 tables, 3 figures, 21,858 words).
+- **Not done in Phase 9:** a complete trace of every number in the prose (only registered numbers are checked; chapters 3-5 contain unregistered numbers); the abstract's numbers are checked by hand only; consistency sweep was by search, not by a full read.
+
+## Phase 9 continuation (2026-11-05)
+- Edits: abbreviation list gains RSC_P, A/B/D, SPY/IEF/GLD; appendix no longer states a hard-coded count of registered numbers; Ch2 duplicate phrase removed and the "nested in the correlation matrix" overstatement replaced by a pointer to Table 4.1; Ch3 dry-run medians and hold-out-data test wording corrected; Ch5 indicator symbol and the simulated-vs-real SE bullet corrected; Ch6 simulated-vs-real SE paragraph rewritten (S2 simulated SE 0.0026 is larger than the real 0.0013, so the earlier claim that simulated SEs are smaller was false); Ch7 gains a power-at-SESOI figure (about 48%, computed at the stated effect 0.0020 and the observed SE, not at the estimate). All are error corrections or additions of a stated effect-based figure; no result changed.
+- `check_numbers.py` gains kind `power_effect`; 174 numbers registered, 0 problems. Wording check clean on all chapters and front matter; pytest 110 passed; clean-clone rebuild MATCH (11 tables, 3 figures, 22,045 words). Committed.
+- Page count: 60 PDF pages, about 50 numbered pages including references and appendix; within the guideline.
+- Still not done: a viewing of every rendered page (pages 41-42, 47-48, 53-54, 56-58 were not viewed this pass); unregistered numbers in Ch3-5 remain traced by reading rather than by the checker.
+
+## Phase 10, reviewer 1 of 4: hostile econometrics examiner (2026-11-05)
+Each finding was checked by me against files or by recomputation (scratch script, then `scripts/thesis_posthoc.py`, which reads the stored forecasts only; nothing refit, hold-out not re-run).
+- **1 (high) power figures 18.2/35.2% vs MDE: CONFIRMED.** The scenario SE differs (S2 simulated SE 0.0026 vs observed 0.0013). Fix: abstract/Ch1/Ch9 now quote the effect-based figure (48% at SESOI at the observed SE); Ch7 and Ch8 state that scenario power depends on the scenario SE and give 17% and 85% for the two simulated shifts at the observed SE (registered, `power_effect`).
+- **2 (prereg low-power rule vacuous when written): CONFIRMED, preregistration is frozen.** The rule is not in the thesis; disclosed here. Known issue.
+- **3 (MDE > SESOI, O3 nearly unreachable): CONFIRMED but already stated in advance in Ch5.** Ch8 limitations now say the design could in practice return only O1 or O2.
+- **4 (SESOI rounding up): not changed.** The declared 0.002 is the pre-specified value; noted as a viva point.
+- **5 (where the difference arises): CONFIRMED** (2021 sum -1.56, COVID window +1.05, mean excluding it -0.0020). New Ch7 subsection of post hoc checks, labelled as such.
+- **6 (HAC lag): CONFIRMED** (SE 0.00121/0.00126/0.00140/0.00151 at lags 0/7/21/42). In Ch7 post hoc subsection.
+- **7 (framing of estimand/nesting/estimation uncertainty): PARTLY.** Ch8 Inference bullet rewritten for the GW estimand and the interior null; "nested" not used as a size argument.
+- **8 (size evidence weak): CONFIRMED.** Ch6 and Ch8 softened.
+- **9 (post-result edits not disclosed): CONFIRMED.** Ch7 intro now lists them and says no `prewrite-v1` tag exists.
+- **10 (v1.1 amendment outside the letter of 6a; coverage of check): CONFIRMED.** Ch7 section 7.1 now says so. The preregistration's duplicate section number 8 is left (frozen file).
+- **11 (ES claim rests on VaR hit rate): CONFIRMED.** Abstract, Ch7-9 reworded to "breaches too frequent; breach-day losses exceeded the forecast shortfall"; first-order independence test caveat added.
+- **12 (GW direction): CONFIRMED,** noted in Ch7.
+- **13, 14, 15, 16 (low): not changed;** open low-severity items (substantive justification of one-sided choice; warm-start vs finite window; dev and hold-out agree but cannot be pooled; hold-out contamination tone).
+- Length: 62 PDF pages after additions (about 52 numbered); slightly over the guideline. Gates re-run: 191 numbers 0 problems, wording clean, pytest 110 passed.
+
+## Phase 10, reviewer 2 of 4: literature reviewer (2026-11-05)
+Source PDFs are not in the repository, so checks were against the matrix and audit (the author's own record).
+- **1 (Ch2 per-study findings for Brooks, McAleer, Santos, Kole): CONFIRMED against audit item 7.** Replaced by the abstract-supported statements plus Fortin et al.'s characterisation of the earlier literature as mixed.
+- **2 (Paolella "equities only"): CONFIRMED.** Reworded (Ch1, Ch2). **3 (Fortin abstract sentence): CONFIRMED unrecorded,** reworded to "differences mostly not significant". **11:** "(2021 working paper)" added in section 2.2.
+- **4 (Clark attribution): CONFIRMED,** split between Clark-McCracken 2001 and Clark-West 2007. **6 (Hoenig, Abadie): CONFIRMED,** narrowed to abstract wording. **7 (reading-level gap): CONFIRMED,** one blanket sentence added.
+- **5, 14 (Zhu-Timmermann; Connolly et al. in the matrix but uncited): CONFIRMED.** Both now cited (bib entries added); Zhu-Timmermann at the conditional GW test, Connolly et al. in 2.4.
+- **13, 14 (further missing references, Guidolin-Timmermann etc.): NOT ADDED.** I have not read them; listed in `notes/outbox/05_library_requests.md`. The thesis does not claim the survey is exhaustive.
+- **15 (novelty claim), 16, 17, 18, 8, 9, 10, 12: not changed;** low or medium wording points already hedged ("a statement about what I read"); open as low severity.
+
+## Phase 10, reviewer 3 of 4: clarity reader (2026-11-05)
+Acted on (each checked against the text; edits are wording, no result changed):
+- **H1 scale of 0.0013: CONFIRMED.** Ch1 now translates it (penalty of a 2-3 per cent scale error, Table 5.1 / Section 5.7).
+- **H2 motivation vs design (stress correlation learned from a window with almost no positive correlation): CONFIRMED as a plausible limit,** stated with hedging ("unlikely to deliver") in Ch1 and Ch8.
+- **H3 calibration emphasis: CONFIRMED.** Ch8 superlative toned down; not promoted. The t-chain and GARCH-t calibration were not added (would be a new analysis).
+- **H4 abstract omitted that GARCH beat regime volatility: CONFIRMED.** Abstract and Ch1 corrected.
+- **M10/M12 power in the abstract: CONFIRMED** (the abstract still carried 18-35%): now the effect-based 48%; Ch1 says the test was known in advance to be low power; Ch8 "only O1 or O2" corrected to include O4.
+- **M11 post hoc labelling: CONFIRMED.** Ch7 says the 17/85% figures were computed after the result. **M14 real SE twice that of S0: CONFIRMED,** sentence added in Ch6.
+- **Not done (open, medium/low):** glossary and git vocabulary (M1), A/B/D lettering and table labels with _N/_S suffixes (M2), sample table and the derivation of 214 (M3), Ch4/Ch5 density (M4, M5, M6), Table 6.5 explanation (M7), "ladder/decomposition" wording (M8), "fixed in advance" vs "chosen from power" in Ch4 (M9), repeated result paragraph and length cuts (section 4 of the review), M13, L1-L6. These affect readability, not correctness; the repeated material is the route to the page guideline if you want it cut.
+
+## Phase 10, reviewer 4 of 4: error hunter (2026-11-05)
+Headline numbers, Tables 7.1-7.3, Table 6.x, calibration, post hoc, data counts and hashes were recomputed by the reviewer and matched. Accepted and fixed: Figure 6.1 floated to after the Conclusion (now placed in Chapter 6, height-limited); abstract/Ch6 text pointing at an abstract figure that is no longer there; "85%" corrected to 86% (unrounded S2 mean); "more than twenty times" restricted to the primary pair and RSC vs CCC; interval -0.0676 corrected to -0.0675; Ch6 "optimistic" claim made direction-specific; Ch8 "only O1, O2" corrected (O3 reachable for a small positive estimate); predicted-SE range harmonised (0.0010 to 0.0015); "about 6.9%" now "6.8% to 6.9%"; abstract and Ch1 say the GARCH advantage is significant in one sample; Pelletier issue "1--2"; Zhu entry; Table 5.1 caption (no math in caption); "smallest effect of interest" in the abbreviation list; Ch6 "a third and a half" now 0.36 to 0.52.
+- **Not changed (open, low):** notation collisions B/R/mu/A (item 9: rename if time allows), capitalisation and "pre-registration"/"preregistration" mixing, abbreviation list gaps (CI, SPA), hyphen vs en dash in names in the abbreviation list, bib URLs, underfull boxes in Tables 3.1 and 4.1.
+- **Only the author can fix:** title-page placeholders (author, degree, department) and the acknowledgements page.
+- Page count after Phase 10 edits: 64 PDF pages, 54 numbered pages; over the guideline of about 50. Cutting the repeated result paragraph and limitations (see reviewer 3, section 4) would recover about 3 pages.
+
+## Phase 10 closed, Phase 11 done (2026-11-05)
+- Phase 10: one round of four reviews, each finding verified and acted on or logged. After the fixes: 191 numbers 0 problems, wording clean, pytest 110 passed, clean-clone MATCH. No round 2 was run: the reviewers' remaining findings are low or medium wording and readability items listed above; no high-severity finding is open except the author-only placeholders (title page, acknowledgements). A second review round would be the next step if time allows.
+- Phase 11: `thesis/final/` (PDF, docx export), `notes/submission_checklist.md`, `notes/viva_prep.md`, `notes/ai_statement_draft.md`, `notes/outbox/04_full_draft_note.md`; tag `thesis-submission-candidate` (local only; nothing pushed or submitted).
+
+## Length trim (2026-11-05)
+Repeated headline-result paragraphs in Chapters 8 and 9 shortened to a statement plus a pointer to Chapter 7 (the abstract, Chapter 1 and Chapter 7 keep the full statement). Seven registered numbers that no longer appear were removed from `numbers.yaml`; no result or number changed. Effect: 63 PDF pages, about 53 numbered (one page recovered, not the three estimated). Further cuts would remove substantive content (limits, method detail) and were not made.

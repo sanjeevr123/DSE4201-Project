@@ -5,7 +5,7 @@ Frozen scoring of the confirmatory run (docs/preregistration_confirmatory.md; do
   .venv/bin/python scripts/confirm_01_score.py holdout    # the frozen scoring of the 2020-2025 run
 
 Same code path for both modes. The run is validated first (plan 4.10: expected day count, finite VaR/ES with ES <= VaR < 0 for the
-primary arms, raw-file hash, and in hold-out mode git_head equal to the commit of the tag spec-freeze-v1). Nothing is scored if
+primary arms, raw-file hash, and in hold-out mode git_head a descendant of the commit of the tag spec-freeze-v1 with src/, the runner and requirements.txt unchanged since it; spec-freeze-v1.1). Nothing is scored if
 validation fails. Only declared arms are scored (no Kendall arms, HS or EWMA, no model confidence set).
 
 SIGN CONVENTION. Loss differences are richer minus baseline, d_t = FZ0_t(RSC_P_N) - FZ0_t(CCC_S_N); negative means the
@@ -23,6 +23,7 @@ from __future__ import annotations
 
 import json
 import pickle
+import subprocess
 import sys
 from pathlib import Path
 
@@ -33,7 +34,7 @@ from scipy import stats
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 sys.path.insert(0, str(ROOT / "scripts"))
-from confirm_00_run import EXPECTED_DAYS, OUT as CONF, PRIMARY_ARMS, freeze_tag_commit, sha256_file, validate_output  # noqa: E402
+from confirm_00_run import EXPECTED_DAYS, OUT as CONF, PRIMARY_ARMS, _git, freeze_tag_commit, sha256_file, validate_output  # noqa: E402
 from src.engine import acerbi_szekely_z2, fz0  # noqa: E402
 from src.explore_inference import gw_test  # noqa: E402
 
@@ -284,7 +285,14 @@ def validate_run(res: dict, mode: str) -> None:
     if mode == "holdout":
         tag = freeze_tag_commit()
         assert tag is not None, "tag spec-freeze-v1 does not exist"
-        assert res["git_head"] == tag == res["freeze_tag"], "run was not made at the tagged commit"
+        assert res["freeze_tag"] == tag, "pickle records a different freeze-tag commit"
+        # spec-freeze-v1.1: the run commit must descend from the tag and leave every file that determines the forecasts
+        # unchanged (src/, the runner, requirements). Commits touching only logs or ignore files do not affect the forecasts.
+        head = res["git_head"]
+        assert subprocess.run(["git", "merge-base", "--is-ancestor", tag, head], cwd=ROOT).returncode == 0, \
+            "run commit does not descend from the tagged commit"
+        changed = _git("diff", "--name-only", tag, head, "--", "src", "scripts/confirm_00_run.py", "requirements.txt")
+        assert not changed, f"files that determine the forecasts differ between the tag and the run commit: {changed}"
 
 
 def cumulative_plot(res: dict, d: np.ndarray, year: int, path: Path):

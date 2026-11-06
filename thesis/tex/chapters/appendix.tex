@@ -1,3 +1,37 @@
 \begin{center}\textbf{APPENDIX}\end{center}
-\section{SPECIFICATION LOG AND REPRODUCIBILITY}\label{app:log}
-\todo{Pointer to \texttt{docs/decisions\_log.md}, the exploration grid summary (10 universes, 10 regime definitions, 214 headline tests), the controls and sub-period tables, the pre-registration text, and the reproducibility instructions. Written in Phase 4 onward.}
+\section{SPECIFICATION, REPRODUCIBILITY AND FROZEN WORDING}\label{app:log}
+
+\subsection{Where the record is}
+
+Every methodological decision is in \texttt{docs/decisions\_log.md}, including the exploration grid (10 ETF universes, 10 regime definitions, 214 headline tests) and the family tests. The confirmatory specification is \texttt{docs/preregistration\_confirmatory.md}, fixed by the annotated tags \texttt{spec-freeze-v1} and \texttt{spec-freeze-v1.1}; its section 8 records the one amendment (Section~\ref{sec:holdout-record}). \texttt{docs/EXECUTION\_LOG.md} lists each step of the work in order, with the hashes of the hold-out forecast file and of the scored tables. The hold-out forecast file has SHA-256 \texttt{9537bb5d6008028076126d0166bb2edc1f643e5a9f496cb852d7872f8485f974}; the scored tables are in \texttt{output/confirm/holdout/} with a manifest of their hashes. Tables of the development controls and sub-periods are in \texttt{output/explore/} and are not reprinted.
+
+\subsection{Rebuilding the thesis from saved results}
+
+The command \texttt{python scripts/build\_all.py} rebuilds every table of Chapters 5 to 7, the forest plots and the PDF, and checks every registered number against its source file. It reads the saved result files, refits nothing and takes a few seconds. \texttt{scripts/verify\_clean\_clone.py} repeats the build in a clean clone of the committed repository and compares each table byte for byte, each figure pixel by pixel and the text of the PDF.
+
+\subsection{Recomputing the results}
+
+The saved results can be recomputed from the raw data file stored under \texttt{data/raw/} (SHA-256 \texttt{0ab8c7f3\ldots150e29}) in the order below.
+\begin{itemize}
+\item The exploration grid, the ladder and the development power study: \texttt{scripts/explore\_00} to \texttt{explore\_20}.
+\item Power at the hold-out length: \texttt{scripts/explore\_21\_\allowbreak power\_\allowbreak holdout\_\allowbreak length.py}, 500 replications in each of four scenarios (about 19 seconds per replication), summarised by \texttt{scripts/explore\_22\_power\_summary.py}.
+\item The confirmatory dry run and hold-out: \texttt{scripts/confirm\_00\_run.py pseudo} (18 seconds) and \texttt{holdout} (27 seconds), then \texttt{scripts/confirm\_01\_score.py}. The runner refuses to run the hold-out unless the frozen files match the tag and refuses to overwrite an existing output.
+\end{itemize}
+The test suite (\texttt{pytest}; 105 tests in about one minute, plus three that read the hold-out period) checks the models, the scorer and the helper scripts.
+
+\subsection{Environment}
+
+Python 3.9.6 with numpy 2.0.2, pandas 2.3.3, scipy 1.13.1, arch 7.2.0, statsmodels 0.14.6, hmmlearn 0.3.3 and matplotlib 3.9.4; the full list is in \texttt{requirements.txt}. BLAS threads are set to one so that the numbers should not depend on the core count; I did not test this on another machine.
+
+\subsection{Hidden Markov model initial values}
+
+The first fit of a run is a cold start with 100 iterations from start probabilities $(0.5,0.5)$, a transition matrix with diagonal $(0.98,0.95)$, both means at the window mean, and variances $0.5v$ and $2.5v$, where $v$ is the window variance.
+
+\subsection{Frozen wording of the other outcomes}
+
+The wording fixed before the run for the outcomes that did not occur was:
+\begin{description}
+\item[O1] ``The hold-out data provide statistical evidence at the one-sided 5\% level that letting the SPY--IEF correlation switch with the regime lowers expected FZ0 loss relative to constant correlation (difference $\bar d$, 95\% CI $[a,b]$). This is one test on one six-year sample containing a single stock--bond reversal; simulated power was $P\%$.''
+\item[O3] ``The data are inconsistent, at the one-sided 5\% level, with an improvement larger than SESOI $=0.002$ FZ0 units. Improvements smaller than this, and any degradation, are not excluded.''
+\item[O4] ``The hold-out data provide evidence that the switching specification has higher expected FZ0 loss ($\bar d$, 95\% CI $[a,b]$).''
+\end{description}

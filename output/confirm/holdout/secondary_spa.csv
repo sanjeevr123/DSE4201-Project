@@ -1,0 +1,2 @@
+benchmark,n,reps,seed,p_consistent,p_upper,best_candidate,best_minus_benchmark
+GARCHt,1508,2000,0,0.477,0.477,RSC,-0.04438944250586463

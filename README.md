@@ -1,166 +1,62 @@
 # Regime-Switching Risk Models for ETF Portfolios
 
-## Thesis Title
+Honours thesis code and results: *Regime-Switching Risk Models for ETF Portfolios: Do Market-State Shifts Improve Tail-Risk Forecasting?*
 
-Regime-Switching Risk Models for ETF Portfolios:
-Do Market-State Shifts Improve Tail-Risk Forecasting?
+## Question and result
 
-The allocation clause of the originally approved title was dropped with
-the allocation extension, as the supervisor allowed. The official
-title-change process is still to be confirmed (`notes/requirements.md`).
+A risk manager who reports one-day value-at-risk (VaR) and expected shortfall (ES) for a stock, bond and gold portfolio has to choose how the stock–bond correlation behaves in stress. The thesis tests whether letting the SPY–IEF correlation switch with a two-state hidden Markov regime (fitted to SPY) improves VaR and ES forecasts of an equal-weight SPY, IEF and GLD portfolio, against constant correlation with the same GARCH margins. Forecasts are scored with the FZ0 loss.
 
-## Research Question
+The comparison was fixed before the 2020–2025 hold-out was used and was run once. On the 1,508 hold-out days the switching model's loss was lower by 0.0013 (95% interval −0.0037 to +0.0012; one-sided p = 0.158; outcome O2). The test could detect a difference of 0.0031 with 80% probability, so the data are consistent with a gain and with none. Both models breached the 5% VaR on about 6.8–6.9% of days. Full results: `thesis/final/thesis_draft_for_review.pdf`.
 
-Where does regime information change one-day-ahead tail-risk forecasts
-for a fixed diversified ETF portfolio, and how large an effect could this
-data reveal?
+## Repository map
 
-## Current Project Stage
-
-Pilot study complete (WP0-WP5). All six pre-registered go/no-go criteria
-passed — **decision: PROCEED** with the full design. See
-`output/PILOT_REPORT.md` (or `output/PILOT_REPORT.pdf`) for the full
-results, scorecard, and 4-week plan for the full thesis run.
-
-**Exploration (Oct 2026) done; supervisor feedback received (Nov 2026).**
-Regime definitions, ETF universes, bond-aware signals and a long-history
-stock/bond sample were screened and backtested on data through 2019-12-31
-only (`output/explore/EXPLORATION_SUMMARY.md`). Prof. Seo approved the
-direction and the hold-out (`notes/supervisor_feedback_2026-11.md`).
-
-**Current stage: pre-freeze.** `docs/THESIS_PLAN.md` is the plan and
-`docs/EXECUTION_LOG.md` records progress. Estimated effects of regime
-correlation on GARCH margins are -0.004 to -0.006 on the ETF universes,
-below the 0.007 to 0.014 the design could detect, so this is inconclusive
-(`output/explore/ladder/ladder_dm_table.csv`). **2020-2025 is a one-shot
-confirmatory hold-out.** No model has been fitted or tuned on it. Earlier
-descriptive work displayed summary statistics for those years; the
-preregistration lists this and the other disclosures.
-
-## Current Pilot Dataset
-
-Initial Day-1 pilot universe:
-
-- SPY — US equities
-- IEF — US Treasury bonds
-- GLD — gold
-
-Pilot period:
-
-2010-01-01 to 2025-12-31
-
-This is a temporary pilot universe, not the final thesis ETF universe.
-
-## Core Empirical Principle
-
-Every forecast for date t+1 must be constructed using only
-information available by date t.
-
-Avoiding look-ahead bias and data leakage is a non-negotiable
-requirement of this research project.
-
-## Research Data Flow
-
-Public data source
-→ immutable raw snapshot
-→ data validation
-→ processed prices and returns
-→ model inputs
-→ forecasts
-→ backtests
-→ figures and tables
-
-## Pilot Data / EDA
-
-Current temporary pilot:
-
-- SPY, IEF, GLD
-- 2010-01-04 to 2025-12-31 (Yahoo Finance via yfinance)
-- daily adjusted-price simple and log returns
-- equal-weight exploratory portfolio (constant weights of 1/3 each, rebalanced daily)
-- 21-day trailing rolling volatility, return and squared-return ACF
-
-This is not the final empirical specification. See
-`notes/pilot_eda.md` for the full write-up, `notes/decision_log.md`
-for status, and `notebooks/01_pilot_data_and_eda.ipynb` for the
-reproducible walkthrough. Pipeline: `scripts/01_download_raw_data.py`
-→ `scripts/02_validate_and_build_processed_data.py` →
-`scripts/03_run_eda.py`.
-
-## Pilot Study (docs/PILOT_PROMPT.md)
-
-A separate, more tightly scoped pilot study — testing whether letting
-cross-asset correlations vary by regime improves VaR/ES forecasts beyond
-letting only volatilities vary — lives alongside the Day-1 EDA pipeline
-above. **This is a deliberate split, not duplication**: two independent
-pipelines exist side by side (`scripts/01-03` + `outputs/`, plural, for
-the earlier Day-1 EDA; `scripts/00`/`wp2`/`wp3`/`wp4` + `output/`,
-singular, for the pilot study), each with its own raw data snapshot,
-metadata, and deliverables directory. See `docs/decisions_log.md` for why.
-See `docs/PILOT_PROMPT.md` for the full specification and
-`docs/preregistration.md` for the pre-registered go/no-go criteria.
-Results: `output/PILOT_REPORT.md`.
-
-Reproduce the pilot's data-acquisition step with:
-
-```
-python -m src.run_pilot
-```
-
-Run the pilot's correctness test suite (WP1) with:
-
-```
-pytest tests/ -v
-```
-
-Key pilot paths:
-
-- `config/pilot.yaml` — every pilot parameter and random seed.
-- `src/engine.py` — the model engine (HMM regimes, covariance-variant
-  VaR/ES, scoring), a reviewed-and-fixed copy of `starter/pilot_core.py`.
-- `data/raw/MANIFEST.txt` — SHA-256 provenance record for every archived raw
-  download; raw data is downloaded once and never re-pulled.
-- `output/` (singular) — pilot deliverables (figures, tables,
-  `PILOT_REPORT.md`). This is deliberately separate from `outputs/`
-  (plural) above, which belongs to the earlier, unrelated Day-1 EDA
-  pipeline — the two are not the same directory and are not merged.
-
-## Exploration Phase (post-pilot)
-
-Exploratory vs. confirmatory split: data through 2019-12-31 are the
-development window, with forecasts from 2010 (1992 for the fund sample)
-and 2016-2019 as a dry-run window that is not independent of development
-choices; 2020-2025, which contains the 2022 stock-bond correlation
-reversal, is not used for fitting or tuning. `src/explore.py` asserts no data past
-2019-12-31, and every specification tried is reported in `output/explore/`,
-including the unpromising ones. See `docs/decisions_log.md` and the addendum
-in `docs/preregistration.md`.
-
-Pipeline (run from the repo root with `.venv/bin/python`):
-
-| Step | Script | Output |
+| Folder | Content | Thesis |
 |---|---|---|
-| 0 | `scripts/explore_00_download.py`, `explore_00b_download_rates.py` | ETF/VIX and ^TNX/^MOVE raw snapshots (`data/raw/`, logged in `MANIFEST.txt`) |
-| 1-4 | `explore_01..04_*.py` | universe screen, regime-definition comparison, long-history stock-bond check, figures |
-| 5 | `explore_05_backtests.py` (`--validate` first), `explore_05b_longhistory_backtest.py` | walk-forward VaR/ES forecasts in `output/explore/backtests/` |
-| 6 | `explore_06_score.py` | `backtest_loss_table.csv`, `backtest_dm_table.csv` |
-| 7 | `explore_07_figures.py` | `fig_backtest_E_corr_channel.png` |
-| 8 | `explore_08_routes.py` (`--validate` first) | GARCH-margin + regime-correlation arm (layer 2) and Route M (Kendall) / Route P (single pair) variants (layer 1), pilot universe |
-| 9 | `explore_09_score_routes.py` | `output/explore/routes/routes_{loss,dm}_table.csv` |
-| 10-11 | `explore_10_power_routes.py` (`--validate` first), `explore_11_power_summary.py` | power/size of each route on the pilot DGP; `power_summary.csv`, `fig_routes_G_power.png` |
+| `thesis/tex/` | LaTeX source, bibliography, generated tables; `thesis/numbers.yaml` registers every prose number against its source file | all chapters |
+| `src/` | models (HMM, static covariance models, GARCH-margin models, DCC), FZ0 loss, DM and coverage tests, simulation | Ch. 4–5 |
+| `scripts/explore_*` | development-period exploration: universe screen, ladder, power studies | Ch. 6 |
+| `scripts/confirm_*` | frozen hold-out runner (`confirm_00_run.py`), scorer (`confirm_01_score.py`), SESOI derivation (`confirm_04_sesoi.py`), checks | Ch. 5, 7 |
+| `scripts/thesis_*`, `build_all.py`, `check_numbers.py` | tables, figures, post hoc checks, number trace, PDF build | Ch. 6–7, appendix |
+| `output/confirm/` | hold-out and dry-run results, stored hold-out forecasts (`holdout_forecasts.pkl`), post hoc results | Ch. 7 |
+| `output/explore/` | development results (csv/json) and figures | Ch. 6 |
+| `data/raw/` | raw Yahoo Finance snapshots with SHA-256 hashes in `MANIFEST.txt` | Ch. 3 |
+| `docs/` | preregistration, decisions log, execution log, plan | Ch. 3, 5, appendix |
+| `tests/` | 105 tests by default; 3 more read hold-out-period data and were run only after scoring | appendix |
 
-`explore_05_backtests.py --validate` checks that the generalised engine
-(`src/explore_wf.py`) reproduces the pilot's WP3 table before any full run.
-Set `OMP_NUM_THREADS=1` (and the BLAS equivalents) when running the full
-backtests in parallel, or the worker processes thrash.
+`scripts/00`, `01`, `02`, `wp2`–`wp4`, `src/wp*`, `src/run_pilot.py`, `src/audit.py` and `data/processed/` belong to the earlier pilot stage. No thesis table depends on them; they are kept because the tests and `explore_05 --validate` read their outputs.
 
-`output/STUDY_GUIDE.md` / `.pdf` is a study guide to the project.
+## Setup
 
-## Methodological Decisions
+Python 3.9.6, macOS. From the repository root:
 
-Settled with the supervisor's November feedback, and frozen in
-`docs/preregistration_confirmatory.md` once tagged: universe (SPY/IEF/GLD,
-constant equal weights), two regimes, SPY-only HMM signal, rolling 1,260-day
-window, benchmark set, VaR/ES evaluation design, and the confirmatory test.
-The allocation extension is dropped. No additional macro-regime models or
-robustness checks. See `notes/decision_log.md` and `docs/decisions_log.md`.
+```
+python3 -m venv .venv
+.venv/bin/pip install -r requirements.txt
+```
+
+The PDF build needs [tectonic](https://tectonic-typesetting.github.io/).
+
+## Reproduce
+
+| Task | Command | Time |
+|---|---|---|
+| Rebuild every table and figure from saved results, check the 167 registered numbers, build the PDF | `.venv/bin/python scripts/build_all.py` (`--no-pdf` to skip LaTeX) | seconds |
+| Run the tests | `.venv/bin/python -m pytest -q` | about 1 minute |
+| Post hoc baselines (HS, EWMA, GARCH-t) and calendar-year correlations, from stored forecasts and the raw file | `.venv/bin/python scripts/thesis_baselines.py` | seconds |
+| Verify the build from a clean clone of the committed repository | `.venv/bin/python scripts/verify_clean_clone.py` | minutes |
+| Recompute development results and power studies | `scripts/explore_00` … `explore_22` in order (see thesis Appendix A) | hours |
+| Hold-out run and scoring | `scripts/confirm_00_run.py holdout`, then `confirm_01_score.py` | under a minute |
+
+Large intermediate files (`output/explore/**/*.pkl`, `*.jsonl`) are not tracked. They are regenerated by the `explore_*` scripts; the csv/json summaries that the thesis reads are tracked.
+
+## Frozen specification
+
+The hold-out specification is fixed by the annotated tags `spec-freeze-v1` and `spec-freeze-v1.1` (one amendment of the scorer's validity rule, made before any scoring and recorded in `docs/preregistration_confirmatory.md`, section 8). The scorer checks that `src/`, the runner and `requirements.txt` are unchanged since the tag. Do not edit those files, `config/pilot.yaml` or the preregistration; results produced after the freeze (`thesis_posthoc.py`, `thesis_baselines.py`) are labelled POST HOC in the thesis.
+
+## Data
+
+Daily adjusted closes for SPY, IEF and GLD (and the development-only ETF and fund samples) come from Yahoo Finance through `yfinance`, downloaded once and never re-pulled. Yahoo's terms on redistribution have not been checked; confirm them before making the repository public. Vendor revisions to adjusted prices can change numbers if the data are re-downloaded, which is why the raw files and hashes are stored.
+
+## Notes
+
+`docs/EXECUTION_LOG.md` records the work step by step, including work done with an AI coding assistant (Claude Code). Internal notes, drafts and supervisor correspondence are not part of the repository.

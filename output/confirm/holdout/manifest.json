@@ -1,0 +1,12 @@
+{
+  "RESULT.md": "e996b852e3ab025229d41b47cec3c3ac451f276204f31e6097f92ae68e7a6439",
+  "calibration.csv": "0b88e76005e2c7b2a56c917afcf033818648c1909b30fc280a904f572cddb790",
+  "cumulative_d.png": "d3fd2c362bba8b6d5ac763616bb46b12f4e8be9fa70599ac408691028e538e85",
+  "diagnostics.json": "d0994fc91edc8fb597b8716a2c35a2f72534dcd446a5dd2d583a0149a6755d47",
+  "primary.json": "277a091ce62fe5478ddc344ffc3cc7fbd348d5702f2891ef6ada0a01beac686d",
+  "secondary_alpha_and_t_chain.csv": "563b7e48058bb1334c37a355bb42d33202859225b2b498f65c6979dc137f22cd",
+  "secondary_focus_year.csv": "ae2f2a0cb9ab22d44b09a241217dab53c74634a6bd79172f80db7090dff06f81",
+  "secondary_gw_conditional.csv": "ea538fbd57d1b32aa6cf9f6a83459ec4ab3b17fc38a01c7c4f1607e7e5f51427",
+  "secondary_ladder.csv": "0b53a6d83e40ffcd2ffad4ca2aed9b5fe691fd46ace09edc66b908920c1b5f42",
+  "secondary_spa.csv": "0e7a217980faad8e9b5e78932f9217403f83e0ad76de07699d1dd7c0acfce541"
+}

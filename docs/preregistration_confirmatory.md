@@ -47,3 +47,9 @@ Simulated power at 1,508 days, 500 replications per scenario (`output/explore/la
 - Static D-vs-B tests are oversized under GARCH margins (one-sided size 9.6% at 1,508 days in simulation).
 - HMM estimation uncertainty is not carried into the test; null-scenario size stands in. 214 headline exploration tests, 10 ETF universes and 10 regime definitions were examined; all are logged in `docs/decisions_log.md`.
 - Self-registration: git tag only, no OSF deposit, no independent timestamp.
+
+## 8. Amendment spec-freeze-v1.1 (2026-11-05), made after the hold-out run was written and before it was scored
+- What happened: the hold-out forecasts were produced on 2026-11-05 (pickle SHA-256 `9537bb5d6008028076126d0166bb2edc1f643e5a9f496cb852d7872f8485f974`). The scorer's first validity assertion refused to score because the pickle's `git_head` (c4495da) was two commits after the tag commit (b2cbbaa); those commits changed only `.gitignore` and `docs/EXECUTION_LOG.md`. Section 6a required `git_head` = tag commit. No performance figure had been computed or seen.
+- Change: the scorer's assertion now requires that the pickle's freeze-tag commit is the tag commit, that `git_head` descends from it, and that `src/`, `scripts/confirm_00_run.py` and `requirements.txt` are unchanged between the two. This is the substance of the original rule (the forecasts come from the frozen code) and it does not depend on any result. No scoring, test, threshold or outcome wording changed; the hold-out was not repeated.
+- New SHA-256 of `scripts/confirm_01_score.py`: `372bbcaf76dbc63541c96c34d2b309f2219305710173aefd4cd606b10ca4280c`. Every other hash in section 7 is unchanged and was re-verified before the run.
+- Tag: `spec-freeze-v1.1`. Section 6a's "git_head = tag commit" is superseded by this amendment; the original text is left as written.

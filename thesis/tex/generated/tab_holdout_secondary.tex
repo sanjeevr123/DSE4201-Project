@@ -1,0 +1,26 @@
+\begin{table}[t]
+\centering\setstretch{1}\scriptsize\setlength{\tabcolsep}{3pt}
+\caption{\uc{Secondary comparisons on the hold-out (unadjusted; not confirmatory)}}\label{tab:holdout-secondary}
+\begin{tabular}{lrrrcrrr}
+\toprule
+Comparison & $n$ & $\bar d$ & SE & 95\% interval & $t$ & $p$ (2-sided) & MDE \\
+\midrule
+\multicolumn{8}{l}{\textbf{Ladder steps (all pairs switch where stated)}}\\
+B versus A & 1,508 & $-$0.0952 & 0.0879 & [$-$0.2675, 0.0771] & $-$1.08 & 0.279 & 0.2463 \\
+D versus B & 1,508 & 0.0155 & 0.0117 & [$-$0.0074, 0.0385] & 1.32 & 0.186 & 0.0328 \\
+CCC versus B & 1,508 & $-$0.1107 & 0.0820 & [$-$0.2715, 0.0501] & $-$1.35 & 0.177 & 0.2298 \\
+RSC versus D & 1,508 & $-$0.1299 & 0.0919 & [$-$0.3099, 0.0502] & $-$1.41 & 0.157 & 0.2574 \\
+RSC versus CCC & 1,508 & $-$0.0037 & 0.0033 & [$-$0.0101, 0.0028] & $-$1.11 & 0.265 & 0.0092 \\
+DCC versus RSC & 1,508 & $-$0.0060 & 0.0148 & [$-$0.0351, 0.0230] & $-$0.41 & 0.683 & 0.0415 \\
+\midrule
+\multicolumn{8}{l}{\textbf{Primary pair at other settings}}\\
+$\alpha$ 2.5\%, Gaussian chain & 1,508 & $-$0.0026 & 0.0022 & [$-$0.0070, 0.0017] & $-$1.19 & 0.233 & 0.0062 \\
+$\alpha$ 5\%, Student-$t$ chain & 1,508 & $-$0.0012 & 0.0012 & [$-$0.0035, 0.0012] & $-$0.96 & 0.339 & 0.0034 \\
+$\alpha$ 2.5\%, Student-$t$ chain & 1,508 & $-$0.0023 & 0.0020 & [$-$0.0062, 0.0016] & $-$1.16 & 0.245 & 0.0055 \\
+\midrule
+\multicolumn{8}{l}{\textbf{Calendar year 2022 (interval only, not a test)}}\\
+RSC\_P\_N versus CCC\_S\_N, 2022 & 251 & $-$0.0009 & 0.0041 & [$-$0.0089, 0.0070] & -- & -- & -- \\
+\bottomrule
+\end{tabular}
+\tabnote{Mean FZ0 difference of the richer model minus the baseline; negative favours the richer model. Panel 1 is the ladder of Chapter~\ref{ch:method} on the hold-out, with tail level 5\%, Gaussian chain, pooled mean. The interval is $\bar d\pm1.96\,\mathrm{SE}$ and the MDE is $2.8016\,\mathrm{SE}$ (two-sided 5\%, 80\% power). None of these $p$-values is adjusted and none is cited as confirmation. Source: \texttt{output/confirm/holdout/secondary\_ladder.csv}, \texttt{secondary\_alpha\_and\_t\_chain.csv}, \texttt{secondary\_focus\_year.csv}.}
+\end{table}

@@ -26,6 +26,10 @@ def value(e):
         for p in e["path"].split("."):
             x = x[p]
         x = float(x)
+    elif k == "power_effect":      # one-sided 5% power at a stated true effect: Phi(effect/se - 1.6449), percent
+        from scipy.stats import norm
+        d = json.loads(f.read_text())
+        x = 100 * float(norm.cdf(e["effect"] / d[e["path"]] - 1.6448536))
     elif k == "count_headline":
         df = pd.read_csv(f)
         h = df[df.p_holm_headline.notna()]
