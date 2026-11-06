@@ -13,66 +13,6 @@
   column: mean_diff
   fmt: .4f
   abs: true
-- id: bva_d_U3_credit
-  chapter: ch6_results_exploration.tex
-  text: '0.1659'
-  kind: csv
-  file: output/explore/ladder/ladder_dm_table.csv
-  where:
-    universe: U3_credit
-    alpha: 0.05
-    period: full
-    mean_set: pooled
-    chain: N
-    step: regime_vol
-  column: mean_diff
-  fmt: .4f
-  abs: true
-- id: bva_d_U8_sectors
-  chapter: ch6_results_exploration.tex
-  text: '0.1806'
-  kind: csv
-  file: output/explore/ladder/ladder_dm_table.csv
-  where:
-    universe: U8_sectors
-    alpha: 0.05
-    period: full
-    mean_set: pooled
-    chain: N
-    step: regime_vol
-  column: mean_diff
-  fmt: .4f
-  abs: true
-- id: bva_d_U10_riskassets
-  chapter: ch6_results_exploration.tex
-  text: '0.1586'
-  kind: csv
-  file: output/explore/ladder/ladder_dm_table.csv
-  where:
-    universe: U10_riskassets
-    alpha: 0.05
-    period: full
-    mean_set: pooled
-    chain: N
-    step: regime_vol
-  column: mean_diff
-  fmt: .4f
-  abs: true
-- id: bva_d_L1_longhist
-  chapter: ch6_results_exploration.tex
-  text: '0.1057'
-  kind: csv
-  file: output/explore/ladder/ladder_dm_table.csv
-  where:
-    universe: L1_longhist
-    alpha: 0.05
-    period: full
-    mean_set: pooled
-    chain: N
-    step: regime_vol
-  column: mean_diff
-  fmt: .4f
-  abs: true
 - id: bva_p_U1
   chapter: ch6_results_exploration.tex
   text: '0.408'
@@ -101,66 +41,6 @@
     step: regime_vol
   column: mde80
   fmt: .4f
-- id: rscd_d_U1_pilot
-  chapter: ch6_results_exploration.tex
-  text: '0.0259'
-  kind: csv
-  file: output/explore/ladder/ladder_dm_table.csv
-  where:
-    universe: U1_pilot
-    alpha: 0.05
-    period: full
-    mean_set: pooled
-    chain: N
-    step: margin_effect
-  column: mean_diff
-  fmt: .4f
-  abs: true
-- id: rscd_d_U3_credit
-  chapter: ch6_results_exploration.tex
-  text: '0.0406'
-  kind: csv
-  file: output/explore/ladder/ladder_dm_table.csv
-  where:
-    universe: U3_credit
-    alpha: 0.05
-    period: full
-    mean_set: pooled
-    chain: N
-    step: margin_effect
-  column: mean_diff
-  fmt: .4f
-  abs: true
-- id: rscd_d_U8_sectors
-  chapter: ch6_results_exploration.tex
-  text: '0.0396'
-  kind: csv
-  file: output/explore/ladder/ladder_dm_table.csv
-  where:
-    universe: U8_sectors
-    alpha: 0.05
-    period: full
-    mean_set: pooled
-    chain: N
-    step: margin_effect
-  column: mean_diff
-  fmt: .4f
-  abs: true
-- id: rscd_d_U10_riskassets
-  chapter: ch6_results_exploration.tex
-  text: '0.0760'
-  kind: csv
-  file: output/explore/ladder/ladder_dm_table.csv
-  where:
-    universe: U10_riskassets
-    alpha: 0.05
-    period: full
-    mean_set: pooled
-    chain: N
-    step: margin_effect
-  column: mean_diff
-  fmt: .4f
-  abs: true
 - id: holm_U1_pilot
   chapter: ch6_results_exploration.tex
   text: '0.2341'
@@ -218,36 +98,6 @@
   column: mean_diff
   fmt: .4f
   abs: true
-- id: rscd_zero_U3_credit
-  chapter: ch6_results_exploration.tex
-  text: '0.0569'
-  kind: csv
-  file: output/explore/ladder/ladder_dm_table.csv
-  where:
-    universe: U3_credit
-    alpha: 0.05
-    period: full
-    mean_set: zero
-    chain: N
-    step: margin_effect
-  column: mean_diff
-  fmt: .4f
-  abs: true
-- id: rscd_zero_U8_sectors
-  chapter: ch6_results_exploration.tex
-  text: '0.0504'
-  kind: csv
-  file: output/explore/ladder/ladder_dm_table.csv
-  where:
-    universe: U8_sectors
-    alpha: 0.05
-    period: full
-    mean_set: zero
-    chain: N
-    step: margin_effect
-  column: mean_diff
-  fmt: .4f
-  abs: true
 - id: rscd_zero_U10_riskassets
   chapter: ch6_results_exploration.tex
   text: '0.0814'
@@ -293,36 +143,6 @@
   column: mean_diff
   fmt: .4f
   abs: true
-- id: rscc_d_U3_credit
-  chapter: ch6_results_exploration.tex
-  text: '0.0038'
-  kind: csv
-  file: output/explore/ladder/ladder_dm_table.csv
-  where:
-    universe: U3_credit
-    alpha: 0.05
-    period: full
-    mean_set: pooled
-    chain: N
-    step: corr_with_margins
-  column: mean_diff
-  fmt: .4f
-  abs: true
-- id: rscc_d_U8_sectors
-  chapter: ch6_results_exploration.tex
-  text: '0.0054'
-  kind: csv
-  file: output/explore/ladder/ladder_dm_table.csv
-  where:
-    universe: U8_sectors
-    alpha: 0.05
-    period: full
-    mean_set: pooled
-    chain: N
-    step: corr_with_margins
-  column: mean_diff
-  fmt: .4f
-  abs: true
 - id: rscc_d_U10_riskassets
   chapter: ch6_results_exploration.tex
   text: '0.0055'
@@ -353,20 +173,6 @@
   column: mean_diff
   fmt: .4f
   abs: true
-- id: rscc_mde_U1_pilot
-  chapter: ch6_results_exploration.tex
-  text: '0.0110'
-  kind: csv
-  file: output/explore/ladder/ladder_dm_table.csv
-  where:
-    universe: U1_pilot
-    alpha: 0.05
-    period: full
-    mean_set: pooled
-    chain: N
-    step: corr_with_margins
-  column: mde80
-  fmt: .4f
 - id: rscc_mde_U3_credit
   chapter: ch6_results_exploration.tex
   text: '0.0073'
@@ -374,34 +180,6 @@
   file: output/explore/ladder/ladder_dm_table.csv
   where:
     universe: U3_credit
-    alpha: 0.05
-    period: full
-    mean_set: pooled
-    chain: N
-    step: corr_with_margins
-  column: mde80
-  fmt: .4f
-- id: rscc_mde_U8_sectors
-  chapter: ch6_results_exploration.tex
-  text: '0.0139'
-  kind: csv
-  file: output/explore/ladder/ladder_dm_table.csv
-  where:
-    universe: U8_sectors
-    alpha: 0.05
-    period: full
-    mean_set: pooled
-    chain: N
-    step: corr_with_margins
-  column: mde80
-  fmt: .4f
-- id: rscc_mde_U10_riskassets
-  chapter: ch6_results_exploration.tex
-  text: '0.0120'
-  kind: csv
-  file: output/explore/ladder/ladder_dm_table.csv
-  where:
-    universe: U10_riskassets
     alpha: 0.05
     period: full
     mean_set: pooled
@@ -530,34 +308,6 @@
   file: output/explore/ladder/ladder_dm_table.csv
   where:
     universe: U3_credit
-    alpha: 0.05
-    period: full
-    mean_set: pooled
-    chain: N
-    step: regime_vs_smooth
-  column: p
-  fmt: .3f
-- id: dccrsc_p_U8_sectors
-  chapter: ch6_results_exploration.tex
-  text: '0.888'
-  kind: csv
-  file: output/explore/ladder/ladder_dm_table.csv
-  where:
-    universe: U8_sectors
-    alpha: 0.05
-    period: full
-    mean_set: pooled
-    chain: N
-    step: regime_vs_smooth
-  column: p
-  fmt: .3f
-- id: dccrsc_p_U10_riskassets
-  chapter: ch6_results_exploration.tex
-  text: '0.210'
-  kind: csv
-  file: output/explore/ladder/ladder_dm_table.csv
-  where:
-    universe: U10_riskassets
     alpha: 0.05
     period: full
     mean_set: pooled
@@ -1668,13 +1418,6 @@
   file: output/confirm/holdout/diagnostics.json
   path: dcc_refits
   fmt: .0f
-- id: h_rt
-  chapter: ch7_results_holdout.tex
-  text: '27'
-  kind: json
-  file: output/confirm/holdout/diagnostics.json
-  path: runtime_s
-  fmt: .0f
 - id: c9_d
   chapter: ch9_conclusion.tex
   text: '0.0013'
@@ -1997,3 +1740,20 @@
   column: one_sided_hi
   fmt: .1f
   scale: 100
+- {id: c1_corr_dev, chapter: ch1_introduction.tex, text: '0.46', kind: json, file: output/confirm/corr_by_year.json, path: '2010_2019', fmt: .2f, abs: true}
+- {id: c1_corr_2022, chapter: ch1_introduction.tex, text: '0.19', kind: json, file: output/confirm/corr_by_year.json, path: '2022', fmt: .2f}
+- {id: c1_corr_2023, chapter: ch1_introduction.tex, text: '0.04', kind: json, file: output/confirm/corr_by_year.json, path: '2023', fmt: .2f}
+- {id: c1_corr_2024, chapter: ch1_introduction.tex, text: '0.07', kind: json, file: output/confirm/corr_by_year.json, path: '2024', fmt: .2f}
+- {id: c1_ewma_hit, chapter: ch1_introduction.tex, text: '5.2', kind: json, file: output/confirm/baselines.json, path: hit_rate.EWMA, fmt: .1f, scale: 100}
+- {id: bl_garch_d, chapter: ch7_results_holdout.tex, text: '0.0317', kind: json, file: output/confirm/baselines.json, path: vs_ccc.GARCHt.mean_diff, fmt: .4f}
+- {id: bl_garch_se, chapter: ch7_results_holdout.tex, text: '0.0429', kind: json, file: output/confirm/baselines.json, path: vs_ccc.GARCHt.se, fmt: .4f}
+- {id: bl_hs_d, chapter: ch7_results_holdout.tex, text: '0.1308', kind: json, file: output/confirm/baselines.json, path: vs_ccc.HS.mean_diff, fmt: .4f}
+- {id: bl_hs_se, chapter: ch7_results_holdout.tex, text: '0.1278', kind: json, file: output/confirm/baselines.json, path: vs_ccc.HS.se, fmt: .4f}
+- {id: bl_ewma_d, chapter: ch7_results_holdout.tex, text: '0.0063', kind: json, file: output/confirm/baselines.json, path: vs_ccc.EWMA.mean_diff, fmt: .4f}
+- {id: bl_ewma_se, chapter: ch7_results_holdout.tex, text: '0.0440', kind: json, file: output/confirm/baselines.json, path: vs_ccc.EWMA.se, fmt: .4f}
+- {id: bl_hit_garch, chapter: ch7_results_holdout.tex, text: '6.6', kind: json, file: output/confirm/baselines.json, path: hit_rate.GARCHt, fmt: .1f, scale: 100}
+- {id: bl_hit_hs, chapter: ch7_results_holdout.tex, text: '5.8', kind: json, file: output/confirm/baselines.json, path: hit_rate.HS, fmt: .1f, scale: 100}
+- {id: bl_hit_ewma, chapter: ch7_results_holdout.tex, text: '5.2', kind: json, file: output/confirm/baselines.json, path: hit_rate.EWMA, fmt: .1f, scale: 100}
+- {id: bl_kup_garch, chapter: ch7_results_holdout.tex, text: '0.008', kind: json, file: output/confirm/baselines.json, path: kupiec_p.GARCHt, fmt: .3f}
+- {id: bl_kup_hs, chapter: ch7_results_holdout.tex, text: '0.146', kind: json, file: output/confirm/baselines.json, path: kupiec_p.HS, fmt: .3f}
+- {id: bl_kup_ewma, chapter: ch7_results_holdout.tex, text: '0.673', kind: json, file: output/confirm/baselines.json, path: kupiec_p.EWMA, fmt: .3f}
