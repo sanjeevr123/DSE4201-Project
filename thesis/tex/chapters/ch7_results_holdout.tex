@@ -46,7 +46,7 @@ Figure~\ref{fig:cumulative} plots the running sum of the daily loss differences.
 
 \begin{figure}[t]
 \centering
-\includegraphics[width=\textwidth]{fig_holdout_cumulative.png}
+\includegraphics[width=\textwidth]{fig_holdout_cumulative.pdf}
 \caption{\uc{Cumulative daily FZ0 loss difference on the hold-out, switching minus constant correlation}}\label{fig:cumulative}
 \tabnote{Running sum of $d_t=\FZ_t^{\text{RSC\_P}}-\FZ_t^{\text{CCC}}$, tail level 5\%, Gaussian chain; a falling line means the switching model had the lower loss. The darker band is the crash window of 15 February to 30 April 2020, the lighter band the calendar year 2022. Source: \texttt{output/confirm/holdout\_forecasts.pkl}, drawn by \texttt{scripts/thesis\_fig\_cumulative.py}.}
 \end{figure}

@@ -22,6 +22,8 @@ import numpy as np
 import pandas as pd
 
 ROOT = Path(__file__).resolve().parents[1]
+import sys
+sys.path.insert(0, str(ROOT / "scripts"))
 RAW = ROOT / "data" / "raw" / "spy_ief_gld_raw_2026-09-26.csv"
 ASSETS = ["SPY", "IEF", "GLD"]
 PERIODS = {"dev": ("2010-01-01", "2019-12-31"), "holdout": ("2020-01-01", "2025-12-31")}
@@ -72,26 +74,23 @@ def table(out: dict) -> str:
 
 
 def figure(r: pd.DataFrame, path: Path) -> None:
+    import thesis_plot_style as st
+    st.apply()
     c = r["SPY"].rolling(63).corr(r["IEF"]).dropna()
     fig, ax = plt.subplots(figsize=(6.3, 2.6))
-    for (a, b), lab in ((PERIODS["holdout"], "Hold-out"),):
-        ax.axvspan(pd.Timestamp(a), pd.Timestamp(b), color=SHADE, lw=0, zorder=0)
-        ax.text(pd.Timestamp(a) + pd.Timedelta(days=40), 0.86, lab, fontsize=7, color=MUTED, va="top")
-    ax.axvline(pd.Timestamp("2010-01-01"), color=MUTED, lw=0.6, ls="--", zorder=1)
-    ax.text(pd.Timestamp("2010-02-15"), 0.86, "Development forecasts", fontsize=7, color=MUTED, va="top")
-    ax.axhline(0, color=MUTED, lw=0.8, zorder=1)
-    ax.plot(c.index, c.values, color=INK, lw=1.0, zorder=2)
+    a, b = PERIODS["holdout"]
+    ax.axvspan(pd.Timestamp(a), pd.Timestamp(b), color=st.SHADE, lw=0, zorder=0)
+    ax.text(pd.Timestamp(a) + pd.Timedelta(days=40), 0.88, "Hold-out", color=st.MUTED, va="top")
+    ax.axvline(pd.Timestamp("2010-01-01"), color=st.MUTED, lw=0.6, ls=(0, (3, 2)), zorder=1)
+    ax.text(pd.Timestamp("2010-02-15"), 0.88, "Development forecasts", color=st.MUTED, va="top")
+    ax.axhline(0, color=st.MUTED, lw=0.6, zorder=1)
+    ax.plot(c.index, c.values, color=st.INK, lw=0.75, zorder=2)
     ax.set_ylim(-0.95, 0.95)
-    ax.set_ylabel("Correlation", fontsize=7, color=INK)
-    ax.tick_params(labelsize=7, colors=INK)
-    ax.grid(axis="y", color=GRID, lw=0.6)
+    ax.set_ylabel("Correlation, previous 63 days")
+    ax.grid(axis="y", color=st.GRID, lw=0.5)
     ax.set_axisbelow(True)
-    for s in ("top", "right"):
-        ax.spines[s].set_visible(False)
     fig.tight_layout()
-    fig.savefig(path, dpi=300)
-    plt.close(fig)
-    print("saved", path)
+    st.save(fig, path)
 
 
 def main() -> None:
@@ -107,7 +106,7 @@ def main() -> None:
     out["n_returns_through_2019"] = int((r.index <= "2019-12-31").sum())
     (ROOT / "output" / "tables" / "data_summary.json").write_text(json.dumps(out, indent=2))
     (ROOT / "thesis" / "tex" / "generated" / "tab_data_summary.tex").write_text(table(out))
-    figure(r, ROOT / "output" / "figures" / "fig_spy_ief_corr.png")
+    figure(r, ROOT / "output" / "figures" / "fig_spy_ief_corr")
     print(json.dumps({k: out[k] for k in ("first_return_date", "n_returns_through_2019")}))
 
 

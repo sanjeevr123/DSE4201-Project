@@ -5,7 +5,7 @@ calm-state and stress-state SPY-IEF correlation estimates (standardised residual
 realised correlation of SPY and IEF returns over the 63 days before each forecast day. Everything is read from the stored
 hold-out forecasts (output/confirm/holdout_forecasts.pkl); nothing is refitted.
 
-Writes output/figures/fig_holdout_regime.png and output/confirm/regime_summary.json.
+Writes output/figures/fig_holdout_regime.pdf (and .png) and output/confirm/regime_summary.json.
 Run: .venv/bin/python scripts/thesis_fig_regime.py
 """
 import json
@@ -13,8 +13,6 @@ import pickle
 import sys
 from pathlib import Path
 
-import matplotlib
-matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
@@ -22,11 +20,13 @@ import pandas as pd
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT)); sys.path.insert(0, str(ROOT / "scripts"))
 import confirm_01_score as S  # noqa: E402
+import thesis_plot_style as st  # noqa: E402
 
-INK, MUTED, GRID, SHADE, LIGHT = "#111111", "#555555", "#e6e6e6", "#e9e9e9", "#9a9a9a"
+INK, MUTED, GRID, SHADE, LIGHT = st.INK, st.MUTED, st.GRID, st.SHADE, st.LIGHT
 
 
 def main():
+    st.apply()
     res = pickle.load(open(ROOT / "output/confirm/holdout_forecasts.pkl", "rb"))
     dates = pd.DatetimeIndex(res["dates"])
     stress = pd.Series(res["L2"]["stress"], index=dates)
@@ -37,26 +37,25 @@ def main():
     est = pd.DataFrame([(dates[k - first], cp[k]["regime"][0], cp[k]["regime"][1]) for k in keys],
                        columns=["date", "calm", "stress"]).set_index("date")
 
-    fig, (a1, a2) = plt.subplots(2, 1, figsize=(6.3, 4.4), sharex=True, gridspec_kw={"height_ratios": [1, 1.6]})
+    fig, (a1, a2) = plt.subplots(2, 1, figsize=(6.3, 4.6), sharex=True, gridspec_kw={"height_ratios": [1, 1.7]})
     for ax in (a1, a2):
         ax.axvspan(pd.Timestamp("2022-01-01"), pd.Timestamp("2022-12-31"), color=SHADE, lw=0, zorder=0)
-        ax.grid(axis="y", color=GRID, lw=0.6); ax.set_axisbelow(True)
-        ax.tick_params(labelsize=7, colors=INK)
-        for s in ("top", "right"):
-            ax.spines[s].set_visible(False)
-    a1.fill_between(stress.index, 0, stress.values, color=LIGHT, lw=0, step="post")
-    a1.plot(stress.index, stress.values, color=INK, lw=0.6, drawstyle="steps-post")
-    a1.set_ylim(0, 1); a1.set_ylabel("Stress probability", fontsize=7, color=INK)
+        ax.grid(axis="y", color=GRID, lw=0.5); ax.set_axisbelow(True)
+    a1.fill_between(stress.index, 0, stress.values, color=st.SHADE2, lw=0, zorder=1)
+    a1.plot(stress.index, stress.values, color=MUTED, lw=0.45, zorder=2)
+    a1.set_ylim(0, 1); a1.set_ylabel("Probability")
+    a1.set_title("(a) Predicted probability of the stress state", loc="left", pad=4)
 
-    a2.axhline(0, color=MUTED, lw=0.8)
-    a2.plot(realised.index, realised.values, color=LIGHT, lw=0.9, label="Realised, previous 63 days")
-    a2.plot(est.index, est["stress"], color=INK, lw=1.4, drawstyle="steps-post", label="Model estimate, stress state")
-    a2.plot(est.index, est["calm"], color=INK, lw=1.0, ls="--", drawstyle="steps-post", label="Model estimate, calm state")
-    a2.set_ylim(-0.75, 0.65); a2.set_ylabel("SPY-IEF correlation", fontsize=7, color=INK)
-    a2.legend(fontsize=6.5, frameon=False, loc="upper left", ncol=3)
+    a2.axhline(0, color=MUTED, lw=0.6, zorder=1)
+    a2.plot(realised.index, realised.values, color=LIGHT, lw=0.7, zorder=2, label="Realised, previous 63 days")
+    a2.plot(est.index, est["stress"], color=INK, lw=1.5, drawstyle="steps-post", zorder=3, label="Model estimate, stress state")
+    a2.plot(est.index, est["calm"], color=INK, lw=1.0, ls=(0, (4, 2)), drawstyle="steps-post", zorder=3,
+            label="Model estimate, calm state")
+    a2.set_ylim(-0.75, 0.8); a2.set_ylabel("Correlation")
+    a2.set_title("(b) SPY-IEF correlation: model estimates and realised", loc="left", pad=4)
+    a2.legend(frameon=False, loc="upper left", ncol=3, handlelength=2.2, columnspacing=1.2)
     fig.tight_layout()
-    out = ROOT / "output" / "figures" / "fig_holdout_regime.png"
-    fig.savefig(out, dpi=300); plt.close(fig)
+    st.save(fig, ROOT / "output" / "figures" / "fig_holdout_regime")
 
     y22 = est[est.index.year == 2022]
     summary = {
@@ -68,7 +67,7 @@ def main():
         "realised_corr_max": float(realised.max()),
     }
     (ROOT / "output/confirm/regime_summary.json").write_text(json.dumps(summary, indent=2))
-    print("saved", out); print(json.dumps(summary, indent=1))
+    print(json.dumps(summary, indent=1))
 
 
 if __name__ == "__main__":

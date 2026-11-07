@@ -72,7 +72,7 @@ def ladder_table(df, name, caption, label, panels, note, holm_step=None):
     if holm:  # panels without a Holm column still need the cell
         pass
     size = "\\scriptsize" if holm else "\\footnotesize"
-    txt = (f"\\begin{{table}}[t]\n\\centering\\setstretch{{1}}{size}\\setlength{{\\tabcolsep}}{{3pt}}\n\\caption{{\\uc{{{caption}}}}}\\label{{{label}}}\n"
+    txt = (f"\\begin{{table}}[t]\n\\centering\\setstretch{{1}}{size}\\setlength{{\\tabcolsep}}{{5pt}}\n\\caption{{\\uc{{{caption}}}}}\\label{{{label}}}\n"
            f"\\begin{{tabular}}{{{cs}}}\n\\toprule\n{head} \\\\\n\\midrule\n{body}\\bottomrule\n\\end{{tabular}}\n"
            f"\\tabnote{{{note}}}\n\\end{{table}}\n")
     write(name, txt)
@@ -112,7 +112,7 @@ def main():
             rows.append(f"{pct(a)} & {label.get(p, p)} & {int(r.n):,} & {f4(r.mean_diff)} & {f4(se)} & {ci(r.mean_diff, se)} & "
                         f"{f2(r.t)} & {pfmt(r.p)} & {f4(r.mde80)} \\\\")
     write("tab_real_pair.tex",
-          "\\begin{table}[t]\n\\centering\\setstretch{1}\\footnotesize\\setlength{\\tabcolsep}{3.5pt}\n\\caption{\\uc{Single-pair correlation switching against constant correlation, "
+          "\\begin{table}[t]\n\\centering\\setstretch{1}\\footnotesize\\setlength{\\tabcolsep}{5pt}\n\\caption{\\uc{Single-pair correlation switching against constant correlation, "
           "development data (RSC\\_P versus CCC)}}\\label{tab:real-pair}\n\\begin{tabular}{llrrrcrrr}\n\\toprule\n"
           "$\\alpha$ & Forecast days & $n$ & $\\bar d$ & SE & 95\\% interval & $t$ & $p$ (2-sided) & MDE \\\\\n\\midrule\n"
           + "\n".join(rows) + "\n\\bottomrule\n\\end{tabular}\n"
@@ -141,7 +141,7 @@ def main():
     rows += ["\\midrule", "\\multicolumn{6}{l}{\\textbf{Static D versus B, 1,508 test days (size under GARCH margins)}}\\\\"]
     rows += [prow(p15, "S0_vol_only", "static_corr", names["S0_vol_only"])]
     write("tab_power1508.tex",
-          "\\begin{table}[t]\n\\centering\\setstretch{1}\\footnotesize\\setlength{\\tabcolsep}{3.5pt}\n\\caption{\\uc{Simulated size and power of the difference tests (500 replications per scenario at 1,508 days; 200 at 2,520 days)}}\\label{tab:power1508}\n"
+          "\\begin{table}[t]\n\\centering\\setstretch{1}\\footnotesize\\setlength{\\tabcolsep}{5pt}\n\\caption{\\uc{Simulated size and power of the difference tests (500 replications per scenario at 1,508 days; 200 at 2,520 days)}}\\label{tab:power1508}\n"
           "\\begin{tabular}{lcccrr}\n\\toprule\nScenario & One-sided rejection [95\\% CI] & Two-sided & Upper tail & Mean $\\bar d$ & Mean SE \\\\\n\\midrule\n"
           + "\n".join(rows) + "\n\\bottomrule\n\\end{tabular}\n"
           "\\tabnote{Tail level $\\alpha=5\\%$, Gaussian chain, simulated data from the stylised GARCH regime-switching process "
@@ -162,7 +162,7 @@ def main():
             hs.append(pct(x.hit.iloc[0]) if len(x) else "--")
         rows.append(f"{nm} & " + " & ".join(hs) + " \\\\")
     write("tab_hits.tex",
-          "\\begin{table}[t]\n\\centering\\setstretch{1}\\footnotesize\\setlength{\\tabcolsep}{3.5pt}\n\\caption{\\uc{Share of days on which the return fell below the forecast VaR (nominal 5\\%), development data}}\\label{tab:hits}\n"
+          "\\begin{table}[t]\n\\centering\\setstretch{1}\\footnotesize\\setlength{\\tabcolsep}{5pt}\n\\caption{\\uc{Share of days on which the return fell below the forecast VaR (nominal 5\\%), development data}}\\label{tab:hits}\n"
           f"\\begin{{tabular}}{{l{'r' * len(rungs)}}}\n\\toprule\nSample & " + " & ".join(r.replace("_", "\\_") for r in rungs) + " \\\\\n\\midrule\n"
           + "\n".join(rows) + "\n\\bottomrule\n\\end{tabular}\n"
           "\\tabnote{Gaussian chain, pooled mean, forecast days as in Table~\\ref{tab:ladder-vol}. A hit is a day with $y_t\\le\\mathrm{VaR}_t$. "
@@ -176,7 +176,7 @@ def main():
                    ("normal_alpha0.025", "Normal, $\\alpha=2.5\\%$")):
         rows.append(f"{lab} & " + " & ".join(f4(s[k][c]) for c in cs) + " \\\\")
     write("tab_sesoi.tex",
-          "\\begin{table}[t]\n\\centering\\setstretch{1}\\footnotesize\\setlength{\\tabcolsep}{3.5pt}\n\\caption{\\uc{Expected FZ0 penalty of scaling both VaR and ES by a constant factor}}\\label{tab:sesoi}\n"
+          "\\begin{table}[t]\n\\centering\\setstretch{1}\\footnotesize\\setlength{\\tabcolsep}{5pt}\n\\caption{\\uc{Expected FZ0 penalty of scaling both VaR and ES by a constant factor}}\\label{tab:sesoi}\n"
           "\\begin{tabular}{lrrrr}\n\\toprule\nTrue distribution & $c=0.95$ & $c=0.97$ & $c=1.03$ & $c=1.05$ \\\\\n\\midrule\n"
           + "\n".join(rows) + "\n\\bottomrule\n\\end{tabular}\n"
           "\\tabnote{Analytic expected loss at scale factor $c$ minus the expected loss at $c=1$, for a unit-variance true distribution; "
@@ -186,7 +186,7 @@ def main():
     lh = json.loads((ROOT / "output" / "explore" / "longhistory_summary.json").read_text())["share_days_pos"]
     rows = [f"{k.replace('-', '--')} & {pct(v)} \\\\" for k, v in lh.items()]
     write("tab_eras.tex",
-          "\\begin{table}[t]\n\\centering\\setstretch{1}\\footnotesize\\setlength{\\tabcolsep}{3.5pt}\n\\caption{\\uc{Share of days with a positive 252-day stock--bond correlation, by era}}\\label{tab:eras}\n"
+          "\\begin{table}[t]\n\\centering\\setstretch{1}\\footnotesize\\setlength{\\tabcolsep}{5pt}\n\\caption{\\uc{Share of days with a positive 252-day stock--bond correlation, by era}}\\label{tab:eras}\n"
           "\\begin{tabular}{lr}\n\\toprule\nEra & Share of days \\\\\n\\midrule\n" + "\n".join(rows) + "\n\\bottomrule\n\\end{tabular}\n"
           "\\tabnote{Mutual-fund proxies for stocks and long Treasuries (VFINX, VUSTX), not ETFs. Source: "
           "\\texttt{output/explore/longhistory\\_summary.json}.}\n\\end{table}\n")
@@ -217,7 +217,7 @@ def holdout_tables():
             ("Outcome", pj["outcome"])]
     body = "\n".join(f"{a} & {b} \\\\" for a, b in rows)
     write("tab_holdout_primary.tex",
-          "\\begin{table}[t]\n\\centering\\setstretch{1}\\footnotesize\\setlength{\\tabcolsep}{3.5pt}\n\\caption{\\uc{The pre-specified hold-out test: switching SPY--IEF correlation against constant correlation}}\\label{tab:holdout-primary}\n"
+          "\\begin{table}[t]\n\\centering\\setstretch{1}\\footnotesize\\setlength{\\tabcolsep}{5pt}\n\\caption{\\uc{The pre-specified hold-out test: switching SPY--IEF correlation against constant correlation}}\\label{tab:holdout-primary}\n"
           "\\begin{tabular}{lr}\n\\toprule\nQuantity & Value \\\\\n\\midrule\n" + body + "\n\\bottomrule\n\\end{tabular}\n"
           "\\tabnote{Forecast days 2 January 2020 to 31 December 2025, tail level $\\alpha=5\\%$, Gaussian chain, pooled mean. Negative $\\bar d$ favours "
           "switching the SPY--IEF correlation. The interval is $\\bar d\\pm1.96\\,\\mathrm{SE}$. Power is the simulated one-sided rejection rate at 1,508 days "
@@ -240,7 +240,7 @@ def holdout_tables():
     rows += ["\\midrule", "\\multicolumn{8}{l}{\\textbf{Calendar year 2022 (interval only, not a test)}}\\\\",
              f"RSC\\_P versus CCC, 2022 & {int(fy.n):,} & {f4(fy.mean_diff)} & {f4(fy.se)} & [{f4(fy.ci_lo)}, {f4(fy.ci_hi)}] & -- & -- & -- \\\\"]
     write("tab_holdout_secondary.tex",
-          "\\begin{table}[t]\n\\centering\\setstretch{1}\\scriptsize\\setlength{\\tabcolsep}{3pt}\n\\caption{\\uc{Secondary comparisons on the hold-out (unadjusted; not confirmatory)}}\\label{tab:holdout-secondary}\n"
+          "\\begin{table}[t]\n\\centering\\setstretch{1}\\scriptsize\\setlength{\\tabcolsep}{5pt}\n\\caption{\\uc{Secondary comparisons on the hold-out (unadjusted; not confirmatory)}}\\label{tab:holdout-secondary}\n"
           "\\begin{tabular}{lrrrcrrr}\n\\toprule\nComparison & $n$ & $\\bar d$ & SE & 95\\% interval & $t$ & $p$ (2-sided) & MDE \\\\\n\\midrule\n"
           + "\n".join(rows) + "\n\\bottomrule\n\\end{tabular}\n"
           "\\tabnote{Mean FZ0 difference of the richer model minus the baseline; negative favours the richer model. Panel 1 is the ladder of "
@@ -278,7 +278,7 @@ def holdout_tables():
             rows.append(f"{pct(a)} & {arm[k]} & {r['hits']} & {pct(r['hit_rate'])} & {pfmt(r['kupiec_p'])} & {pfmt(r['independence_p'])} & "
                         f"{pfmt(r['cc_p'])} & -- & -- & {f2(r['es_ratio'])} \\\\")
     write("tab_holdout_calib.tex",
-          "\\begin{table}[t]\n\\centering\\setstretch{1}\\scriptsize\\setlength{\\tabcolsep}{3pt}\n\\caption{\\uc{Coverage and expected-shortfall calibration of the two primary models on the hold-out}}\\label{tab:holdout-calib}\n"
+          "\\begin{table}[t]\n\\centering\\setstretch{1}\\scriptsize\\setlength{\\tabcolsep}{8pt}\n\\caption{\\uc{Coverage and expected-shortfall calibration of the two primary models on the hold-out}}\\label{tab:holdout-calib}\n"
           "\\begin{tabular}{llrrrrrrrr}\n\\toprule\n$\\alpha$ & Model & Hits & Hit rate & Kupiec $p$ & Indep. $p$ & Cond. cov. $p$ & $Z_2$ & $Z_2$ $p$ & ES ratio \\\\\n\\midrule\n"
           + "\n".join(rows) + "\n\\bottomrule\n\\end{tabular}\n"
           "\\tabnote{1,508 forecast days; 75.4 hits expected at 5\\% and 37.7 at 2.5\\%. A hit is a day with $y_t\\le\\mathrm{VaR}_t$. Kupiec: unconditional coverage; Indep.: Christoffersen independence; "
