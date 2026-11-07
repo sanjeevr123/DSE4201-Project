@@ -1,39 +1,23 @@
+# Python, editors and operating system
 .venv/
 venv/
 __pycache__/
 *.pyc
 .ipynb_checkpoints/
-.DS_Store
-.vscode/
 .pytest_cache/
 .coverage
 .env
-output/sim_checkpoints/
-notes/literature/cache/
-
-# third-party reference thesis, kept local only
-notes/reference/
-
-# internal working material and regenerable intermediates, kept outside the repository
-notes/
-starter/
-outputs/
-notebooks/
-docs/*_PROMPT.md
-docs/sent/
-output/explore/**/*.pkl
-output/explore/**/*.jsonl
+.vscode/
+.DS_Store
 *.log
-output/confirm/archive/
+
+# LaTeX build output
 thesis/tex/build/
 
-# internal working files and exploratory figures, kept locally (not part of the submission)
-docs/EXECUTION_LOG.md
-docs/THESIS_PLAN.md
-docs/preregistration.md
-scripts/check_wording.py
-scripts/check_format.py
-scripts/check_thesis_gates.py
-tests/test_check_wording.py
+# Large or regenerable intermediates (rebuilt by the explore_* scripts)
+output/explore/**/*.pkl
+output/explore/**/*.jsonl
 output/explore/fig_*.png
 output/figures/ladder_forest.png
+output/sim_checkpoints/
+output/confirm/archive/

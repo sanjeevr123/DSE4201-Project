@@ -52,7 +52,7 @@ For a forecast mixture with weights $p_k$, means $m_k$ and standard deviations $
 \begin{equation}
 \sum_k p_k\,\Phi\!\left(\frac{q-m_k}{s_k}\right)=\alpha,
 \end{equation}
-found by root-finding, where $\Phi$ is the standard normal distribution function. The expected shortfall is the probability-weighted mean of the return below $q$, which has a closed form (Appendix~\ref{app:tech}). Both are returns, so both are negative at the levels used here. This is the Gaussian chain, which is the primary one. In the secondary Student-$t$ chain every component is a Student-$t$ distribution with common degrees of freedom $\nu$, scaled to the component's standard deviation. $\nu$ is estimated by maximum likelihood on the window's portfolio returns, standardised by an in-window model standard deviation; in the GARCH-margin models this is the constant-correlation standard deviation, so CCC, RSC and RSC\_P share one $\nu$. It is not comparable across the static and GARCH families.
+found by root-finding, where $\Phi$ is the standard normal distribution function. The expected shortfall is the probability-weighted mean of the return below $q$, which has a closed form (Appendix~\ref{app:tech}). Both are returns, so both are negative at the levels used here. This is the Gaussian chain, which is the primary one. In the secondary Student-$t$ chain every component is a Student-$t$ distribution with common degrees of freedom $\nu$, scaled to the component's standard deviation. Appendix~\ref{app:tech} describes how $\nu$ is estimated.
 
 \subsubsection{Benchmarks}\label{sec:bench}
 
@@ -63,23 +63,31 @@ Two other models serve as reference points. The first is a dynamic conditional c
 The thesis compares models in pairs that share the data, the regime signal and the estimation window. I do not call these pairs a nested sequence, because several pairs differ in more than one respect. Table~\ref{tab:differs} lists, for each comparison, the richer model and the baseline, what differs between them, and whether one model is a special case of the other.
 
 \begin{table}[t]
-\centering\setstretch{1}\scriptsize
+\centering\setstretch{1.1}\footnotesize
 \caption{\uc{What differs between the two models in each comparison}}\label{tab:differs}
-\begin{tabular}{p{1.55cm}p{2.5cm}p{2.6cm}p{1.8cm}p{1.9cm}p{2.3cm}}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{2.0cm}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}p{1.9cm}>{\raggedright\arraybackslash}p{1.75cm}>{\raggedright\arraybackslash}X@{}}
 \toprule
 Comparison (richer vs baseline) & Volatility & Correlation matrix & Mean & Components & Relation\\
 \midrule
-B vs A & regime-specific block SDs vs one pooled SD & pooled raw-return correlation in both & pooled window mean & 2 vs 1 & Nested in volatility\\
-D vs B & same regime SDs & regime-specific vs pooled, raw returns & pooled window mean & same & Nested in the correlation matrix\\
-CCC vs B & single-regime GARCH(1,1), daily update, vs regime-specific block SDs & standardised residuals vs raw returns & QML constant vs window mean & 1 vs 2 & Non-nested: changes four things\\
-RSC vs D & single-regime GARCH(1,1) vs regime-specific block SDs & regime-specific, standardised residuals vs raw returns & QML constant vs window mean & 2 and 2 & Non-nested: model-class comparison\\
-RSC vs CCC & identical GARCH & regime-specific vs pooled, same $z$ & identical & 2 vs 1 & Nested in the correlation matrix\\
-RSC\_P vs CCC (primary) & identical GARCH & only the (SPY, IEF) entry regime-specific & identical & 2 vs 1 & Nested in one correlation entry\\
-DCC vs CCC & same specification, fitted separately; own variance initialisation & recursion updated daily vs one pooled matrix per block & identical & 1 vs 1 & Parameter-nested ($\theta_1=\theta_2=0$), different code path\\
-DCC vs RSC & as above & smooth recursion vs regime-weighted & identical & 1 vs 2 & Non-nested\\
+B vs A & regime-specific block SDs vs one pooled SD & pooled raw-return correlation in both & pooled window mean & 2 vs 1 & nested in volatility\\
+\addlinespace
+D vs B & same regime SDs & regime-specific vs pooled, raw returns & pooled window mean & same & nested in the correlation matrix\\
+\addlinespace
+CCC vs B & single-regime GARCH(1,1), daily update, vs regime-specific block SDs & standardised residuals vs raw returns & QML constant vs window mean & 1 vs 2 & non-nested: changes four things\\
+\addlinespace
+RSC vs D & single-regime GARCH(1,1) vs regime-specific block SDs & regime-specific; standardised residuals vs raw returns & QML constant vs window mean & 2 and 2 & non-nested: model-class comparison\\
+\addlinespace
+RSC vs CCC & identical GARCH & regime-specific vs pooled, same $z$ & identical & 2 vs 1 & nested in the correlation matrix\\
+\addlinespace
+\textbf{RSC\_P vs CCC (primary)} & identical GARCH & only the (SPY, IEF) entry regime-specific & identical & 2 vs 1 & nested in one correlation entry\\
+\addlinespace
+DCC vs CCC & same specification, fitted separately; own variance initialisation & recursion updated daily vs one pooled matrix per block & identical & 1 vs 1 & parameter-nested ($\theta_1=\theta_2=0$); different code path\\
+\addlinespace
+DCC vs RSC & as above & smooth recursion vs regime-weighted & identical & 1 vs 2 & non-nested\\
 \bottomrule
-\end{tabular}
-\tabnote{``Block SDs'' means standard deviations estimated on the window and held fixed for 21 days. B reduces to A when the two regime SDs are equal; D reduces to B and RSC to CCC when the regime correlation matrices equal the pooled one. The DCC filter starts from the \texttt{arch} package's own variance initialisation and carries its correlation state forward daily, so it is not the CCC fit with a constant added.}
+\end{tabularx}
+\tabnote{``Block SDs'' means standard deviations estimated on the window and held fixed for 21 days. B reduces to A when the two regime SDs are equal; D reduces to B and RSC to CCC when the regime correlation matrices equal the pooled one. The DCC filter starts from the \texttt{arch} package's own variance initialisation and carries its correlation state forward daily, so it is not the CCC fit with a constant added. The primary comparison is in bold.}
 \end{table}
 
 Three consequences follow. Only D versus B, RSC versus CCC and RSC\_P versus CCC change the correlation matrix alone, so only they speak to the correlation channel, and only within the volatility model used. CCC versus B and RSC versus D change the volatility model, the correlation input, the mean estimator and the number of components together; they compare model classes and cannot be read as the effect of volatility dynamics, since the GARCH models also drop the regime dependence of volatility. And because CCC, RSC and RSC\_P share their margins, the primary test, RSC\_P versus CCC, differs in two respects only: a mixture of two components against one, and a regime-specific SPY--IEF correlation against a pooled one.

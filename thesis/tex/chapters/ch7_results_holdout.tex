@@ -1,6 +1,6 @@
 \section{Results on the Hold-Out}\label{ch:holdout}
 
-This chapter reports the single pre-specified test on the hold-out (1,508 forecast days), with the sentence that Section~\ref{sec:decision-rule} fixed for the outcome that occurred. Secondary results follow, labelled as such; then the calibration of the two models, which is the result that matters most to a practitioner; and finally checks chosen after the result was known. The forecasts were produced once, from the code fixed by the tag \texttt{spec-freeze-v1}, and the run was clean: every covariance matrix was valid without repair, every GARCH fit converged and every DCC fit was admissible. Before any number was computed, the scorer's provenance check was amended once (Appendix~\ref{app:disclosure}).
+This chapter reports the single pre-specified test on the hold-out (1,508 forecast days) with its frozen outcome sentence (Section~\ref{sec:decision-rule}), then the secondary analyses, calibration and post hoc checks. The forecasts were produced once from the code fixed by the tag \texttt{spec-freeze-v1}; the run was clean, and the scorer's provenance check was amended once before any number was computed (Appendix~\ref{app:disclosure}).
 
 \subsection{The pre-specified test}\label{sec:holdout-primary}
 
@@ -14,7 +14,7 @@ This is outcome O2, because the one-sided lower bound, $-0.0033$, is below the s
 The hold-out data neither establish an improvement nor exclude one. The estimate is $-0.0013$ (95\% CI $[-0.0037,+0.0012]$); an improvement of at least 0.0031 (the minimum detectable difference for the one-sided 5\% test, 80\% power) would have been detected with 80\% probability, and smaller improvements, including none, are consistent with the data.
 \end{quote}
 
-The frozen sentence needs three qualifications. First, the estimate is 0.4 times the minimum detectable difference, so the design could not detect an improvement of this size with any useful probability; the standard error, 0.0013, lies within the range of 0.0010 to 0.0015 that the development data had suggested (Section~\ref{sec:pair-dev}). Second, at the standard error observed, a true improvement equal to the smallest effect of interest, 0.0020, would have been detected with a probability of about 48\%; this figure was computed after the result was known, for that stated effect and not at the estimate. Third, the interval contains zero and also improvements well above the smallest effect of interest, up to $-0.0037$, and a degradation up to $+0.0012$. I therefore claim neither equivalence with constant correlation nor an improvement.
+The frozen sentence needs two qualifications. First, the estimate is 0.4 times the minimum detectable difference, so the design could not detect an improvement of this size with any useful probability; the standard error, 0.0013, lies within the range of 0.0010 to 0.0015 that the development data had suggested (Section~\ref{sec:pair-dev}). Second, at the standard error observed, a true improvement equal to the smallest effect of interest, 0.0020, would have been detected with a probability of about 48\%; this figure was computed after the result was known, for that stated effect and not at the estimate. I therefore claim neither equivalence with constant correlation nor an improvement.
 
 \subsection{Secondary comparisons}\label{sec:holdout-secondary}
 
@@ -24,7 +24,7 @@ These are the secondary analyses declared in Section~\ref{sec:prereg}; they are 
 
 The ladder on the hold-out (first panel of Table~\ref{tab:holdout-secondary}) repeats the development pattern without adding precision. Switching all correlations gives $-0.0037$ ($p=0.265$, MDE 0.0092). The three comparisons that involve the pooled-normal and static models have estimates between $-0.095$ and $-0.130$ but standard errors more than twenty times those of the primary pair, so the hold-out says very little about them. The static step D against B is positive, $+0.0155$ ($p=0.186$), and carries the oversizing caution of Chapter~\ref{ch:results}.
 
-Changing only the tail level or the chain leaves the sign unchanged: at $\alpha=2.5\%$ the estimate is $-0.0026$ ($p=0.233$), and with a Student-$t$ chain at $\alpha=5\%$ it is $-0.0012$ ($p=0.339$). For the calendar year 2022 alone, the year of the reversal, the estimate is $-0.0009$ over 251 days, with an interval from $-0.0089$ to $+0.0070$; a single year is too short to test, and the interval includes a large gain and a large loss.
+Changing only the tail level or the chain leaves the sign unchanged: at $\alpha=2.5\%$ the estimate is $-0.0026$ ($p=0.233$), and with a Student-$t$ chain at $\alpha=5\%$ it is $-0.0012$ ($p=0.339$). For the calendar year 2022 alone, the year of the reversal, the estimate is $-0.0009$ over 251 days, with an interval from $-0.0089$ to $+0.0070$, too wide to say anything about the year.
 
 The Giacomini--White conditional test asks whether the loss difference depends on the lagged 63-day SPY--IEF correlation, the economic prediction of Chapter~\ref{ch:intro}. It finds no such dependence (Wald statistic 1.40 on two degrees of freedom, $p=0.498$). In the data, 667 of 1,508 days (44.2\%) had a positive lagged correlation; the mean loss difference was $-0.0004$ on those days and $-0.0019$ on the others. These means are descriptive, and their direction runs opposite to the mechanism that motivated the question. The test of superior predictive ability against GARCH-$t$, with the candidates B, D, RSC and RSC\_P, is also non-significant (consistent $p=0.477$).
 
@@ -38,7 +38,7 @@ Breach-day losses were also larger than forecast. $Z_2$ is positive for both mod
 
 \subsection{Post hoc checks}\label{sec:holdout-posthoc}
 
-The checks in this section were chosen after the result was known. They are descriptive, change no outcome, and were computed from the stored forecasts without refitting anything (scripts \texttt{thesis\_posthoc.py}, \texttt{thesis\_baselines.py} and \texttt{thesis\_fig\_cumulative.py}).
+The checks in this section were chosen after the result was known. They are descriptive, change no outcome, and were computed from the stored forecasts without refitting anything.
 
 \subsubsection{Where the difference arises}
 
@@ -46,7 +46,7 @@ Figure~\ref{fig:cumulative} plots the running sum of the daily loss differences.
 
 \begin{figure}[t]
 \centering
-\includegraphics[width=\textwidth]{fig_holdout_cumulative.png}
+\includegraphics[width=\textwidth]{fig_holdout_cumulative.pdf}
 \caption{\uc{Cumulative daily FZ0 loss difference on the hold-out, switching minus constant correlation}}\label{fig:cumulative}
 \tabnote{Running sum of $d_t=\FZ_t^{\text{RSC\_P}}-\FZ_t^{\text{CCC}}$, tail level 5\%, Gaussian chain; a falling line means the switching model had the lower loss. The darker band is the crash window of 15 February to 30 April 2020, the lighter band the calendar year 2022. Source: \texttt{output/confirm/holdout\_forecasts.pkl}, drawn by \texttt{scripts/thesis\_fig\_cumulative.py}.}
 \end{figure}

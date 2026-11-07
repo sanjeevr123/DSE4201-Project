@@ -19,9 +19,10 @@
 % ---- headings: chapter = \section (centred bold, upper case, no page break), section = \subsection
 %      (centred bold), sub-section = \subsubsection (left bold); all at body size ---------------
 \usepackage{titlesec}
-\titleformat{\section}[block]{\thispagestyle{plain}\centering\normalsize\bfseries}{Chapter \thesection:}{0.5em}{}
+\titleformat{\section}[block]{\thispagestyle{plain}\centering\large\bfseries}{Chapter \thesection:}{0.5em}{}[{\suppressfloats[t]}]
 \titleformat{\subsection}[block]{\normalsize\bfseries}{\thesubsection}{1em}{}
-\titleformat{\subsubsection}[block]{\normalsize\bfseries\itshape}{\thesubsubsection}{1em}{}
+\titleformat{\subsubsection}[block]{\normalsize}{\thesubsubsection}{1em}{}
+\newcommand{\sectionbreak}{\clearpage}   % every chapter starts on a new page
 \titlespacing*{\section}{0pt}{17.7pt}{11pt}
 \titlespacing*{\subsection}{0pt}{0pt}{7.6pt}
 \titlespacing*{\subsubsection}{0pt}{0pt}{7pt}
@@ -41,7 +42,7 @@
 \usepackage{etoolbox}
 \numberwithin{table}{section}
 \numberwithin{figure}{section}
-\newcommand{\uc}[1]{\MakeUppercase{#1}}
+\newcommand{\uc}[1]{#1}
 \newcommand{\tabnote}[1]{\par\vspace{4pt}{\setstretch{1}\footnotesize\noindent\hspace{0.05\textwidth}\begin{minipage}{0.9\textwidth}\scriptsize\textbf{Note:} #1\end{minipage}\par}\vspace{6pt}}
 \renewcommand{\arraystretch}{1.25}
 \graphicspath{{figures/}{../../output/figures/}{../../output/confirm/pseudo/}}
@@ -49,8 +50,8 @@
 % ---- contents and lists: dotted leaders, upper-case captions in the lists --------------------
 \usepackage[titles]{tocloft}
 \renewcommand{\contentsname}{TABLE OF CONTENTS}
-\renewcommand{\listfigurename}{LIST OF FIGURES}
-\renewcommand{\listtablename}{LIST OF TABLES}
+\renewcommand{\listfigurename}{List of figures}
+\renewcommand{\listtablename}{List of tables}
 \renewcommand{\cfttoctitlefont}{\Large\bfseries}
 \renewcommand{\cftloftitlefont}{\Large\bfseries}
 \renewcommand{\cftlottitlefont}{\Large\bfseries}
@@ -59,10 +60,9 @@
 \setlength{\cftbeforelottitleskip}{12pt}\setlength{\cftafterlottitleskip}{12pt}
 \renewcommand{\cftdotsep}{1.5}
 \renewcommand{\cftsecfont}{\bfseries}\renewcommand{\cftsecpagefont}{\bfseries}
-\renewcommand{\cftsecleader}{\bfseries\cftdotfill{\cftdotsep}}
+\renewcommand{\cftsecleader}{\hfill}
 \setlength{\cftbeforesecskip}{16pt}\setlength{\cftbeforesubsecskip}{6pt}
-\setlength{\cftsecindent}{0pt}\setlength{\cftsecnumwidth}{6.4em}
-\renewcommand{\cftsecpresnum}{Chapter~}\renewcommand{\cftsecaftersnum}{:}
+\setlength{\cftsecindent}{0pt}\setlength{\cftsecnumwidth}{2em}
 \setlength{\cftsubsecindent}{1.5em}\setlength{\cftsubsecnumwidth}{2.4em}
 \setlength{\cftsubsubsecindent}{3.9em}\setlength{\cftsubsubsecnumwidth}{3.2em}\setlength{\cftbeforesubsubsecskip}{2pt}
 \setlength{\cftfigindent}{1.5em}\setlength{\cfttabindent}{1.5em}

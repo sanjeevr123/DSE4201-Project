@@ -1,4 +1,4 @@
-\section{Disclosures, the Record of the Hold-Out Run and Frozen Wording}\label{app:disclosure}
+\section{Disclosures and Run Record}\label{app:disclosure}
 
 \subsection{Items seen before the specification was fixed}
 
@@ -7,7 +7,6 @@ Besides the two items discussed in Section~\ref{sec:disclosure}, the following w
 \item A descriptive data analysis and a data audit in the pilot displayed summary statistics for 2010 to 2025. Calendar-year SPY--IEF correlations, Table~\ref{tab:data-summary}, Figure~\ref{fig:corr} and the reference baselines of Section~\ref{sec:holdout-posthoc} were computed after the hold-out was scored, for description only.
 \item Three unit tests read the 2010--2025 pilot returns and passed in earlier sessions; they were excluded from the test run until the hold-out had been scored.
 \item A search of the test files printed two single-day returns, for 2020-03-10 and 2023-11-01, once by accident. They were not used, and no specification depends on them.
-\item All ETF data come from one vendor.
 \end{enumerate}
 
 \subsection{The record of the run}\label{sec:holdout-record}
@@ -31,14 +30,14 @@ The development comparisons of Chapter~\ref{ch:results} use the pooled window me
 
 \begin{figure}[p]
 \centering
-\includegraphics[width=\textwidth,height=0.8\textheight,keepaspectratio]{forest_comparisons_zero.png}
+\includegraphics[width=\textwidth,height=0.8\textheight,keepaspectratio]{forest_comparisons_zero.pdf}
 \caption{\uc{Mean FZ0 difference by comparison and sample, zero mean in both models}}\label{fig:forest-zero}
 \tabnote{As Figure~\ref{fig:forest}, with the forecast mean set to zero in every component. Source: \texttt{output/explore/ladder/ladder\_dm\_table.csv}.}
 \end{figure}
 
 \begin{figure}[p]
 \centering
-\includegraphics[width=\textwidth,height=0.8\textheight,keepaspectratio]{forest_comparisons_regime.png}
+\includegraphics[width=\textwidth,height=0.8\textheight,keepaspectratio]{forest_comparisons_regime.pdf}
 \caption{\uc{Mean FZ0 difference by comparison and sample, regime-specific means}}\label{fig:forest-regime}
 \tabnote{As Figure~\ref{fig:forest}, with a regime-specific mean in each component of the static models; the GARCH-margin models and DCC have no regime-mean version, so the DCC panel is omitted. Source: \texttt{output/explore/ladder/ladder\_dm\_table.csv}.}
 \end{figure}
@@ -69,6 +68,10 @@ In the DCC benchmark the quasi-correlation matrix follows
 Q_t=(1-\theta_1-\theta_2)\bar Q+\theta_1 z_{t-1}z_{t-1}^\prime+\theta_2 Q_{t-1},
 \end{equation}
 where $\bar Q$ is the sample covariance of the standardised residuals $z$, and $Q_t$ is rescaled to a correlation matrix. $(\theta_1,\theta_2)$ are estimated on the window by Gaussian quasi-maximum likelihood every 63 days.
+
+\subsection{Degrees of freedom in the Student-$t$ chain}
+
+In the secondary Student-$t$ chain, $\nu$ is estimated by maximum likelihood on the window's portfolio returns, standardised by an in-window model standard deviation. In the GARCH-margin models this is the constant-correlation standard deviation, so CCC, RSC and RSC\_P share one $\nu$; it is not comparable across the static and GARCH families.
 
 \subsection{The HAC variance estimator}
 

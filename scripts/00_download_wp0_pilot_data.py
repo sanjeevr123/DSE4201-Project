@@ -1,7 +1,7 @@
 """
 WP0 step: acquire and archive the pilot's SPY/IEF/GLD raw price data.
 
-Downloads once, from 2004-11-18 (per docs/PILOT_PROMPT.md's data rules) to
+Downloads once, from 2004-11-18 (per the pilot's data rules) to
 today, saves an immutable raw snapshot to data/raw/ with the download date
 in the filename, records a SHA-256 hash in data/raw/MANIFEST.txt, and runs
 the WP0 data audit (missing dates, zero/duplicate prices, 8-sigma returns,
