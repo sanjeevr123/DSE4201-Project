@@ -1,10 +1,10 @@
 \section{Results on the Development Data}\label{ch:results}
 
-This chapter reports what the development data (forecast days through 2019) show about where regime information helps, and how large an effect the design could reveal. In short, modelling volatility matters and switching correlations barely moves the loss. The results are descriptive: I examined ten ETF universes, ten regime definitions and two tail levels, and chose specifications after seeing them (Chapter~\ref{ch:data}). Each comparison states what it changes (Table~\ref{tab:differs}).
+This chapter reports what the development data (forecast days through 2019) show about where regime information helps, and how large an effect the design could reveal. In short, modelling volatility matters and switching correlations barely moves the loss. The results are descriptive (Section~\ref{sec:split}), and Table~\ref{tab:differs} states what each comparison changes.
 
 \subsection{How to read the tables}\label{sec:reading}
 
-Every comparison reports the mean FZ0 difference $\bar d$ of the richer model minus the baseline, so a negative value favours the richer model, together with the HAC standard error, the two-sided 95\% interval, the two-sided $p$-value and the minimum detectable difference (MDE). A result inside the MDE is inconclusive for effects below the MDE; it does not show that the effect is absent. For scale, the smallest effect of interest of Section~\ref{sec:sesoi} is 0.002.
+Tables report the richer-minus-baseline difference $\bar d$ (negative favours the richer model), its HAC standard error, the 95\% interval, the two-sided $p$-value and the MDE, as defined in Chapter~\ref{ch:eval}; a result inside the MDE is inconclusive, not evidence of no effect. For scale, the smallest effect of interest (Section~\ref{sec:sesoi}) is 0.002.
 
 \subsection{The ladder of comparisons}
 
@@ -16,7 +16,7 @@ Giving each regime its own volatilities (model B) lowered the loss against the p
 
 \subsubsection{A single-regime GARCH model class against static regime covariance}\label{sec:ladder-results}
 
-The contrasts in Table~\ref{tab:ladder-margin} and Figure~\ref{fig:forest} replace block-constant regime volatilities by GARCH(1,1) volatilities. They compare model classes: the GARCH models have no regime dependence in volatility and also change the correlation input and the mean estimator (Table~\ref{tab:differs}). In the pre-declared family, RSC versus D in the four ETF samples, all four estimates are negative. After Holm's adjustment over the four, the adjusted $p$-values are 0.2341, 0.2341, 0.2247 and 0.0025, so the gate, which required significance in at least two samples, was met in one (the risk assets). The GARCH advantage is therefore suggestive, not established.
+The contrasts in Table~\ref{tab:ladder-margin} and Figure~\ref{fig:forest} replace block-constant regime volatilities by GARCH(1,1) volatilities. They compare model classes: the GARCH models have no regime dependence in volatility and also change the correlation input and the mean estimator (Table~\ref{tab:differs}). In the pre-declared family, RSC versus D in the four ETF samples, all four estimates are negative. After Holm's adjustment over the four, only the risk-asset sample is significant (adjusted $p=0.0025$), so the gate, which required two, was not met. The GARCH advantage is therefore suggestive, not established.
 
 \input{generated/tab_ladder_margin}
 
@@ -49,7 +49,7 @@ On the development data the confirmatory comparison, RSC\_P against CCC, gives a
 
 \subsection{Power at the hold-out length}\label{sec:power-results}
 
-At 1,508 test days the primary test is correctly sized and has low power (Table~\ref{tab:power1508}). Its size, the rejection rate in S0, is 3.6\% (95\% interval 2.0\% to 5.2\%), so there is no sign of oversizing, although 500 replications cannot show that the size is at most 5\%; the mean difference in S0 is slightly positive, so the null is interior and not on the boundary. The power is 18.2\% (14.8\% to 21.6\%) in the moderate scenario S1, 35.2\% (31.0\% to 39.4\%) in the strong scenario S2 and 2.4\% in the flight-to-quality scenario S3, where correlations move the other way. At 2,520 test days the corresponding one-sided power was 27.0\% and 53.5\%, so the shorter hold-out costs substantial power. The pre-declared low-power rule, which would have made the hold-out chapter open by saying that the test cannot be expected to detect any simulated shift, applied if S2 power fell below 30\%; at 35.2\% it does not apply, but a moderate shift would be detected about one time in five.
+At 1,508 test days the primary test is correctly sized and has low power (Table~\ref{tab:power1508}). Its size, the rejection rate in S0, is 3.6\%, with no sign of oversizing, although 500 replications cannot show that it is at most 5\%; the mean difference in S0 is slightly positive, so the null is interior rather than on the boundary. The power is 18.2\% for a moderate shift (S1), 35.2\% for a strong one (S2) and 2.4\% when correlations move the other way (S3), against 27.0\% and 53.5\% at 2,520 test days. The pre-declared low-power rule, triggered if S2 power fell below 30\%, therefore did not apply, but a moderate shift would be detected about one time in five.
 
 \input{generated/tab_power1508}
 

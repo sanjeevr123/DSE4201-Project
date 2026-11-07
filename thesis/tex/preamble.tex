@@ -19,7 +19,7 @@
 % ---- headings: chapter = \section (centred bold, upper case, no page break), section = \subsection
 %      (centred bold), sub-section = \subsubsection (left bold); all at body size ---------------
 \usepackage{titlesec}
-\titleformat{\section}[block]{\thispagestyle{plain}\centering\large\bfseries}{Chapter \thesection:}{0.5em}{}
+\titleformat{\section}[block]{\thispagestyle{plain}\centering\large\bfseries}{Chapter \thesection:}{0.5em}{}[{\suppressfloats[t]}]
 \titleformat{\subsection}[block]{\normalsize\bfseries}{\thesubsection}{1em}{}
 \titleformat{\subsubsection}[block]{\normalsize}{\thesubsubsection}{1em}{}
 \newcommand{\sectionbreak}{\clearpage}   % every chapter starts on a new page

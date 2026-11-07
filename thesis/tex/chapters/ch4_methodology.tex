@@ -52,7 +52,7 @@ For a forecast mixture with weights $p_k$, means $m_k$ and standard deviations $
 \begin{equation}
 \sum_k p_k\,\Phi\!\left(\frac{q-m_k}{s_k}\right)=\alpha,
 \end{equation}
-found by root-finding, where $\Phi$ is the standard normal distribution function. The expected shortfall is the probability-weighted mean of the return below $q$, which has a closed form (Appendix~\ref{app:tech}). Both are returns, so both are negative at the levels used here. This is the Gaussian chain, which is the primary one. In the secondary Student-$t$ chain every component is a Student-$t$ distribution with common degrees of freedom $\nu$, scaled to the component's standard deviation. $\nu$ is estimated by maximum likelihood on the window's portfolio returns, standardised by an in-window model standard deviation; in the GARCH-margin models this is the constant-correlation standard deviation, so CCC, RSC and RSC\_P share one $\nu$. It is not comparable across the static and GARCH families.
+found by root-finding, where $\Phi$ is the standard normal distribution function. The expected shortfall is the probability-weighted mean of the return below $q$, which has a closed form (Appendix~\ref{app:tech}). Both are returns, so both are negative at the levels used here. This is the Gaussian chain, which is the primary one. In the secondary Student-$t$ chain every component is a Student-$t$ distribution with common degrees of freedom $\nu$, scaled to the component's standard deviation. Appendix~\ref{app:tech} describes how $\nu$ is estimated.
 
 \subsubsection{Benchmarks}\label{sec:bench}
 

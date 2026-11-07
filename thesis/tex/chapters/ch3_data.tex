@@ -1,6 +1,6 @@
 \section{Data and Sample Design}\label{ch:data}
 
-This chapter describes the data and the portfolio, shows the patterns that motivate the analysis, and divides the sample into a development period and a hold-out period. Many specifications were examined on the development period before one was chosen, so the hold-out is clean only in the sense that nothing was fitted on it.
+This chapter describes the data and portfolio, the patterns that motivate the analysis, and the split into development and hold-out periods.
 
 \subsection{Data}
 
@@ -63,4 +63,4 @@ The late part of the development period (2016--2019) serves as a dry run: I ran 
 
 \subsubsection{What was known before the specification was fixed}\label{sec:disclosure}
 
-No model was fitted or tuned on 2020--2025, but two things that bear on the result were known. I knew that the stock--bond correlation turned positive in 2022, and that knowledge motivated the question. And the confirmatory test was chosen from simulated power on a process in which the SPY--IEF correlation shift is largest by construction (Section~\ref{sec:power-design}). The specification file, the scoring code and the raw-data hash were fixed together in the annotated git tag \texttt{spec-freeze-v1} before the run, and the scorer checks that the forecasts were produced from the code the tag fixed. Appendix~\ref{app:disclosure} lists the remaining, minor items seen before the freeze and the one amendment made to the scorer before any scoring.
+No model was fitted or tuned on 2020--2025, but two things that bear on the result were known. I knew that the stock--bond correlation turned positive in 2022, and that knowledge motivated the question. And the confirmatory test was chosen from simulated power on a process in which the SPY--IEF correlation shift is largest by construction (Section~\ref{sec:power-design}). The specification, scoring code and raw-data hash were fixed in the git tag \texttt{spec-freeze-v1} before the run. Appendix~\ref{app:disclosure} lists the remaining, minor items seen before the freeze and the one amendment made to the scorer before any scoring.

@@ -41,34 +41,6 @@
     step: regime_vol
   column: mde80
   fmt: .4f
-- id: holm_U1_pilot
-  chapter: ch6_results_exploration.tex
-  text: '0.2341'
-  kind: csv
-  file: output/explore/ladder/ladder_dm_table.csv
-  where:
-    universe: U1_pilot
-    alpha: 0.05
-    period: full
-    mean_set: pooled
-    chain: N
-    step: margin_effect
-  column: p_holm_primary
-  fmt: .4f
-- id: holm_U8_sectors
-  chapter: ch6_results_exploration.tex
-  text: '0.2247'
-  kind: csv
-  file: output/explore/ladder/ladder_dm_table.csv
-  where:
-    universe: U8_sectors
-    alpha: 0.05
-    period: full
-    mean_set: pooled
-    chain: N
-    step: margin_effect
-  column: p_holm_primary
-  fmt: .4f
 - id: holm_U10_riskassets
   chapter: ch6_results_exploration.tex
   text: '0.0025'
@@ -394,18 +366,6 @@
   column: one_sided
   fmt: .1f
   scale: 100
-- id: pair15_lo_S0
-  chapter: ch6_results_exploration.tex
-  text: '2.0'
-  kind: csv
-  file: output/explore/ladder/power_1508_summary.csv
-  where:
-    scenario: S0_vol_only
-    alpha: 0.05
-    step: pair_with_margins
-  column: one_sided_lo
-  fmt: .1f
-  scale: 100
 - id: pair15_hi_S0
   chapter: ch6_results_exploration.tex
   text: '5.2'
@@ -428,42 +388,6 @@
     alpha: 0.05
     step: pair_with_margins
   column: one_sided_lo
-  fmt: .1f
-  scale: 100
-- id: pair15_hi_S1
-  chapter: ch6_results_exploration.tex
-  text: '21.6'
-  kind: csv
-  file: output/explore/ladder/power_1508_summary.csv
-  where:
-    scenario: S1_moderate_breakdown
-    alpha: 0.05
-    step: pair_with_margins
-  column: one_sided_hi
-  fmt: .1f
-  scale: 100
-- id: pair15_lo_S2
-  chapter: ch6_results_exploration.tex
-  text: '31.0'
-  kind: csv
-  file: output/explore/ladder/power_1508_summary.csv
-  where:
-    scenario: S2_strong_breakdown
-    alpha: 0.05
-    step: pair_with_margins
-  column: one_sided_lo
-  fmt: .1f
-  scale: 100
-- id: pair15_hi_S2
-  chapter: ch6_results_exploration.tex
-  text: '39.4'
-  kind: csv
-  file: output/explore/ladder/power_1508_summary.csv
-  where:
-    scenario: S2_strong_breakdown
-    alpha: 0.05
-    step: pair_with_margins
-  column: one_sided_hi
   fmt: .1f
   scale: 100
 - id: static15_os
@@ -1763,14 +1687,6 @@
   file: output/tables/data_summary.json
   path: holdout.Portfolio.vol_ann_pct
   fmt: .1f
-- id: c8_corr2021
-  chapter: ch8_discussion.tex
-  text: '0.09'
-  kind: json
-  file: output/confirm/corr_by_year.json
-  path: '2021'
-  fmt: .2f
-  abs: true
 - id: h_corr2021
   chapter: ch7_results_holdout.tex
   text: '0.09'
