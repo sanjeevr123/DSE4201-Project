@@ -1,6 +1,6 @@
 \section{METHODOLOGY}\label{ch:method}
 
-The tail risk of a portfolio depends on how volatile each asset is and on how the assets move together, and a market regime can change either. The models in this chapter share one regime signal, one portfolio and one estimation scheme, and differ in whether volatility, correlation or both depend on the regime, and in whether volatility also follows GARCH dynamics. Pairing them so that each comparison changes as little as possible (Section~\ref{sec:ladder-design}) is what lets the thesis ask about the correlation channel specifically. Chapter~\ref{ch:eval} defines the loss, the test and the decision rule; Appendix~\ref{app:tech} gives the longer formulas and Chapter~\ref{ch:code} the implementation settings.
+The tail risk of a portfolio depends on how volatile each asset is and on how the assets move together, and a market regime can change either. The models in this chapter share one regime signal, one portfolio and one estimation scheme. They differ in whether volatility, correlation or both depend on the regime, and in whether volatility also follows GARCH dynamics. Pairing them so that each comparison changes as little as possible (Section~\ref{sec:ladder-design}) is what lets the thesis ask about the correlation channel specifically. Chapter~\ref{ch:eval} defines the loss, the test and the decision rule; Appendix~\ref{app:tech} gives the longer formulas and Chapter~\ref{ch:code} the implementation settings.
 
 \subsection{The forecasting task and the estimation scheme}\label{sec:walkforward}
 
@@ -10,7 +10,7 @@ Forecasts come from a walk-forward scheme. The forecast days are split into bloc
 
 \subsection{The regime signal}\label{sec:hmm}
 
-The regime signal is a two-state Gaussian hidden Markov model (HMM) fitted to SPY daily returns only, so that every model uses the same signal. The hidden state $S_t\in\{1,2\}$ is calm (1, lower return variance) or stressed (2); given $S_t=k$, the SPY return is normal with mean $\mu_k$ and variance $\sigma_k^2$, and $S_t$ follows a Markov chain with transition matrix $P$. The parameters are estimated on each window by the expectation--maximisation algorithm, and the states are ordered by variance after each fit, so the stress state keeps its label.
+The regime signal is a two-state Gaussian hidden Markov model (HMM) fitted to SPY daily returns only, so that every model uses the same signal. The hidden state $S_t\in\{1,2\}$ is calm (1, lower return variance) or stressed (2). Given $S_t=k$, the SPY return is normal with mean $\mu_k$ and variance $\sigma_k^2$, and $S_t$ follows a Markov chain with transition matrix $P$. The parameters are estimated on each window by the expectation--maximisation algorithm, and the states are ordered by variance after each fit, so the stress state keeps its label.
 
 Two sets of probabilities are used, and they must not be confused. Inside the window, the smoothed probabilities $\gamma_{s,k}=\Pr(S_s=k\mid\text{window})$ for each window day $s$ weight the regime moments below; they use no data beyond the end of the window. For the forecast, the weights of the mixture are the predictive probabilities
 \begin{equation}
@@ -34,7 +34,7 @@ These models replace the block-constant volatilities by GARCH(1,1) volatilities 
 \begin{equation}
 x_{i,s}=\mu_i+\varepsilon_{i,s},\qquad \sigma_{i,s+1}^2=\omega_i+a_i\,\varepsilon_{i,s}^2+b_i\,\sigma_{i,s}^2,
 \end{equation}
-by Gaussian quasi-maximum likelihood, one asset at a time. The fitted recursion gives standardised residuals $z_{i,s}=\varepsilon_{i,s}/\sigma_{i,s}$ in the window and, in the block, a volatility that is updated each day from the realised return with the parameters held fixed (Chapter~\ref{ch:code}). Write $A_t=w\circ\sigma_t/100$ for the vector of weighted volatilities, where $\circ$ is the element-wise product. The volatility is the same in every regime component: GARCH volatility in these models does not depend on the regime, which enters only through the correlation matrix of $z$ and the mixture weights.
+by Gaussian quasi-maximum likelihood, one asset at a time. The fitted recursion gives the standardised residuals $z_{i,s}=\varepsilon_{i,s}/\sigma_{i,s}$ in the window. Within the block, each volatility is updated daily from the realised return with the parameters held fixed (Chapter~\ref{ch:code}). Write $A_t=w\circ\sigma_t/100$ for the vector of weighted volatilities, where $\circ$ is the element-wise product. The volatility is the same in every regime component, so the regime enters only through the correlation matrix of $z$ and the mixture weights.
 
 The three models differ in the correlation matrix of the standardised residuals:
 \begin{align}
@@ -42,7 +42,7 @@ The three models differ in the correlation matrix of the standardised residuals:
 \text{RSC:}&\quad R_k=\bar R_k;\\
 \text{RSC\_P:}&\quad R_k=\bar R\ \text{with the (SPY, IEF) entry replaced by } (\bar R_k)_{12}.
 \end{align}
-Here $\bar R$ is the correlation matrix of $z$ over the window with equal weights and $\bar R_k$ is the correlation matrix of $z$ with weights $\gamma_{s,k}$. In RSC\_P only the SPY--IEF correlation switches with the regime and the other two correlations stay pooled. I fixed this pair in advance from the stock--bond hypothesis, not by scanning. A repair that keeps every matrix a valid correlation matrix is in place but never fired (Chapter~\ref{ch:code}). The forecast distribution of $y_t$ is a mixture of normals with weights $p_{t,k}$ ($p_{t,k}=1$ for CCC), a common mean $m=w^\prime\hat\mu^{\mathrm{QML}}/100$ from the QML constants, and component variances $A_t^\prime R_k A_t$; the mean is therefore the same in the two models of the primary test.
+Here $\bar R$ is the correlation matrix of $z$ over the window with equal weights and $\bar R_k$ is the correlation matrix of $z$ with weights $\gamma_{s,k}$. In RSC\_P only the SPY--IEF correlation switches with the regime and the other two correlations stay pooled. I fixed this pair in advance from the stock--bond hypothesis, not by scanning. A repair that keeps every matrix a valid correlation matrix is in place but never fired (Chapter~\ref{ch:code}). The forecast distribution of $y_t$ is a mixture of normals with weights $p_{t,k}$ ($p_{t,k}=1$ for CCC) and component variances $A_t^\prime R_k A_t$. Its mean, $m=w^\prime\hat\mu^{\mathrm{QML}}/100$ from the QML constants, is common to all components and to both models of the primary test.
 
 \subsection{Mixture value-at-risk and expected shortfall}\label{sec:mixvar}
 
@@ -54,7 +54,7 @@ found by root-finding, where $\Phi$ is the standard normal distribution function
 
 \subsection{Benchmarks}\label{sec:bench}
 
-Two other models serve as reference points. The first is a dynamic conditional correlation model (DCC; \citealp{engle2002}) built on the same GARCH(1,1) margins, in which the correlation matrix follows a GARCH-type recursion in the standardised residuals (Appendix~\ref{app:tech}); its parameters are re-estimated every 63 days and the recursion is updated daily, and if the estimates are not admissible it falls back to constant correlation (Chapter~\ref{ch:code}). The second is a GARCH(1,1) model with Student-$t$ errors fitted by maximum likelihood to the portfolio return itself (GARCH-t), which uses no information about the individual assets. Two practitioner baselines, both on the portfolio return, were added only after the hold-out was scored (Section~\ref{sec:holdout-posthoc}): historical simulation, the empirical 5\% quantile and the mean of the returns below it over the last 500 days; and a RiskMetrics exponentially weighted variance with decay 0.94, a zero mean and a normal distribution.
+Two other models serve as reference points. The first is a dynamic conditional correlation model (DCC; \citealp{engle2002}) built on the same GARCH(1,1) margins, in which the correlation matrix follows a GARCH-type recursion in the standardised residuals (Appendix~\ref{app:tech}). Its parameters are re-estimated every 63 days and the recursion is updated daily; if the estimates are not admissible, it falls back to constant correlation (Chapter~\ref{ch:code}). The second is a GARCH(1,1) model with Student-$t$ errors fitted by maximum likelihood to the portfolio return itself (GARCH-t), which uses no information about the individual assets. Two practitioner baselines, both on the portfolio return, were added only after the hold-out was scored (Section~\ref{sec:holdout-posthoc}): historical simulation, the empirical 5\% quantile and the mean of the returns below it over the last 500 days; and a RiskMetrics exponentially weighted variance with decay 0.94, a zero mean and a normal distribution.
 
 \subsection{What each comparison changes}\label{sec:ladder-design}
 
