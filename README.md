@@ -37,7 +37,8 @@ The comparison was fixed before the 2020–2025 hold-out was used and was run on
 | Table 6.5 (primary pair, development) | `output/explore/routes/routes_dm_table.csv` | `explore_08`, `explore_09` |
 | Table 6.6 (power) | `output/explore/ladder/power_1508_summary.csv`, `power_2520_twosided.csv` | `explore_16`, `explore_20`–`explore_22` |
 | Tables 7.1–7.3 | `output/confirm/holdout/` | `confirm_00_run.py holdout`, `confirm_01_score.py` |
-| Figure 7.1, post hoc rows | `holdout_forecasts.pkl`, `posthoc.json`, `baselines.json` | `thesis_fig_cumulative.py`, `thesis_posthoc.py`, `thesis_baselines.py` |
+| Figure 7.1, Table 7.4 (breaches by year), post hoc rows | `holdout_forecasts.pkl`, `posthoc.json`, `baselines.json` | `thesis_fig_cumulative.py`, `thesis_posthoc.py`, `thesis_baselines.py` |
+| Figure 8.1 (regime signal and correlation estimates) | `holdout_forecasts.pkl`, `regime_summary.json` | `thesis_fig_regime.py` |
 
 All tables are written to `thesis/tex/generated/` by `thesis_tables.py` (Table 3.1 by `thesis_data_summary.py`; Tables 3.3 and 4.1 are written by hand); figures go to `output/figures/`.
 
@@ -68,7 +69,7 @@ Large intermediate files (`output/explore/**/*.pkl`, `*.jsonl`) are not tracked;
 
 ## Frozen specification
 
-The hold-out specification is fixed by the annotated tags `spec-freeze-v1` and `spec-freeze-v1.1` (one amendment of the scorer's validity rule, made before any scoring and recorded in `docs/preregistration_confirmatory.md`, section 8). The scorer checks that `src/`, the runner and `requirements.txt` are unchanged since the tag, so those files are not edited, including stale comments in them (for example the reference to `docs/decision_log.md` and the pilot-era `locked_test_start: 2016-01-01` in `config/pilot.yaml`, which the confirmatory run does not use). Results produced after the freeze (`thesis_posthoc.py`, `thesis_baselines.py`, `thesis_fig_cumulative.py`) are labelled POST HOC in the thesis.
+The hold-out specification is fixed by the annotated tags `spec-freeze-v1` and `spec-freeze-v1.1` (one amendment of the scorer's validity rule, made before any scoring and recorded in `docs/preregistration_confirmatory.md`, section 8). The scorer checks that `src/`, the runner and `requirements.txt` are unchanged since the tag, so those files are not edited, including stale comments in them (for example the reference to `docs/decision_log.md` and the pilot-era `locked_test_start: 2016-01-01` in `config/pilot.yaml`, which the confirmatory run does not use). Results produced after the freeze (`thesis_posthoc.py`, `thesis_baselines.py`, `thesis_fig_cumulative.py`, `thesis_fig_regime.py`) are labelled POST HOC in the thesis.
 
 ## Data
 

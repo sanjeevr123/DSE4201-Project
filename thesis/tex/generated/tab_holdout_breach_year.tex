@@ -1,0 +1,16 @@
+\begin{table}[t]
+\centering\setstretch{1}\footnotesize\setlength{\tabcolsep}{4pt}
+\caption{\uc{Share of hold-out days on which the 5\% VaR was breached, by calendar year}}\label{tab:breach-year}
+\begin{tabular}{lrrrrrr}
+\toprule
+ & 2020 & 2021 & \textbf{2022} & 2023 & 2024 & 2025 \\
+\midrule
+Forecast days & 253 & 252 & \textbf{251} & 250 & 252 & 250 \\
+\midrule
+CCC (constant correlation) & 6.3\% & 7.1\% & \textbf{12.0\%} & 6.4\% & 6.0\% & 3.2\% \\
+RSC\_P (switching SPY--IEF correlation) & 6.3\% & 7.1\% & \textbf{12.4\%} & 6.4\% & 6.0\% & 3.2\% \\
+RiskMetrics EWMA (POST HOC baseline) & 6.7\% & 6.0\% & \textbf{6.0\%} & 4.0\% & 5.2\% & 3.6\% \\
+\bottomrule
+\end{tabular}
+\tabnote{Nominal rate 5\%; Gaussian chain for CCC and RSC\_P. 2022, the year in which the stock--bond correlation turned positive, is in bold. POST HOC and descriptive: chosen after the result was known; no test. Source: \texttt{output/confirm/posthoc.json} (\texttt{scripts/thesis\_posthoc.py}).}
+\end{table}

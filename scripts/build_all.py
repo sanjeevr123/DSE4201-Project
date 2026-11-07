@@ -21,6 +21,7 @@ STEPS = [("data summary and correlation figure", ["scripts/thesis_data_summary.p
          ("tables", ["scripts/thesis_tables.py"]),
          ("figure: forest plots", ["scripts/thesis_fig_forest.py"]),
          ("figure: hold-out cumulative difference", ["scripts/thesis_fig_cumulative.py"]),
+         ("figure: hold-out regime signal and correlation", ["scripts/thesis_fig_regime.py"]),
          ("registered numbers", ["scripts/check_numbers.py"])]
 CHAPTERS = sorted((ROOT / "thesis" / "tex" / "chapters").glob("ch*.tex"))
 

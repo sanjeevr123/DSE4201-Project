@@ -19,14 +19,14 @@
 % ---- headings: chapter = \section (centred bold, upper case, no page break), section = \subsection
 %      (centred bold), sub-section = \subsubsection (left bold); all at body size ---------------
 \usepackage{titlesec}
-\titleformat{\section}[block]{\thispagestyle{plain}\centering\normalsize\bfseries}{\thesection}{1em}{}
-\titleformat{\subsection}[block]{\centering\normalsize\bfseries}{\thesubsection}{1em}{}
-\titleformat{\subsubsection}[block]{\normalsize\bfseries}{\thesubsubsection}{1em}{}
+\titleformat{\section}[block]{\thispagestyle{plain}\centering\normalsize\bfseries}{Chapter \thesection:}{0.5em}{}
+\titleformat{\subsection}[block]{\normalsize\bfseries}{\thesubsection}{1em}{}
+\titleformat{\subsubsection}[block]{\normalsize\bfseries\itshape}{\thesubsubsection}{1em}{}
 \titlespacing*{\section}{0pt}{17.7pt}{11pt}
 \titlespacing*{\subsection}{0pt}{0pt}{7.6pt}
 \titlespacing*{\subsubsection}{0pt}{0pt}{7pt}
 \setcounter{secnumdepth}{3}
-\setcounter{tocdepth}{2}
+\setcounter{tocdepth}{3}
 
 % ---- page numbers: top right on ordinary pages, centred at the foot on chapter-opening pages
 %      and in the front matter ------------------------------------------------------------------
@@ -61,8 +61,10 @@
 \renewcommand{\cftsecfont}{\bfseries}\renewcommand{\cftsecpagefont}{\bfseries}
 \renewcommand{\cftsecleader}{\bfseries\cftdotfill{\cftdotsep}}
 \setlength{\cftbeforesecskip}{16pt}\setlength{\cftbeforesubsecskip}{6pt}
-\setlength{\cftsecindent}{0pt}\setlength{\cftsecnumwidth}{1.5em}
+\setlength{\cftsecindent}{0pt}\setlength{\cftsecnumwidth}{6.4em}
+\renewcommand{\cftsecpresnum}{Chapter~}\renewcommand{\cftsecaftersnum}{:}
 \setlength{\cftsubsecindent}{1.5em}\setlength{\cftsubsecnumwidth}{2.4em}
+\setlength{\cftsubsubsecindent}{3.9em}\setlength{\cftsubsubsecnumwidth}{3.2em}\setlength{\cftbeforesubsubsecskip}{2pt}
 \setlength{\cftfigindent}{1.5em}\setlength{\cfttabindent}{1.5em}
 \setlength{\cftfignumwidth}{2.6em}\setlength{\cfttabnumwidth}{2.6em}
 \setlength{\cftbeforefigskip}{4pt}\setlength{\cftbeforetabskip}{4pt}

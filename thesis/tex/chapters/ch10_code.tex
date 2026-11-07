@@ -1,4 +1,4 @@
-\section{CODE AND DATA}\label{ch:code}
+\section{Code and Data}\label{ch:code}
 
 This chapter explains how the analysis is organised in the accompanying repository, how the data are stored and transformed, and how every table and figure can be reproduced. Paths are relative to the repository root. The code is Python 3.9.6; package versions are pinned in \texttt{requirements.txt}, and the main ones are numpy 2.0.2, pandas 2.3.3, scipy 1.13.1, arch 7.2.0, statsmodels 0.14.6, hmmlearn 0.3.3 and matplotlib 3.9.4.
 
@@ -53,7 +53,7 @@ Power at the hold-out length & \texttt{scripts/explore\_21\_power\_holdout\_leng
 \tabnote{The hold-out runner refuses to run unless the frozen files match the tag and refuses to overwrite an existing output; the stored hold-out forecasts are \texttt{output/confirm/holdout\_forecasts.pkl}. \texttt{scripts/verify\_clean\_clone.py} repeats the build in a fresh clone and compares each table, figure and the PDF text with the committed versions.}
 \end{table}
 
-\texttt{build\_all.py} runs \texttt{thesis\_data\_summary.py}, \texttt{thesis\_tables.py}, \texttt{thesis\_fig\_forest.py}, \texttt{thesis\_fig\_cumulative.py} and \texttt{check\_numbers.py}, then compiles the LaTeX source with \texttt{tectonic}. Every number quoted in the prose that comes from a result file is registered in \texttt{thesis/numbers.yaml} with its source file and format, and \texttt{check\_numbers.py} recomputes each one and checks that it appears in the stated chapter. Each table and figure names its result file and script in its note, and the repository's README collects the same map in one table.
+\texttt{build\_all.py} runs \texttt{thesis\_data\_summary.py}, \texttt{thesis\_tables.py}, \texttt{thesis\_fig\_forest.py}, \texttt{thesis\_fig\_cumulative.py}, \texttt{thesis\_fig\_regime.py} and \texttt{check\_numbers.py}, then compiles the LaTeX source with \texttt{tectonic}. Every number quoted in the prose that comes from a result file is registered in \texttt{thesis/numbers.yaml} with its source file and format, and \texttt{check\_numbers.py} recomputes each one and checks that it appears in the stated chapter. Each table and figure names its result file and script in its note, and the repository's README collects the same map in one table.
 
 
 \subsection{Checks on the code}\label{sec:code-tests}

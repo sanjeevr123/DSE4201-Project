@@ -5,6 +5,7 @@ Reads output/confirm/holdout_forecasts.pkl, writes output/confirm/posthoc.json. 
   year_sum/mean  the primary difference by calendar year; the 2020 crash window
   bootstrap      stationary-bootstrap 95% percentile intervals for the mean difference (expected block lengths 5, 21 and
                  63 days, 10,000 draws, seed 0), a check on the normal interval of a heavy-tailed series
+  breach_by_year 5% VaR breach rate by calendar year for CCC, RSC_P and the RiskMetrics EWMA, with days per year
   t_chain_calib  coverage of the two primary models in the Student-t chain (hit rate, Kupiec, Christoffersen
                  independence, conditional coverage, mean y/ES on breach days); Z2 is not simulated for this chain;
                  keys are ARM_a50 (5%) and ARM_a25 (2.5%)
@@ -53,5 +54,10 @@ for a in (0.05, 0.025):
                                               "independence_p": float(1 - chi2.cdf(ind, 1)),
                                               "cc_p": float(1 - chi2.cdf(uc + ind, 2)),
                                               "es_ratio": float(np.mean(y[h == 1] / e[h == 1]))}
+out["breach_by_year"] = {"days": {str(k): int(v) for k, v in s.groupby(s.index.year).size().items()}}
+for arm in ("CCC_S_N", "RSC_P_N", "EWMA"):
+    v, _ = S.forecast(res, arm, 0.05)
+    hb = pd.Series(res["y"] <= v, index=s.index)
+    out["breach_by_year"][arm] = {str(k): float(g.mean()) for k, g in hb.groupby(hb.index.year)}
 (ROOT / "output/confirm/posthoc.json").write_text(json.dumps(out, indent=2))
 print(json.dumps({k: out[k] for k in ("bootstrap", "t_chain_calib")}, indent=1))

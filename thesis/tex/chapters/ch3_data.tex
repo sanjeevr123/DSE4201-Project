@@ -1,12 +1,18 @@
-\section{DATA AND SAMPLE DESIGN}\label{ch:data}
+\section{Data and Sample Design}\label{ch:data}
 
 This chapter describes the data and the portfolio, shows the patterns that motivate the analysis, and divides the sample into a development period and a hold-out period. Many specifications were examined on the development period before one was chosen, so the hold-out is clean only in the sense that nothing was fitted on it.
 
-\subsection{Data}\label{sec:data}
+\subsection{Data}
+
+\subsubsection{The main sample}\label{sec:data}
 
 The main sample is three exchange-traded funds: SPY (US large-cap equities), IEF (US Treasuries with seven to ten years to maturity) and GLD (gold). The data are daily adjusted closing prices from Yahoo Finance, obtained through the \texttt{yfinance} package; the data vintage is 26 September 2026, and the file and its SHA-256 hash are stored with the code (Chapter~\ref{ch:code}). The estimation code truncates the series at 31 December 2025 before computing anything.
 
 I compute simple daily returns, $r_{i,t}=P_{i,t}/P_{i,t-1}-1$, from the adjusted close. Dates on which any of the three prices is missing are dropped and returns are computed between consecutive available dates, with no forward filling. Through 31 December 2019 the file yields 3,805 prices and 3,804 returns, the first on 19 November 2004. Adjusted closes include distributions, so a return measures the total return of holding the fund. Daily ETF prices are the data a desk forecasting this portfolio would itself use, and they cover the 2022 reversal; their weakness, examined below, is that they start too late to contain an earlier spell of positive stock--bond correlation.
+
+\subsubsection{Additional samples used in the development period}\label{sec:samples}
+
+The ladder of comparisons in Chapter~\ref{ch:results} is also run on three further ETF samples: SPY, IEF and HYG; four sector funds (XLU, XLK, XLF, XLE); and four risk assets (HYG, EEM, VNQ, DBC). They were used for a check declared before it was run (Section~\ref{sec:ladder-design}). The first contains a Treasury fund, whose correlation with equities falls in stress in the development data; in the other two the correlations rise in stress. HYG has a shorter history, so the two samples that contain it start forecasting in 2012. A fifth sample uses two mutual funds as proxies for stocks and long Treasuries (VFINX and VUSTX, equally weighted), with forecasts from 1992 to 2019, to include a period in which the stock--bond correlation was positive. The funds are not ETFs, and VUSTX tracks long Treasuries and not IEF. None of these samples is used in the hold-out, and their data stop at 31 December 2019.
 
 \subsection{The portfolio}\label{sec:portfolio}
 
@@ -29,11 +35,9 @@ Table~\ref{tab:data-summary} summarises daily returns in the two forecast period
 
 A longer history puts the development period in context. Table~\ref{tab:eras} uses two mutual funds as proxies for stocks and long Treasuries: the 252-day stock--bond correlation was positive on 90.6\% of days in 1987--1999, on 23.7\% in 2000--2009 and on 0.0\% in 2010--2019. No ETF development sample contains the regime the thesis is about, so the development data cannot show whether a correlation-switching model detects it. Only the hold-out can.
 
-\subsection{Additional samples used in the development period}\label{sec:samples}
-
-The ladder of comparisons in Chapter~\ref{ch:results} is also run on three further ETF samples: SPY, IEF and HYG; four sector funds (XLU, XLK, XLF, XLE); and four risk assets (HYG, EEM, VNQ, DBC). They were used for a check declared before it was run (Section~\ref{sec:ladder-design}). The first contains a Treasury fund, whose correlation with equities falls in stress in the development data; in the other two the correlations rise in stress. HYG has a shorter history, so the two samples that contain it start forecasting in 2012. A fifth sample uses two mutual funds as proxies for stocks and long Treasuries (VFINX and VUSTX, equally weighted), with forecasts from 1992 to 2019, to include a period in which the stock--bond correlation was positive. The funds are not ETFs, and VUSTX tracks long Treasuries and not IEF. None of these samples is used in the hold-out, and their data stop at 31 December 2019.
-
 \subsection{Sample design}\label{sec:split}
+
+\subsubsection{Development and hold-out periods}
 
 Table~\ref{tab:split} sets out the periods. Each forecast for day $t$ uses the 1,260 returns before $t$ (Section~\ref{sec:walkforward}), so every sample also needs five years of earlier returns.
 
@@ -57,6 +61,6 @@ The development period is where I explored. I screened ten ETF universes, ten re
 
 The late part of the development period (2016--2019) serves as a dry run: I ran the final code path on it to check the pipeline end to end, and its estimates enter no argument about the hypothesis. The hold-out is 2 January 2020 to 31 December 2025, 1,508 forecast days. It contains the 2020 crash, the 2022 stock--bond reversal that motivates the thesis and the years around it. I ran the pre-specified test on it once, after the specification was fixed (Section~\ref{sec:prereg}).
 
-\subsection{What was known before the specification was fixed}\label{sec:disclosure}
+\subsubsection{What was known before the specification was fixed}\label{sec:disclosure}
 
 No model was fitted or tuned on 2020--2025, but two things that bear on the result were known. I knew that the stock--bond correlation turned positive in 2022, and that knowledge motivated the question. And the confirmatory test was chosen from simulated power on a process in which the SPY--IEF correlation shift is largest by construction (Section~\ref{sec:power-design}). The specification file, the scoring code and the raw-data hash were fixed together in the annotated git tag \texttt{spec-freeze-v1} before the run, and the scorer checks that the forecasts were produced from the code the tag fixed. Appendix~\ref{app:disclosure} lists the remaining, minor items seen before the freeze and the one amendment made to the scorer before any scoring.
