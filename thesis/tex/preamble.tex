@@ -1,5 +1,4 @@
-% Preamble: every layout setting lives here. Measured values and their source are in
-% notes/reference_thesis_analysis.md; the build check is scripts/check_format.py.
+% Preamble: every layout setting lives here.
 \documentclass[11pt,a4paper]{article}   % 11pt class: 10.95 pt text, 13.6 pt baseline, 17 pt parindent
 
 % ---- page (A4 chosen by the author; margins, font size and spacing as measured) -------------
@@ -84,10 +83,11 @@
 \newcommand{\FZ}{\mathrm{FZ0}}
 \newcommand{\E}{\mathbb{E}}
 \newcommand{\Prob}{\mathbb{P}}
-\newcommand{\unverified}{\textsuperscript{[UNVERIFIED]}}
-\newcommand{\pending}[1]{#1\textsuperscript{[PENDING]}}
 \newcommand{\todo}[1]{\textbf{[TO WRITE: #1]}}
 \DeclareMathOperator*{\argmin}{arg\,min}
+\setlength{\emergencystretch}{3em}   % lets TeX loosen a line rather than run into the margin
+% allow a line break after an underscore, so long file names in \texttt do not run into the margin
+\DeclareRobustCommand{\_}{\textunderscore\penalty500\hskip0pt\relax}
 
 % ---- title-page details to confirm (see notes/outbox/02_requirements_questions.md) ------------
 \newcommand{\thesisauthor}{[AUTHOR NAME]}

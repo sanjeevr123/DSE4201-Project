@@ -1,11 +1,8 @@
-# Pilot Decisions Log
+# Decisions log
 
-Ambiguous choices made while executing docs/PILOT_PROMPT.md, picked
-conservatively and logged here per that document's working rules ("If
-something is ambiguous, pick the conservative option, write it into
-docs/decisions_log.md with a one-line reason, and continue"). This is
-separate from `notes/decision_log.md`, which tracks broader thesis-level
-methodology decisions outside the pilot's scope.
+Methodological decisions in the order they were made, from the pilot through the exploration of the development data
+(2005-2019) to the confirmatory specification. Every specification tried in development is recorded here, including the
+ones that did not enter the thesis. Entries are kept as written; later entries correct earlier ones where needed.
 
 - **`output/` vs `outputs/`**: created a new `output/` (singular) directory
   for all pilot (WP0-WP5) deliverables, left the pre-existing `outputs/`

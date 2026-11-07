@@ -1,7 +1,9 @@
 """
 Thesis figure: forest plot of the model comparisons (FZ0 difference, richer minus baseline; negative = richer model
 better) per sample, with two-sided 95% CI and the minimum detectable difference (two-sided 5%, 80% power) as a grey band.
-Tail level 5%, Gaussian chain, full window. One figure per mean treatment: pooled (main text), zero and regime (appendix).
+Each panel has its own x-scale, because the volatility and margin contrasts are about ten times larger than the
+correlation contrasts.
+Tail level 5%, Gaussian chain, full window. One figure per mean treatment: pooled (Chapter 6), zero and regime (Appendix B).
 Labels state what each comparison changes and do not imply a nested sequence. Greyscale. Source:
 output/explore/ladder/ladder_dm_table.csv. Output: output/figures/forest_comparisons_{pooled,zero,regime}.png
 Run: .venv/bin/python scripts/thesis_fig_forest.py
@@ -13,6 +15,7 @@ from pathlib import Path
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
+from matplotlib.ticker import MaxNLocator
 import pandas as pd
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -33,7 +36,7 @@ def p_label(p: float) -> str:
 
 def forest(d: pd.DataFrame, out: Path):
     steps = [(s, t) for s, t in STEPS if (d.step == s).any()]
-    fig, axes = plt.subplots(len(steps), 1, figsize=(6.3, 1.15 * len(steps) + 0.6), sharex=True)
+    fig, axes = plt.subplots(len(steps), 1, figsize=(6.3, 1.25 * len(steps) + 0.6))
     for ax, (step, title) in zip(axes, steps):
         for i, (u, label) in enumerate(UNIS):
             r = d[(d.universe == u) & (d.step == step)].iloc[0]
@@ -41,7 +44,8 @@ def forest(d: pd.DataFrame, out: Path):
             ax.barh(y, 2 * r.mde80, left=-r.mde80, height=0.62, color=BAND, zorder=1)
             ax.plot([r.mean_diff - 1.96 * r.se, r.mean_diff + 1.96 * r.se], [y, y], color=INK, lw=1.4, zorder=2)
             ax.plot(r.mean_diff, y, "o", ms=5, mfc=INK if r.p < 0.05 else "white", mec=INK, mew=1.4, zorder=3)
-            ax.text(0.205, y, f"{r.mean_diff:+.4f}  ({p_label(r.p)})", va="center", ha="right", fontsize=6.5, color=INK)
+            ax.text(1.01, y, f"{r.mean_diff:+.4f}  ({p_label(r.p)})", va="center", ha="left", fontsize=6.5, color=INK,
+                    transform=ax.get_yaxis_transform())
         ax.axvline(0, color=MUTED, lw=0.8, zorder=0)
         ax.set_yticks(range(len(UNIS)))
         ax.set_yticklabels([l for _, l in UNIS][::-1], fontsize=7, color=INK)
@@ -51,9 +55,15 @@ def forest(d: pd.DataFrame, out: Path):
         for s in ("top", "right", "left"):
             ax.spines[s].set_visible(False)
         ax.tick_params(axis="y", length=0)
-        ax.set_xlim(-0.30, 0.21)
+        sub = d[d.step == step]
+        lo = min((sub.mean_diff - 1.96 * sub.se).min(), -sub.mde80.max())
+        hi = max((sub.mean_diff + 1.96 * sub.se).max(), sub.mde80.max())
+        pad = 0.08 * (hi - lo)
+        ax.set_xlim(lo - pad, hi + pad)
+        ax.tick_params(axis="x", labelsize=6.5, colors=INK)
+        ax.xaxis.set_major_locator(MaxNLocator(nbins=6))
     axes[-1].set_xlabel("Mean FZ0 loss difference, richer minus baseline (negative: richer model better)", fontsize=7, color=INK)
-    fig.tight_layout()
+    fig.tight_layout(rect=(0, 0, 0.8, 1))
     fig.savefig(out, dpi=300)
     plt.close(fig)
     print("saved", out)

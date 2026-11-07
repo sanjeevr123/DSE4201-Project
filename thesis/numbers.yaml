@@ -173,34 +173,6 @@
   column: mean_diff
   fmt: .4f
   abs: true
-- id: rscc_mde_U3_credit
-  chapter: ch6_results_exploration.tex
-  text: '0.0073'
-  kind: csv
-  file: output/explore/ladder/ladder_dm_table.csv
-  where:
-    universe: U3_credit
-    alpha: 0.05
-    period: full
-    mean_set: pooled
-    chain: N
-    step: corr_with_margins
-  column: mde80
-  fmt: .4f
-- id: rscc_mde_L1_longhist
-  chapter: ch6_results_exploration.tex
-  text: '0.0162'
-  kind: csv
-  file: output/explore/ladder/ladder_dm_table.csv
-  where:
-    universe: L1_longhist
-    alpha: 0.05
-    period: full
-    mean_set: pooled
-    chain: N
-    step: corr_with_margins
-  column: mde80
-  fmt: .4f
 - id: rscc_p_L1
   chapter: ch6_results_exploration.tex
   text: '0.806'
@@ -492,30 +464,6 @@
     alpha: 0.05
     step: pair_with_margins
   column: one_sided_hi
-  fmt: .1f
-  scale: 100
-- id: pair15_ts_S1
-  chapter: ch6_results_exploration.tex
-  text: '14.2'
-  kind: csv
-  file: output/explore/ladder/power_1508_summary.csv
-  where:
-    scenario: S1_moderate_breakdown
-    alpha: 0.05
-    step: pair_with_margins
-  column: two_sided
-  fmt: .1f
-  scale: 100
-- id: pair15_ts_S2
-  chapter: ch6_results_exploration.tex
-  text: '24.2'
-  kind: csv
-  file: output/explore/ladder/power_1508_summary.csv
-  where:
-    scenario: S2_strong_breakdown
-    alpha: 0.05
-    step: pair_with_margins
-  column: two_sided
   fmt: .1f
   scale: 100
 - id: static15_os
@@ -825,7 +773,7 @@
   column: fav_b
   fmt: d
 - id: era_1987-1999
-  chapter: ch6_results_exploration.tex
+  chapter: ch3_data.tex
   text: '90.6'
   kind: json
   file: output/explore/longhistory_summary.json
@@ -833,7 +781,7 @@
   fmt: .1f
   scale: 100
 - id: era_2000-2009
-  chapter: ch6_results_exploration.tex
+  chapter: ch3_data.tex
   text: '23.7'
   kind: json
   file: output/explore/longhistory_summary.json
@@ -841,7 +789,7 @@
   fmt: .1f
   scale: 100
 - id: era_2010-2019
-  chapter: ch6_results_exploration.tex
+  chapter: ch3_data.tex
   text: '0.0'
   kind: json
   file: output/explore/longhistory_summary.json
@@ -849,7 +797,7 @@
   fmt: .1f
   scale: 100
 - id: vend_max
-  chapter: ch3_data.tex
+  chapter: ch10_code.tex
   text: '2.5'
   kind: json
   file: output/confirm/vendor_check.json
@@ -857,7 +805,7 @@
   fmt: .1f
   scale: 1000000.0
 - id: vend_port
-  chapter: ch3_data.tex
+  chapter: ch10_code.tex
   text: '9.3'
   kind: json
   file: output/confirm/vendor_check.json
@@ -924,13 +872,6 @@
   file: output/confirm/holdout/primary.json
   path: mde_one_sided
   fmt: .4f
-- id: h_n
-  chapter: ch7_results_holdout.tex
-  text: '1508'
-  kind: json
-  file: output/confirm/holdout/primary.json
-  path: n
-  fmt: .0f
 - id: h_ratio
   chapter: ch7_results_holdout.tex
   text: '0.4'
@@ -940,30 +881,6 @@
   fmt: .1f
   abs: true
   div: 0.0031367101812369963
-- id: h_pow_s1
-  chapter: ch7_results_holdout.tex
-  text: '18.2'
-  kind: csv
-  file: output/explore/ladder/power_1508_summary.csv
-  where:
-    scenario: S1_moderate_breakdown
-    alpha: 0.05
-    step: pair_with_margins
-  column: one_sided
-  fmt: .1f
-  scale: 100
-- id: h_pow_s2
-  chapter: ch7_results_holdout.tex
-  text: '35.2'
-  kind: csv
-  file: output/explore/ladder/power_1508_summary.csv
-  where:
-    scenario: S2_strong_breakdown
-    alpha: 0.05
-    step: pair_with_margins
-  column: one_sided
-  fmt: .1f
-  scale: 100
 - id: h_rc_d
   chapter: ch7_results_holdout.tex
   text: '0.0037'
@@ -974,25 +891,6 @@
   column: mean_diff
   fmt: .4f
   abs: true
-- id: h_rc_lo
-  chapter: ch7_results_holdout.tex
-  text: '0.0101'
-  kind: csv
-  file: output/confirm/holdout/secondary_ladder.csv
-  where:
-    step: RSC vs CCC
-  column: ci_lo
-  fmt: .4f
-  abs: true
-- id: h_rc_hi
-  chapter: ch7_results_holdout.tex
-  text: '0.0028'
-  kind: csv
-  file: output/confirm/holdout/secondary_ladder.csv
-  where:
-    step: RSC vs CCC
-  column: ci_hi
-  fmt: .4f
 - id: h_rc_p
   chapter: ch7_results_holdout.tex
   text: '0.265'
@@ -1011,25 +909,6 @@
     step: RSC vs CCC
   column: mde_two_sided
   fmt: .4f
-- id: h_dcc_d
-  chapter: ch7_results_holdout.tex
-  text: '0.0060'
-  kind: csv
-  file: output/confirm/holdout/secondary_ladder.csv
-  where:
-    step: DCC vs RSC
-  column: mean_diff
-  fmt: .4f
-  abs: true
-- id: h_dcc_p
-  chapter: ch7_results_holdout.tex
-  text: '0.683'
-  kind: csv
-  file: output/confirm/holdout/secondary_ladder.csv
-  where:
-    step: DCC vs RSC
-  column: p_two_sided
-  fmt: .3f
 - id: h_ba_d
   chapter: ch7_results_holdout.tex
   text: '0.095'
@@ -1050,24 +929,6 @@
   column: mean_diff
   fmt: .3f
   abs: true
-- id: h_cb_se
-  chapter: ch7_results_holdout.tex
-  text: '0.082'
-  kind: csv
-  file: output/confirm/holdout/secondary_ladder.csv
-  where:
-    step: CCC vs B
-  column: se
-  fmt: .3f
-- id: h_rd_se
-  chapter: ch7_results_holdout.tex
-  text: '0.092'
-  kind: csv
-  file: output/confirm/holdout/secondary_ladder.csv
-  where:
-    step: RSC vs D
-  column: se
-  fmt: .3f
 - id: h_mde_lo
   chapter: ch7_results_holdout.tex
   text: '0.23'
@@ -1405,40 +1266,21 @@
   column: z2_p_underestimated
   fmt: .4f
 - id: h_psd
-  chapter: ch7_results_holdout.tex
+  chapter: ch10_code.tex
   text: '144'
   kind: json
   file: output/confirm/holdout/diagnostics.json
   path: psd_matrices
   fmt: .0f
 - id: h_dcc
-  chapter: ch7_results_holdout.tex
+  chapter: ch10_code.tex
   text: '24'
   kind: json
   file: output/confirm/holdout/diagnostics.json
   path: dcc_refits
   fmt: .0f
-- id: c9_d
-  chapter: ch9_conclusion.tex
-  text: '0.0013'
-  kind: json
-  file: output/confirm/holdout/primary.json
-  path: mean_diff
-  fmt: .4f
-  abs: true
-- id: c9_cal_r5
-  chapter: ch9_conclusion.tex
-  text: '6.9'
-  kind: csv
-  file: output/confirm/holdout/calibration.csv
-  where:
-    arm: RSC_P_N
-    alpha: 0.05
-  column: hit_rate
-  fmt: .1f
-  scale: 100
 - id: c1_gw_share
-  chapter: ch1_introduction.tex
+  chapter: ch3_data.tex
   text: '44.2'
   kind: csv
   file: output/confirm/holdout/secondary_gw_conditional.csv
@@ -1557,7 +1399,7 @@
   path: n
   fmt: ',.0f'
 - id: c3_dry_lo
-  chapter: ch3_data.tex
+  chapter: ch10_code.tex
   text: '1.3'
   kind: csv
   file: output/confirm/dryrun_vs_exploration.csv
@@ -1569,7 +1411,7 @@
   fmt: .1f
   scale: 100000.0
 - id: c3_dry_hi
-  chapter: ch3_data.tex
+  chapter: ch10_code.tex
   text: '1.4'
   kind: csv
   file: output/confirm/dryrun_vs_exploration.csv
@@ -1716,18 +1558,6 @@
   column: upper_1645
   fmt: .1f
   scale: 100
-- id: c8_lo
-  chapter: ch8_discussion.tex
-  text: '2.0'
-  kind: csv
-  file: output/explore/ladder/power_1508_summary.csv
-  where:
-    scenario: S0_vol_only
-    alpha: 0.05
-    step: pair_with_margins
-  column: one_sided_lo
-  fmt: .1f
-  scale: 100
 - id: c8_hi
   chapter: ch8_discussion.tex
   text: '5.2'
@@ -1740,20 +1570,299 @@
   column: one_sided_hi
   fmt: .1f
   scale: 100
-- {id: c1_corr_dev, chapter: ch1_introduction.tex, text: '0.46', kind: json, file: output/confirm/corr_by_year.json, path: '2010_2019', fmt: .2f, abs: true}
-- {id: c1_corr_2022, chapter: ch1_introduction.tex, text: '0.19', kind: json, file: output/confirm/corr_by_year.json, path: '2022', fmt: .2f}
-- {id: c1_corr_2023, chapter: ch1_introduction.tex, text: '0.04', kind: json, file: output/confirm/corr_by_year.json, path: '2023', fmt: .2f}
-- {id: c1_corr_2024, chapter: ch1_introduction.tex, text: '0.07', kind: json, file: output/confirm/corr_by_year.json, path: '2024', fmt: .2f}
-- {id: c1_ewma_hit, chapter: ch1_introduction.tex, text: '5.2', kind: json, file: output/confirm/baselines.json, path: hit_rate.EWMA, fmt: .1f, scale: 100}
-- {id: bl_garch_d, chapter: ch7_results_holdout.tex, text: '0.0317', kind: json, file: output/confirm/baselines.json, path: vs_ccc.GARCHt.mean_diff, fmt: .4f}
-- {id: bl_garch_se, chapter: ch7_results_holdout.tex, text: '0.0429', kind: json, file: output/confirm/baselines.json, path: vs_ccc.GARCHt.se, fmt: .4f}
-- {id: bl_hs_d, chapter: ch7_results_holdout.tex, text: '0.1308', kind: json, file: output/confirm/baselines.json, path: vs_ccc.HS.mean_diff, fmt: .4f}
-- {id: bl_hs_se, chapter: ch7_results_holdout.tex, text: '0.1278', kind: json, file: output/confirm/baselines.json, path: vs_ccc.HS.se, fmt: .4f}
-- {id: bl_ewma_d, chapter: ch7_results_holdout.tex, text: '0.0063', kind: json, file: output/confirm/baselines.json, path: vs_ccc.EWMA.mean_diff, fmt: .4f}
-- {id: bl_ewma_se, chapter: ch7_results_holdout.tex, text: '0.0440', kind: json, file: output/confirm/baselines.json, path: vs_ccc.EWMA.se, fmt: .4f}
-- {id: bl_hit_garch, chapter: ch7_results_holdout.tex, text: '6.6', kind: json, file: output/confirm/baselines.json, path: hit_rate.GARCHt, fmt: .1f, scale: 100}
-- {id: bl_hit_hs, chapter: ch7_results_holdout.tex, text: '5.8', kind: json, file: output/confirm/baselines.json, path: hit_rate.HS, fmt: .1f, scale: 100}
-- {id: bl_hit_ewma, chapter: ch7_results_holdout.tex, text: '5.2', kind: json, file: output/confirm/baselines.json, path: hit_rate.EWMA, fmt: .1f, scale: 100}
-- {id: bl_kup_garch, chapter: ch7_results_holdout.tex, text: '0.008', kind: json, file: output/confirm/baselines.json, path: kupiec_p.GARCHt, fmt: .3f}
-- {id: bl_kup_hs, chapter: ch7_results_holdout.tex, text: '0.146', kind: json, file: output/confirm/baselines.json, path: kupiec_p.HS, fmt: .3f}
-- {id: bl_kup_ewma, chapter: ch7_results_holdout.tex, text: '0.673', kind: json, file: output/confirm/baselines.json, path: kupiec_p.EWMA, fmt: .3f}
+- id: c1_corr_dev
+  chapter: ch1_introduction.tex
+  text: '0.46'
+  kind: json
+  file: output/confirm/corr_by_year.json
+  path: '2010_2019'
+  fmt: .2f
+  abs: true
+- id: c1_corr_2022
+  chapter: ch1_introduction.tex
+  text: '0.19'
+  kind: json
+  file: output/confirm/corr_by_year.json
+  path: '2022'
+  fmt: .2f
+- id: c1_corr_2023
+  chapter: ch1_introduction.tex
+  text: '0.04'
+  kind: json
+  file: output/confirm/corr_by_year.json
+  path: '2023'
+  fmt: .2f
+- id: c1_corr_2024
+  chapter: ch1_introduction.tex
+  text: '0.07'
+  kind: json
+  file: output/confirm/corr_by_year.json
+  path: '2024'
+  fmt: .2f
+- id: c1_ewma_hit
+  chapter: ch1_introduction.tex
+  text: '5.2'
+  kind: json
+  file: output/confirm/baselines.json
+  path: hit_rate.EWMA
+  fmt: .1f
+  scale: 100
+- id: bl_garch_d
+  chapter: ch7_results_holdout.tex
+  text: '0.0317'
+  kind: json
+  file: output/confirm/baselines.json
+  path: vs_ccc.GARCHt.mean_diff
+  fmt: .4f
+- id: bl_garch_se
+  chapter: ch7_results_holdout.tex
+  text: '0.0429'
+  kind: json
+  file: output/confirm/baselines.json
+  path: vs_ccc.GARCHt.se
+  fmt: .4f
+- id: bl_hs_d
+  chapter: ch7_results_holdout.tex
+  text: '0.1308'
+  kind: json
+  file: output/confirm/baselines.json
+  path: vs_ccc.HS.mean_diff
+  fmt: .4f
+- id: bl_hs_se
+  chapter: ch7_results_holdout.tex
+  text: '0.1278'
+  kind: json
+  file: output/confirm/baselines.json
+  path: vs_ccc.HS.se
+  fmt: .4f
+- id: bl_ewma_d
+  chapter: ch7_results_holdout.tex
+  text: '0.0063'
+  kind: json
+  file: output/confirm/baselines.json
+  path: vs_ccc.EWMA.mean_diff
+  fmt: .4f
+- id: bl_ewma_se
+  chapter: ch7_results_holdout.tex
+  text: '0.0440'
+  kind: json
+  file: output/confirm/baselines.json
+  path: vs_ccc.EWMA.se
+  fmt: .4f
+- id: bl_hit_garch
+  chapter: ch7_results_holdout.tex
+  text: '6.6'
+  kind: json
+  file: output/confirm/baselines.json
+  path: hit_rate.GARCHt
+  fmt: .1f
+  scale: 100
+- id: bl_hit_hs
+  chapter: ch7_results_holdout.tex
+  text: '5.8'
+  kind: json
+  file: output/confirm/baselines.json
+  path: hit_rate.HS
+  fmt: .1f
+  scale: 100
+- id: bl_hit_ewma
+  chapter: ch7_results_holdout.tex
+  text: '5.2'
+  kind: json
+  file: output/confirm/baselines.json
+  path: hit_rate.EWMA
+  fmt: .1f
+  scale: 100
+- id: bl_kup_garch
+  chapter: ch7_results_holdout.tex
+  text: '0.008'
+  kind: json
+  file: output/confirm/baselines.json
+  path: kupiec_p.GARCHt
+  fmt: .3f
+- id: bl_kup_hs
+  chapter: ch7_results_holdout.tex
+  text: '0.146'
+  kind: json
+  file: output/confirm/baselines.json
+  path: kupiec_p.HS
+  fmt: .3f
+- id: bl_kup_ewma
+  chapter: ch7_results_holdout.tex
+  text: '0.673'
+  kind: json
+  file: output/confirm/baselines.json
+  path: kupiec_p.EWMA
+  fmt: .3f
+- id: d_corr_dev
+  chapter: ch3_data.tex
+  text: '0.46'
+  kind: json
+  file: output/tables/data_summary.json
+  path: dev.corr_spy_ief
+  fmt: .2f
+  abs: true
+- id: d_corr_ho
+  chapter: ch3_data.tex
+  text: '0.08'
+  kind: json
+  file: output/tables/data_summary.json
+  path: holdout.corr_spy_ief
+  fmt: .2f
+  abs: true
+- id: d_share_dev
+  chapter: ch3_data.tex
+  text: '6.4'
+  kind: json
+  file: output/tables/data_summary.json
+  path: dev.share_rolling63_positive
+  fmt: .1f
+  scale: 100
+- id: d_share_ho
+  chapter: ch3_data.tex
+  text: '44.2'
+  kind: json
+  file: output/tables/data_summary.json
+  path: holdout.share_rolling63_positive
+  fmt: .1f
+  scale: 100
+- id: d_vol_dev
+  chapter: ch3_data.tex
+  text: '7.1'
+  kind: json
+  file: output/tables/data_summary.json
+  path: dev.Portfolio.vol_ann_pct
+  fmt: .1f
+- id: d_vol_ho
+  chapter: ch3_data.tex
+  text: '10.0'
+  kind: json
+  file: output/tables/data_summary.json
+  path: holdout.Portfolio.vol_ann_pct
+  fmt: .1f
+- id: d_kurt_dev
+  chapter: ch3_data.tex
+  text: '4.2'
+  kind: json
+  file: output/tables/data_summary.json
+  path: dev.Portfolio.exkurt
+  fmt: .1f
+- id: d_kurt_ho
+  chapter: ch3_data.tex
+  text: '7.3'
+  kind: json
+  file: output/tables/data_summary.json
+  path: holdout.Portfolio.exkurt
+  fmt: .1f
+- id: d_nret
+  chapter: ch3_data.tex
+  text: 3,804
+  kind: json
+  file: output/tables/data_summary.json
+  path: n_returns_through_2019
+  fmt: ',.0f'
+- id: c8_vol_dev
+  chapter: ch8_discussion.tex
+  text: '7.1'
+  kind: json
+  file: output/tables/data_summary.json
+  path: dev.Portfolio.vol_ann_pct
+  fmt: .1f
+- id: c8_vol_ho
+  chapter: ch8_discussion.tex
+  text: '10.0'
+  kind: json
+  file: output/tables/data_summary.json
+  path: holdout.Portfolio.vol_ann_pct
+  fmt: .1f
+- id: c8_corr2021
+  chapter: ch8_discussion.tex
+  text: '0.09'
+  kind: json
+  file: output/confirm/corr_by_year.json
+  path: '2021'
+  fmt: .2f
+  abs: true
+- id: h_corr2021
+  chapter: ch7_results_holdout.tex
+  text: '0.09'
+  kind: json
+  file: output/confirm/corr_by_year.json
+  path: '2021'
+  fmt: .2f
+  abs: true
+- id: h_bs5_lo
+  chapter: ch7_results_holdout.tex
+  text: '0.0037'
+  kind: json
+  file: output/confirm/posthoc.json
+  path: bootstrap.5.ci_lo
+  fmt: .4f
+  abs: true
+- id: h_bs5_hi
+  chapter: ch7_results_holdout.tex
+  text: '0.0013'
+  kind: json
+  file: output/confirm/posthoc.json
+  path: bootstrap.5.ci_hi
+  fmt: .4f
+- id: h_bs21_lo
+  chapter: ch7_results_holdout.tex
+  text: '0.0039'
+  kind: json
+  file: output/confirm/posthoc.json
+  path: bootstrap.21.ci_lo
+  fmt: .4f
+  abs: true
+- id: h_bs21_hi
+  chapter: ch7_results_holdout.tex
+  text: '0.0017'
+  kind: json
+  file: output/confirm/posthoc.json
+  path: bootstrap.21.ci_hi
+  fmt: .4f
+- id: h_bs63_lo
+  chapter: ch7_results_holdout.tex
+  text: '0.0042'
+  kind: json
+  file: output/confirm/posthoc.json
+  path: bootstrap.63.ci_lo
+  fmt: .4f
+  abs: true
+- id: h_bs63_hi
+  chapter: ch7_results_holdout.tex
+  text: '0.0017'
+  kind: json
+  file: output/confirm/posthoc.json
+  path: bootstrap.63.ci_hi
+  fmt: .4f
+- id: h_t_hit5
+  chapter: ch7_results_holdout.tex
+  text: '7.2'
+  kind: json
+  file: output/confirm/posthoc.json
+  path: t_chain_calib.RSC_P_t_a50.hit_rate
+  fmt: .1f
+  scale: 100
+- id: h_t_hit25
+  chapter: ch7_results_holdout.tex
+  text: '4.2'
+  kind: json
+  file: output/confirm/posthoc.json
+  path: t_chain_calib.RSC_P_t_a25.hit_rate
+  fmt: .1f
+  scale: 100
+- id: h_t_es_lo
+  chapter: ch7_results_holdout.tex
+  text: '1.07'
+  kind: json
+  file: output/confirm/posthoc.json
+  path: t_chain_calib.RSC_P_t_a25.es_ratio
+  fmt: .2f
+- id: h_t_es_hi
+  chapter: ch7_results_holdout.tex
+  text: '1.08'
+  kind: json
+  file: output/confirm/posthoc.json
+  path: t_chain_calib.RSC_P_t_a50.es_ratio
+  fmt: .2f

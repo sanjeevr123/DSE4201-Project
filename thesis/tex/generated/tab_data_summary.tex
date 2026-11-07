@@ -1,0 +1,22 @@
+\begin{table}[t]
+\centering\setstretch{1}\footnotesize\setlength{\tabcolsep}{4pt}
+\caption{\uc{Summary statistics of daily returns}}\label{tab:data-summary}
+\begin{tabular}{lrrrrrr}
+\toprule
+ & Mean (\% p.a.) & Volatility (\% p.a.) & Skewness & Excess kurtosis & Minimum (\%) & 5\% quantile (\%) \\
+\midrule
+\multicolumn{7}{l}{\textbf{Development, 2010--2019} (2,516 days; SPY--IEF correlation $-$0.46)}\\
+SPY & 13.7 & 14.7 & $-$0.42 & 4.4 & $-$6.51 & $-$1.52 \\
+IEF & 4.5 & 6.0 & $-$0.13 & 1.1 & $-$1.68 & $-$0.58 \\
+GLD & 4.1 & 15.5 & $-$0.47 & 5.3 & $-$8.78 & $-$1.49 \\
+Portfolio & 7.4 & 7.1 & $-$0.41 & 4.2 & $-$3.63 & $-$0.70 \\
+\midrule
+\multicolumn{7}{l}{\textbf{Hold-out, 2020--2025} (1,508 days; SPY--IEF correlation $-$0.08)}\\
+SPY & 16.2 & 20.7 & $-$0.27 & 13.0 & $-$10.94 & $-$1.81 \\
+IEF & 0.4 & 7.6 & 0.22 & 2.6 & $-$2.51 & $-$0.75 \\
+GLD & 18.4 & 16.3 & $-$0.36 & 3.0 & $-$6.43 & $-$1.63 \\
+Portfolio & 11.6 & 10.0 & $-$0.02 & 7.3 & $-$4.50 & $-$0.95 \\
+\bottomrule
+\end{tabular}
+\tabnote{Simple daily returns from adjusted closing prices; mean $\times 252$, volatility $\times\sqrt{252}$. Portfolio: equal weights, rebalanced daily. The 5\% quantile is the empirical counterpart of the 5\% VaR. Source: \texttt{output/tables/data\_summary.json}, from \texttt{scripts/thesis\_data\_summary.py}.}
+\end{table}

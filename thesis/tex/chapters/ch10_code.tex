@@ -1,0 +1,80 @@
+\section{CODE AND DATA}\label{ch:code}
+
+This chapter explains how the analysis is organised in the accompanying repository, how the data are stored and transformed, and how every table and figure can be reproduced. Paths are relative to the repository root. The code is Python 3.9.6; package versions are pinned in \texttt{requirements.txt}, and the main ones are numpy 2.0.2, pandas 2.3.3, scipy 1.13.1, arch 7.2.0, statsmodels 0.14.6, hmmlearn 0.3.3 and matplotlib 3.9.4.
+
+\subsection{Structure of the repository}\label{sec:code-structure}
+
+\begin{sloppypar}
+\begin{description}
+\item[\texttt{config/pilot.yaml}] The single source of parameters and seeds: tickers, window (1,260 days), refit intervals (21 and 63 days), tail levels and the simulation design. Its pilot-stage lock date (2016) predates the hold-out design and is not used by the confirmatory run.
+\item[\texttt{data/raw/}] The raw Yahoo Finance downloads, never re-pulled, with SHA-256 hashes in \texttt{MANIFEST.txt}. The thesis uses \texttt{spy\_ief\_gld\_raw\_2026-09-26.csv} (main sample) and \texttt{explore\_etfs\_2004\_2019.csv} and \texttt{explore\_rates\_1986\_2019.csv} (development samples). \texttt{data/processed/} and \texttt{data/metadata/} hold pilot-stage files that some tests read.
+\item[\texttt{src/}] The models and tests. \texttt{returns.py} builds returns and the portfolio; \texttt{engine.py} holds the hidden Markov model, the mixture VaR and ES, the FZ0 loss, the Diebold--Mariano test and the coverage tests; \texttt{explore\_wf.py} runs the walk-forward forecasts of the static models, DCC and GARCH-$t$; \texttt{explore\_routes.py} runs the GARCH-margin models CCC, RSC and RSC\_P; \texttt{explore\_ladder.py} assembles the ladder; \texttt{explore\_inference.py} implements the Giacomini--White test; \texttt{dgp\_garch.py} simulates the process of the power study.
+\item[\texttt{scripts/}] Entry points, in three groups: \texttt{explore\_00} to \texttt{explore\_22} (development results and power studies, Chapter~\ref{ch:results}); \texttt{confirm\_00} to \texttt{confirm\_06} (the frozen hold-out runner and scorer and their checks, Chapter~\ref{ch:holdout}); and \texttt{thesis\_*} together with \texttt{build\_all.py} and \texttt{check\_numbers.py} (tables, figures, post hoc checks and the number trace).
+\item[\texttt{output/}] Results: \texttt{explore/} (development), \texttt{confirm/} (dry run, hold-out and post hoc), \texttt{figures/} and \texttt{tables/}.
+\item[\texttt{docs/}] The confirmatory specification (\texttt{preregistration\_confirmatory.md}) and the log of every specification tried in development (\texttt{decisions\_log.md}).
+\item[\texttt{tests/}] 101 unit tests run by default, and three more that read hold-out-period data and were run only after scoring.
+\item[\texttt{thesis/}] The LaTeX source (\texttt{tex/}), the generated tables (\texttt{tex/generated/}), the number registry (\texttt{numbers.yaml}) and the compiled thesis (\texttt{final/thesis.pdf}).
+\end{description}
+\end{sloppypar}
+
+The files under \texttt{src/}, \texttt{scripts/confirm\_00\_run.py} and \texttt{requirements.txt} are frozen by the tags \texttt{spec-freeze-v1} and \texttt{spec-freeze-v1.1}: the scorer refuses to score forecasts produced by code that differs from the tagged version. Pilot-stage modules in \texttt{src/} therefore remain in place even though no thesis table depends on them.
+
+\subsection{Data storage and transformations}\label{sec:code-data}
+
+The raw file stores every Yahoo field for the three funds from 18 November 2004 to 25 September 2026. The forecasting code reads only the adjusted closes, truncates them at 31 December 2025, drops dates with a missing price, and computes simple returns between consecutive available dates (\texttt{src/returns.py}). The portfolio return is the equal-weighted mean of the three asset returns. Nothing is forward-filled, winsorised or rescaled, except that the GARCH estimation works with returns in per cent and converts back.
+
+Because Yahoo revises adjusted prices when it recomputes distributions, the numbers depend on the data vintage; this is why the raw files are stored with their hashes. A second download of the same three tickers, truncated at 2019, had the same 3,804 dates, and its daily returns differed from the first by at most $2.5\times10^{-6}$ (portfolio returns by at most $9.3\times10^{-7}$). This shows that the download was reproducible across two pulls; it is not a second source, since every ETF series comes from one vendor.
+
+\subsection{Implementation settings}\label{sec:code-settings}
+
+The hidden Markov model is fitted with \texttt{hmmlearn} (diagonal covariance, tolerance $10^{-4}$, seed 0). The first fit of a run is a cold start with 100 iterations from start probabilities $(0.5,0.5)$, a transition matrix with diagonal $(0.98,0.95)$, both means at the window mean, and variances $0.5v$ and $2.5v$, where $v$ is the window variance; every later fit warm-starts from the previous block's estimates with at most 50 iterations. Because the chain carries its estimates forward, a run that starts in 2016 differs slightly from the exploration chain that started in 2010 (a median absolute VaR difference of $1.3\times10^{-5}$ to $1.4\times10^{-5}$ in the primary models); the hold-out run starts cold in the same way.
+
+A regime or hybrid correlation matrix whose smallest eigenvalue is below $10^{-8}$ is repaired by clipping the eigenvalues and rescaling to a unit diagonal. The repair never fired: 0 of 240 matrices in the chain that starts in 2010, 0 of 96 in the chain that starts in 2016, and 0 of 144 in the hold-out run. If a DCC fit returns $\theta_1<0$, $\theta_2<0$ or $\theta_1+\theta_2\ge0.9995$, the code sets $\theta_1=\theta_2=0$; none of the 24 hold-out refits needed this, and no GARCH margin fit failed. BLAS threads are set to one so that the numbers should not depend on the number of cores; I did not test this on another machine.
+
+\subsection{Reproducing the results}\label{sec:code-reproduce}
+
+Table~\ref{tab:reproduce} gives the three levels of reproduction. The quickest rebuilds the thesis from the stored result files; the slowest recomputes everything from the raw data.
+
+\begin{table}[t]
+\centering\setstretch{1}\footnotesize
+\caption{\uc{How to reproduce the results}}\label{tab:reproduce}
+\begin{tabular}{>{\raggedright\arraybackslash}p{4.6cm}>{\raggedright\arraybackslash}p{6.6cm}>{\raggedright\arraybackslash}p{2.4cm}}
+\toprule
+Task & Command (from the repository root) & Time\\
+\midrule
+Rebuild all tables and figures, check every registered number, compile the PDF & \texttt{python scripts/build\_all.py} (add \texttt{-{}-no-pdf} to skip LaTeX) & seconds\\
+Run the tests & \texttt{python -m pytest -q} & about 1 minute\\
+Post hoc checks and baselines & \texttt{python scripts/thesis\_posthoc.py}, \texttt{thesis\_baselines.py} & seconds\\
+Dry run and hold-out & \texttt{python scripts/confirm\_00\_run.py pseudo} or \texttt{holdout}, then \texttt{confirm\_01\_score.py} & under 1 minute\\
+Development results & \texttt{scripts/explore\_00} to \texttt{explore\_20} in order & several hours\\
+Power at the hold-out length & \texttt{scripts/explore\_21\_power\_holdout\_length.py}, then \texttt{explore\_22\_power\_summary.py} & about 19 s per replication, 2,000 replications\\
+\bottomrule
+\end{tabular}
+\tabnote{The hold-out runner refuses to run unless the frozen files match the tag and refuses to overwrite an existing output; the stored hold-out forecasts are \texttt{output/confirm/holdout\_forecasts.pkl}. \texttt{scripts/verify\_clean\_clone.py} repeats the build in a fresh clone and compares each table, figure and the PDF text with the committed versions.}
+\end{table}
+
+\texttt{build\_all.py} runs \texttt{thesis\_data\_summary.py}, \texttt{thesis\_tables.py}, \texttt{thesis\_fig\_forest.py}, \texttt{thesis\_fig\_cumulative.py} and \texttt{check\_numbers.py}, then compiles the LaTeX source with \texttt{tectonic}. Every number quoted in the prose that comes from a result file is registered in \texttt{thesis/numbers.yaml} with its source file and format, and \texttt{check\_numbers.py} recomputes each one and checks that it appears in the stated chapter. Table~\ref{tab:exhibits} maps each exhibit to its source.
+
+\begin{table}[t]
+\centering\setstretch{1}\scriptsize
+\caption{\uc{Source of each table and figure}}\label{tab:exhibits}
+\begin{tabular}{>{\raggedright\arraybackslash}p{3.3cm}>{\raggedright\arraybackslash}p{5.4cm}>{\raggedright\arraybackslash}p{4.9cm}}
+\toprule
+Exhibit & Result file & Produced by\\
+\midrule
+Tables~\ref{tab:data-summary}, Figure~\ref{fig:corr} & \texttt{output/tables/data\_summary.json} & \texttt{thesis\_data\_summary.py}\\
+Table~\ref{tab:eras} & \texttt{output/explore/longhistory\_summary.json} & \texttt{explore\_03\_longhistory.py}\\
+Table~\ref{tab:sesoi} & \texttt{output/confirm/sesoi.json} & \texttt{confirm\_04\_sesoi.py}\\
+Tables~\ref{tab:ladder-vol}--\ref{tab:ladder-corr}, Figures~\ref{fig:forest}, \ref{fig:forest-zero}, \ref{fig:forest-regime} & \texttt{output/explore/ladder/ladder\_dm\_table.csv}, \texttt{ladder\_loss\_table.csv} & \texttt{explore\_13\_ladder.py}, \texttt{explore\_14\_score\_ladder.py}, \texttt{explore\_15\_longhistory\_ladder.py}\\
+Table~\ref{tab:real-pair} & \texttt{output/explore/routes/routes\_dm\_table.csv} & \texttt{explore\_08\_routes.py}, \texttt{explore\_09\_score\_routes.py}\\
+Table~\ref{tab:power1508} & \texttt{output/explore/ladder/power\_1508\_summary.csv}, \texttt{power\_2520\_twosided.csv} & \texttt{explore\_16}, \texttt{explore\_20}--\texttt{explore\_22}\\
+Tables~\ref{tab:holdout-primary}--\ref{tab:holdout-calib} & \texttt{output/confirm/holdout/*} & \texttt{confirm\_00\_run.py}, \texttt{confirm\_01\_score.py}\\
+Figure~\ref{fig:cumulative}, post hoc rows & \texttt{output/confirm/holdout\_forecasts.pkl}, \texttt{posthoc.json}, \texttt{baselines.json} & \texttt{thesis\_fig\_cumulative.py}, \texttt{thesis\_posthoc.py}, \texttt{thesis\_baselines.py}\\
+\bottomrule
+\end{tabular}
+\tabnote{All tables are written to \texttt{thesis/tex/generated/} by \texttt{scripts/thesis\_tables.py}, except Table~\ref{tab:data-summary}, which \texttt{thesis\_data\_summary.py} writes; figures are written to \texttt{output/figures/}. Table~\ref{tab:differs} was derived by hand from the model code.}
+\end{table}
+
+\subsection{Checks on the code}\label{sec:code-tests}
+
+The tests check the parts of the pipeline on which the results depend: that no forecast uses information from its own day or later and that dates align across assets; that the FZ0 loss is lower at the true VaR and ES than at biased ones on simulated normal data; that the mixture VaR and ES match their closed forms; that the hidden Markov model recovers known states; the sign convention of $Z_2$ and the Christoffersen test; the scorer's decision rule and validity checks; and the hold-out lock. The scored hold-out tables are listed with their SHA-256 hashes in \texttt{output/confirm/holdout/manifest.json}, and the forecast file has SHA-256 \texttt{9537bb5d6008028076126d0166bb2edc1f643e5a9f496cb852d7872f8485f974}.

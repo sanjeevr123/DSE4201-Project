@@ -26,3 +26,14 @@ output/explore/**/*.jsonl
 *.log
 output/confirm/archive/
 thesis/tex/build/
+
+# internal working files and exploratory figures, kept locally (not part of the submission)
+docs/EXECUTION_LOG.md
+docs/THESIS_PLAN.md
+docs/preregistration.md
+scripts/check_wording.py
+scripts/check_format.py
+scripts/check_thesis_gates.py
+tests/test_check_wording.py
+output/explore/fig_*.png
+output/figures/ladder_forest.png

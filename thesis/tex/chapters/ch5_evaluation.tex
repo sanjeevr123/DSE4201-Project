@@ -8,7 +8,7 @@ A forecast of $(\VaR_t,\ES_t)$ is scored against the realised return $y_t$ with 
 \begin{equation}
 \FZ(y_t,\VaR_t,\ES_t;\alpha)=-\frac{\mathbf{1}\{y_t\le \VaR_t\}\,(\VaR_t-y_t)}{\alpha\,\ES_t}+\frac{\VaR_t}{\ES_t}+\log(-\ES_t)-1,
 \end{equation}
-where $\VaR_t<0$ and $\ES_t<0$ are return quantiles. Lower is better. This is the member of the Fissler--Ziegel family \citep{fissler2016} that \citet{patton2019} call FZ0; Joint elicitability means that the expected loss is smallest at the true VaR and ES pair, which is the reason to use such a loss.\footnote{I did not re-derive the elicitability result and rely on the cited papers for it. I use the loss as a formula; a unit test checks that on simulated normal data the true VaR and ES have lower mean loss than biased ones.} Scaling the return and both forecasts by $c>0$ adds $\log c$ to the loss, so a difference between the losses of two models does not depend on the units of the return. Section~\ref{sec:sesoi} translates a loss difference into a proportional error in the forecasts.
+where $\VaR_t<0$ and $\ES_t<0$ are return quantiles. Lower is better. This is the member of the Fissler--Ziegel family \citep{fissler2016} that \citet{patton2019} call FZ0. Joint elicitability means that the expected loss is smallest at the true VaR and ES pair, so a forecaster cannot lower the expected loss by misreporting either; this is the reason to use such a loss. Scaling the return and both forecasts by $c>0$ adds $\log c$ to the loss, so a difference between the losses of two models does not depend on the units of the return. Section~\ref{sec:sesoi} translates a loss difference into a proportional error in the forecasts.
 
 \subsection{Estimand}\label{sec:estimand}
 
@@ -20,7 +20,7 @@ so that a negative $d_t$ favours the richer model. This sign convention, richer 
 \begin{equation}
 \mu=\E[d_t],
 \end{equation}
-the expected loss difference between the two procedures over the evaluation sample. It describes the procedures as they are run, with estimation error in their parameters included. It is not a statement about whether the extra parameters of the richer model are zero in a population. This is the sense of equal predictive ability in \citet{giacomini2006}, who treat the forecasting method, including its finite estimation window, as the object being compared, so that estimation uncertainty does not vanish and the test applies whether or not one model is a special case of the other. Their unconditional test is the Diebold--Mariano statistic with a two-sided alternative; the one-sided version used here is my adaptation. \citet{mccracken2020} gives a counterexample to asymptotic normality for a fixed estimation window, and the rolling-window case of Giacomini and White, which my design uses (1,260 returns), remains valid.
+the expected loss difference between the two procedures over the evaluation sample. It describes the procedures as they are run, with estimation error in their parameters included. It is not a statement about whether the extra parameters of the richer model are zero in a population. This is the sense of equal predictive ability in \citet{giacomini2006}, who treat the forecasting method, including its finite estimation window, as the object being compared, so that estimation uncertainty does not vanish and the test applies whether or not one model is a special case of the other; \citet{diebold2015} makes the same distinction between comparing forecasts and comparing models. Their unconditional test is the Diebold--Mariano statistic with a two-sided alternative; the one-sided version used here is my adaptation. \citet{mccracken2020} gives a counterexample to asymptotic normality for a fixed estimation window; the rolling-window case of Giacomini and White, which my design uses (1,260 returns), remains valid.
 
 \subsection{Estimator and test}\label{sec:test}
 
@@ -34,7 +34,7 @@ with the lag $m=\lfloor 4\,(T/100)^{2/9}\rfloor$, the rule of thumb associated w
 \begin{equation}
 t_{\mathrm{DM}}=\bar d/\widehat{\mathrm{SE}},
 \end{equation}
-which I compare with the standard normal distribution, without a small-sample correction (the small-sample correction of \citet{harvey1997} has factor $0.9997$ at one step and $T=1{,}508$, and I do not apply it). This is the Diebold--Mariano statistic \citep{diebold1995}. The null hypothesis and its alternative are statements about $\mu$ and are written separately from the statistic:
+which I compare with the standard normal distribution. The small-sample correction of \citet{harvey1997} would change it by a factor of $0.9997$ at $T=1{,}508$ and is not applied. This is the Diebold--Mariano statistic \citep{diebold1995}. The null hypothesis and its alternative are statements about $\mu$ and are written separately from the statistic:
 \begin{equation}
 H_0:\ \mu\ge 0\qquad\text{against}\qquad H_1:\ \mu<0.
 \end{equation}
@@ -44,9 +44,9 @@ Normal critical values need not be accurate for out-of-sample comparisons. When 
 
 \subsection{Decision rule and interpretation}\label{sec:decision-rule}
 
-The confirmatory test is RSC\_P against CCC, at tail level $\alpha=5\%$ with a Gaussian chain (Section~\ref{sec:ladder-design}). Two levels should not be confused: $\alpha=5\%$ is the tail level of the forecast, and the test is a separate test with its own size, also 5\%. The decision rule is one-sided: reject $H_0$ if $t_{\mathrm{DM}}<-1.6449$. I chose a one-sided test because the substantive question has one direction, and because the simulated power and size reported in Chapter~\ref{ch:results} were computed for exactly this rule. A one-sided test says nothing about harm, so I declare a separate statement: the switching model is called significantly worse if $t_{\mathrm{DM}}>+1.96$, the upper tail of a two-sided 5\% test. In the simulated null the upper-tail rate of this comparison is 5.2\% at 1.96 (Table~\ref{tab:power1508}) and 8.0\% at 1.6449, which is why 1.96 is the threshold.
+The confirmatory test is RSC\_P against CCC, at tail level $\alpha=5\%$ with a Gaussian chain (Section~\ref{sec:ladder-design}). Two levels should not be confused: $\alpha=5\%$ is the tail level of the forecast, and the test is a separate test with its own size, also 5\%. The 5\% tail level was chosen for power, since a 5\% VaR is breached about twice as often as a 2.5\% one and gives the loss difference more information; the 2.5\% level of the Basel expected-shortfall standard is the secondary level. The decision rule is one-sided: reject $H_0$ if $t_{\mathrm{DM}}<-1.6449$. I chose a one-sided test because the substantive question has one direction, and because the simulated power and size reported in Chapter~\ref{ch:results} were computed for exactly this rule. A one-sided test says nothing about harm, so I declare a separate statement: the switching model is called significantly worse if $t_{\mathrm{DM}}>+1.96$, the upper tail of a two-sided 5\% test. In the simulated null the upper-tail rate of this comparison is 5.2\% at 1.96 (Table~\ref{tab:power1508}) and 8.0\% at 1.6449, which is why 1.96 is the threshold.
 
-The four possible outcomes are checked in this order and each licenses one sentence, fixed before the run. The full wording of O1, O3 and O4 is in Appendix~\ref{app:log}.
+The four possible outcomes are checked in this order and each licenses one sentence, fixed before the run. The full wording of O1, O3 and O4 is in Appendix~\ref{app:wording}.
 \begin{description}
 \item[O1] $t_{\mathrm{DM}}\le-1.6449$: statistical evidence at the one-sided 5\% level that switching lowers expected FZ0 loss.
 \item[O4] $t_{\mathrm{DM}}\ge+1.96$: evidence that the switching specification has higher expected FZ0 loss.
@@ -88,15 +88,4 @@ The confirmatory family has one member, so no adjustment is needed. Besides it I
 
 In the development data, the 214 headline tests of the exploration were treated as one family with the adjustment of \citet{holm1979}, and the pre-declared family of four ETF samples with another. The static test of D versus B is oversized under GARCH margins (Chapter~\ref{ch:results}), so its adjusted values are not valid; nothing was significant after adjustment, so the reading is unchanged.
 
-The specification is registered in \texttt{docs/preregistration\_confirmatory.md} and fixed by an annotated git tag together with the scoring code and the raw-data hash. This follows the logic of pre-registration \citep{nosek2018} but it is a self-registration inside the repository, with no independent timestamp. The run followed the protocol except for one amendment of the scorer's validity rule, made before any scoring (Section~\ref{sec:holdout-record}).
-
-\subsection{Limits of the design}\label{sec:limits-design}
-
-The following limits apply to every result in this thesis and are not repeated in each table.
-\begin{itemize}
-\item The test compares forecasting procedures, with their window, refit schedule and the hidden-state chain. It does not test population parameters.
-\item The uncertainty in the estimated regimes is not carried into the test. I did not build a bootstrap of the whole pipeline; the rejection rate in the simulated null stands in as a size check, and it is only as good as the simulated process.
-\item The simulated power does not transfer one-for-one to real data: the simulated standard error of the primary difference depends on the scenario and differs from the real-data one (Chapter~\ref{ch:results}), so the power in a scenario is not the power that the same difference would have at the standard error of the real data.
-\item The regime signal is the SPY return only. A volatility signal and a rolling 1,260-day window may be slow to reflect a change in the stock--bond correlation.
-\item There is one portfolio of three funds, one data vendor and one reversal episode in the hold-out.
-\end{itemize}
+The specification is registered in \texttt{docs/preregistration\_confirmatory.md} and fixed by an annotated git tag together with the scoring code and the raw-data hash, following the logic of pre-registration \citep{nosek2018} within the limits stated in Section~\ref{sec:disclosure}. The run followed the protocol except for one amendment of the scorer's validity rule, made before any scoring (Appendix~\ref{app:disclosure}).
