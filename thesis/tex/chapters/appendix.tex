@@ -43,3 +43,62 @@ The development comparisons of Chapter~\ref{ch:results} use the pooled window me
 \caption{\uc{Mean FZ0 difference by comparison and sample, regime-specific means}}\label{fig:forest-regime}
 \tabnote{As Figure~\ref{fig:forest}, with a regime-specific mean in each component of the static models; the GARCH-margin models and DCC have no regime-mean version, so the DCC panel is omitted. Source: \texttt{output/explore/ladder/ladder\_dm\_table.csv}.}
 \end{figure}
+
+\section{TECHNICAL DETAILS}\label{app:tech}
+
+\subsection{Weighted moments of the static models}
+
+For weights $q_s\ge0$ over the window days, the weighted mean and covariance of the asset returns are
+\begin{equation}
+\hat\mu(q)=\frac{\sum_s q_s r_s}{\sum_s q_s},\qquad
+\hat\Sigma(q)=\frac{\sum_s q_s\,(r_s-\hat\mu(q))(r_s-\hat\mu(q))^\prime}{\sum_s q_s},
+\end{equation}
+with the maximum-likelihood normalisation. The pooled moments use $q_s=1$; the regime moments use $q_s=\gamma_{s,k}$, with a floor of $10^{-12}$.
+
+\subsection{Expected shortfall of a normal mixture}
+
+For a mixture with weights $p_k$, means $m_k$ and standard deviations $s_k$, and value-at-risk $q$ from Section~\ref{sec:mixvar}, the expected shortfall is
+\begin{equation}
+\ES=\frac1\alpha\sum_k p_k\Bigl[m_k\,\Phi(z_k)-s_k\,\phi(z_k)\Bigr],\qquad z_k=\frac{q-m_k}{s_k},
+\end{equation}
+where $\Phi$ and $\phi$ are the standard normal distribution and density functions.
+
+\subsection{The DCC recursion}
+
+In the DCC benchmark the quasi-correlation matrix follows
+\begin{equation}
+Q_t=(1-\theta_1-\theta_2)\bar Q+\theta_1 z_{t-1}z_{t-1}^\prime+\theta_2 Q_{t-1},
+\end{equation}
+where $\bar Q$ is the sample covariance of the standardised residuals $z$, and $Q_t$ is rescaled to a correlation matrix. $(\theta_1,\theta_2)$ are estimated on the window by Gaussian quasi-maximum likelihood every 63 days.
+
+\subsection{The HAC variance estimator}
+
+The standard error of $\bar d$ in Section~\ref{sec:test} is $\widehat{\mathrm{SE}}=\sqrt{\widehat V/T}$, with the Bartlett-kernel estimator
+\begin{equation}
+\widehat{V}=\hat\gamma_0+2\sum_{\ell=1}^{m}\Bigl(1-\frac{\ell}{m+1}\Bigr)\hat\gamma_\ell,\qquad
+\hat\gamma_\ell=\frac1T\sum_{t=\ell+1}^{T}(d_t-\bar d)(d_{t-\ell}-\bar d).
+\end{equation}
+
+\subsection{Parameters of the simulated process}
+
+\begin{table}[h]
+\centering\setstretch{1}\footnotesize
+\caption{\uc{Parameters of the process used in the power study}}\label{tab:dgp}
+\begin{tabular}{lccc}
+\toprule
+ & Equity-like & Bond-like & Gold-like\\
+\midrule
+Daily volatility, calm state & 0.75\% & 0.30\% & 0.90\%\\
+Daily volatility, stress state & 2.0\% & 0.5\% & 1.6\%\\
+\midrule
+ & Equity--bond & Equity--gold & Bond--gold\\
+\midrule
+Correlation, calm state (all scenarios) & $-0.30$ & 0.05 & 0.30\\
+Stress state, S0 (no change) & $-0.30$ & 0.05 & 0.30\\
+Stress state, S1 (moderate breakdown) & 0.00 & 0.20 & 0.30\\
+Stress state, S2 (strong breakdown) & 0.40 & 0.40 & 0.30\\
+Stress state, S3 (flight to quality) & $-0.55$ & $-0.10$ & 0.40\\
+\bottomrule
+\end{tabular}
+\tabnote{Persistence of the calm state 0.99 and of the stress state 0.97. Innovations are multivariate Student-$t$ with six degrees of freedom. Each asset's volatility also follows GARCH(1,1) dynamics with coefficients 0.08 and 0.90 on the regime-scaled return, fixed and not estimated. Sources: \texttt{config/pilot.yaml} (volatilities, persistence, correlations, degrees of freedom) and \texttt{src/dgp\_garch.py} (GARCH coefficients).}
+\end{table}
