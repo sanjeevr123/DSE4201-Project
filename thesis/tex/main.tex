@@ -40,6 +40,9 @@
 \clearpage
 \appendix
 \renewcommand{\thesection}{\Alph{section}}
+\titleformat{\section}[block]{\thispagestyle{plain}\centering\normalsize\bfseries}{Appendix \thesection:}{0.5em}{}
+\addtocontents{toc}{\protect\renewcommand{\protect\cftsecpresnum}{Appendix~}}
+\addtocontents{toc}{\protect\setlength{\protect\cftsecnumwidth}{7.6em}}
 \input{chapters/appendix}
 
 \end{document}

@@ -53,7 +53,7 @@ def ladder_panel(df, step, title, holm=False):
         extra = ""
         if holm:
             ph = r.p_holm_primary
-            extra = " & " + (f4(ph) if pd.notna(ph) else "--")
+            extra = " & " + (("\\textbf{" + f4(ph) + "}" if ph < 0.05 else f4(ph)) if pd.notna(ph) else "--")
         rows.append(f"{name} & {int(r.n):,} & {f4(r.mean_diff)} & {f4(r.se)} & {ci(r.mean_diff, r.se)} & {f2(r.t)} & "
                     f"{pfmt(r.p)} & {f4(r.mde80)}{extra} \\\\")
     cols = 8 + (1 if holm else 0)
@@ -92,7 +92,7 @@ def main():
                  "tab:ladder-margin",
                  [("margin_pooledcorr", "CCC versus B (non-nested)"), ("margin_effect", "RSC versus D (non-nested; pre-declared family)")],
                  "As Table~\\ref{tab:ladder-vol}. Holm $p$: the pre-declared family is RSC versus D in the four ETF samples, "
-                 "Holm-adjusted over the four; the fund sample is not in the family.", holm_step="margin_effect")
+                 "Holm-adjusted over the four; the fund sample is not in the family. Bold: the one adjusted $p$-value below 0.05.", holm_step="margin_effect")
     ladder_table(df, "tab_ladder_corr.tex", "Correlation steps",
                  "tab:ladder-corr",
                  [("static_corr", "D versus B (nested in the correlation matrix; size unreliable under GARCH margins)"),
@@ -256,7 +256,21 @@ def holdout_tables():
         for r in cal[cal.alpha == a].itertuples():
             rows.append(f"{pct(a)} & {arm[r.arm]} & {int(r.hits)} & {pct(r.hit_rate)} & {pfmt(r.kupiec_p)} & {pfmt(r.independence_p)} & "
                         f"{pfmt(r.cc_p)} & {f3(r.z2)} & {pfmt(r.z2_p_underestimated)} & {f2(r.mean_es_exceedance_ratio)} \\\\")
-    tc = json.loads((ROOT / "output" / "confirm" / "posthoc.json").read_text())["t_chain_calib"]
+    ph_all = json.loads((ROOT / "output" / "confirm" / "posthoc.json").read_text())
+    tc = ph_all["t_chain_calib"]
+    by = ph_all["breach_by_year"]
+    yrs = sorted(by["days"])
+    def cell(y, x):
+        t = pct(x)
+        return "\\textbf{" + t + "}" if y == "2022" else t
+    brows = [f"Forecast days & " + " & ".join(("\\textbf{" + str(by['days'][y]) + "}" if y == "2022" else str(by['days'][y])) for y in yrs) + " \\\\", "\\midrule"]
+    for k, lab in (("CCC_S_N", "CCC (constant correlation)"), ("RSC_P_N", "RSC\\_P (switching SPY--IEF correlation)"), ("EWMA", "RiskMetrics EWMA (POST HOC baseline)")):
+        brows.append(f"{lab} & " + " & ".join(cell(y, by[k][y]) for y in yrs) + " \\\\")
+    write("tab_holdout_breach_year.tex",
+          "\\begin{table}[t]\n\\centering\\setstretch{1}\\footnotesize\\setlength{\\tabcolsep}{4pt}\n\\caption{\\uc{Share of hold-out days on which the 5\\% VaR was breached, by calendar year}}\\label{tab:breach-year}\n"
+          "\\begin{tabular}{l" + "r" * len(yrs) + "}\n\\toprule\n & " + " & ".join(("\\textbf{" + y + "}" if y == "2022" else y) for y in yrs) + " \\\\\n\\midrule\n"
+          + "\n".join(brows) + "\n\\bottomrule\n\\end{tabular}\n"
+          "\\tabnote{Nominal rate 5\\%; Gaussian chain for CCC and RSC\\_P. 2022, the year in which the stock--bond correlation turned positive, is in bold. POST HOC and descriptive: chosen after the result was known; no test. Source: \\texttt{output/confirm/posthoc.json} (\\texttt{scripts/thesis\\_posthoc.py}).}\n\\end{table}\n")
     rows += ["\\midrule", "\\multicolumn{10}{l}{\\textbf{Student-$t$ chain (POST HOC, descriptive)}}\\\\"]
     for a in (0.05, 0.025):
         for k in ("RSC_P_t", "CCC_S_t"):

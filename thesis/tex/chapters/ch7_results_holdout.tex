@@ -1,4 +1,4 @@
-\section{RESULTS: THE HOLD-OUT TEST}\label{ch:holdout}
+\section{Results on the Hold-Out}\label{ch:holdout}
 
 This chapter reports the single pre-specified test on the hold-out (1,508 forecast days), with the sentence that Section~\ref{sec:decision-rule} fixed for the outcome that occurred. Secondary results follow, labelled as such; then the calibration of the two models, which is the result that matters most to a practitioner; and finally checks chosen after the result was known. The forecasts were produced once, from the code fixed by the tag \texttt{spec-freeze-v1}, and the run was clean: every covariance matrix was valid without repair, every GARCH fit converged and every DCC fit was admissible. Before any number was computed, the scorer's provenance check was amended once (Appendix~\ref{app:disclosure}).
 
@@ -40,7 +40,9 @@ Breach-day losses were also larger than forecast. $Z_2$ is positive for both mod
 
 The checks in this section were chosen after the result was known. They are descriptive, change no outcome, and were computed from the stored forecasts without refitting anything (scripts \texttt{thesis\_posthoc.py}, \texttt{thesis\_baselines.py} and \texttt{thesis\_fig\_cumulative.py}).
 
-\emph{Where the difference arises.} Figure~\ref{fig:cumulative} plots the running sum of the daily loss differences. The total over all 1,508 days is $-1.91$. The switching model lost ground in the 2020 crash: the days from 15 February to 30 April 2020 sum to $+1.05$, and excluding that window the mean difference is $-0.0020$. It then gained steadily through 2021, which contributes $-1.56$, against $-0.10$ for 2020 as a whole and $-0.24$ for 2022, and the two models tracked each other from 2023. The average is therefore the net of a few large, opposite-signed episodes, with 2021, when the calendar-year SPY--IEF correlation was $-0.09$, contributing most of the favourable part and not 2022.
+\subsubsection{Where the difference arises}
+
+Figure~\ref{fig:cumulative} plots the running sum of the daily loss differences. The total over all 1,508 days is $-1.91$. The switching model lost ground in the 2020 crash: the days from 15 February to 30 April 2020 sum to $+1.05$, and excluding that window the mean difference is $-0.0020$. It then gained steadily through 2021, which contributes $-1.56$, against $-0.10$ for 2020 as a whole and $-0.24$ for 2022, and the two models tracked each other from 2023. The average is therefore the net of a few large, opposite-signed episodes, with 2021, when the calendar-year SPY--IEF correlation was $-0.09$, contributing most of the favourable part and not 2022.
 
 \begin{figure}[t]
 \centering
@@ -49,8 +51,20 @@ The checks in this section were chosen after the result was known. They are desc
 \tabnote{Running sum of $d_t=\FZ_t^{\text{RSC\_P}}-\FZ_t^{\text{CCC}}$, tail level 5\%, Gaussian chain; a falling line means the switching model had the lower loss. The darker band is the crash window of 15 February to 30 April 2020, the lighter band the calendar year 2022. Source: \texttt{output/confirm/holdout\_forecasts.pkl}, drawn by \texttt{scripts/thesis\_fig\_cumulative.py}.}
 \end{figure}
 
-\emph{Inference.} The test used a HAC lag of 7. With no lag the standard error is 0.0012 ($t=-1.04$), with 21 lags 0.0014 ($t=-0.90$) and with 42 lags 0.0015 ($t=-0.84$). Because the loss difference is dominated by a few days, I also computed stationary-bootstrap intervals for the mean, which do not rely on the normal approximation: with expected block lengths of 5, 21 and 63 days they run from $-0.0037$ to $+0.0013$, from $-0.0039$ to $+0.0017$ and from $-0.0042$ to $+0.0017$. Every choice leaves the result non-significant, and the normal interval is about as wide as the bootstrap ones.
+\subsubsection{Inference}
 
-\emph{Baselines.} Three simpler forecasts of the portfolio return, scored with the same loss on the same days, were statistically indistinguishable from constant correlation. The mean FZ0 difference against CCC (positive means worse than CCC) was $+0.0317$ for GARCH-$t$ (HAC standard error 0.0429), $+0.1308$ for historical simulation (0.1278) and $+0.0063$ for the RiskMetrics EWMA (0.0440), and every interval contains zero. Their 5\% breach rates were 6.6\%, 5.8\% and 5.2\%, against 6.8\% and 6.9\% for CCC and RSC\_P; the Kupiec test rejects correct coverage for GARCH-$t$ ($p=0.008$) but not for historical simulation ($p=0.146$) or the EWMA ($p=0.673$). A one-parameter EWMA therefore came close to nominal coverage with a loss indistinguishable from that of the GARCH-based models.
+The test used a HAC lag of 7. With no lag the standard error is 0.0012 ($t=-1.04$), with 21 lags 0.0014 ($t=-0.90$) and with 42 lags 0.0015 ($t=-0.84$). Because the loss difference is dominated by a few days, I also computed stationary-bootstrap intervals for the mean, which do not rely on the normal approximation: with expected block lengths of 5, 21 and 63 days they run from $-0.0037$ to $+0.0013$, from $-0.0039$ to $+0.0017$ and from $-0.0042$ to $+0.0017$. Every choice leaves the result non-significant, and the normal interval is about as wide as the bootstrap ones.
 
-\emph{Heavier tails.} The Student-$t$ versions of the two primary models (lower panel of Table~\ref{tab:holdout-calib}) breached the 5\% VaR more often, on 7.2\% of days, and the 2.5\% VaR on 4.2\%, while breach-day losses came closer to the forecast shortfall (ratio 1.07 to 1.08). Fatter tails did not fix the breach rate, which is consistent with forecast volatility that was too low rather than tails that were too thin.
+\subsubsection{Baselines}
+
+Three simpler forecasts of the portfolio return, scored with the same loss on the same days, were statistically indistinguishable from constant correlation. The mean FZ0 difference against CCC (positive means worse than CCC) was $+0.0317$ for GARCH-$t$ (HAC standard error 0.0429), $+0.1308$ for historical simulation (0.1278) and $+0.0063$ for the RiskMetrics EWMA (0.0440), and every interval contains zero. Their 5\% breach rates were 6.6\%, 5.8\% and 5.2\%, against 6.8\% and 6.9\% for CCC and RSC\_P; the Kupiec test rejects correct coverage for GARCH-$t$ ($p=0.008$) but not for historical simulation ($p=0.146$) or the EWMA ($p=0.673$). A one-parameter EWMA therefore came close to nominal coverage with a loss indistinguishable from that of the GARCH-based models.
+
+\subsubsection{Breaches by year}
+
+The excess breaches of the two primary models were concentrated in one year (Table~\ref{tab:breach-year}). In 2022, constant correlation breached its 5\% VaR on 12.0\% of days and the switching model on 12.4\%, more than twice the intended rate, while the EWMA breached on 6.0\%. In the other years the two primary models stayed between 3.2\% and 7.1\%.
+
+\input{generated/tab_holdout_breach_year}
+
+\subsubsection{Heavier tails}
+
+The Student-$t$ versions of the two primary models (lower panel of Table~\ref{tab:holdout-calib}) breached the 5\% VaR more often, on 7.2\% of days, and the 2.5\% VaR on 4.2\%, while breach-day losses came closer to the forecast shortfall (ratio 1.07 to 1.08). Fatter tails did not fix the breach rate, which is consistent with forecast volatility that was too low rather than tails that were too thin.

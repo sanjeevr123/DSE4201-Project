@@ -1,4 +1,4 @@
-\section{METHODOLOGY}\label{ch:method}
+\section{Methodology}\label{ch:method}
 
 The tail risk of a portfolio depends on how volatile each asset is and on how the assets move together, and a market regime can change either. The models in this chapter share one regime signal, one portfolio and one estimation scheme. They differ in whether volatility, correlation or both depend on the regime, and in whether volatility also follows GARCH dynamics. Pairing them so that each comparison changes as little as possible (Section~\ref{sec:ladder-design}) is what lets the thesis ask about the correlation channel specifically. Chapter~\ref{ch:eval} defines the loss, the test and the decision rule; Appendix~\ref{app:tech} gives the longer formulas and Chapter~\ref{ch:code} the implementation settings.
 
@@ -18,7 +18,9 @@ p_{t,k}=\Pr\bigl(S_t=k\mid \text{SPY returns through } t-1\bigr),
 \end{equation}
 obtained by propagating the filtered probability at the window end through $P$ and, within the block, filtering with the realised SPY returns up to day $t-1$. Day $t$'s own return is never used.
 
-\subsection{Static regime-covariance models: A, B and D}\label{sec:static}
+\subsection{The forecasting models}
+
+\subsubsection{Static regime-covariance models: A, B and D}\label{sec:static}
 
 The static models use weighted sample moments of the asset returns over the window (Appendix~\ref{app:tech}): pooled moments $\hat\mu,\hat\Sigma$ with equal weights, and regime moments $\hat\mu_k,\hat\Sigma_k$ weighted by $\gamma_{s,k}$. Write $\hat\Sigma=\mathrm{diag}(\hat\sigma)\hat R\,\mathrm{diag}(\hat\sigma)$ and $\hat\Sigma_k=\mathrm{diag}(\hat\sigma_k)\hat R_k\,\mathrm{diag}(\hat\sigma_k)$ for their decompositions into standard deviations and correlations. The three static models assign to regime component $k$ the covariance
 \begin{align}
@@ -28,7 +30,7 @@ The static models use weighted sample moments of the asset returns over the wind
 \end{align}
 Model A has the same covariance in both components, so it is a single normal distribution. Model B lets the volatilities differ by regime and holds the correlation matrix at its pooled value. Model D lets every volatility and every correlation differ by regime. The portfolio variance in component $k$ is $s_k^2=w^\prime\Sigma_k w$, and every component has the same mean $m=w^\prime\hat\mu$, the pooled window mean (the ``pooled'' mean treatment used in the ladder tables). The covariances are fixed within a 21-day block; only the mixture weights $p_{t,k}$ move from day to day. Two controls vary the mean: a regime-specific mean ($w^\prime\hat\mu_k$ in component $k$) and a zero mean. Appendix~\ref{app:mean} reports them, because they change the size of some contrasts.
 
-\subsection{Models with GARCH margins: CCC, RSC and RSC\_P}\label{sec:garch}
+\subsubsection{Models with GARCH margins: CCC, RSC and RSC\_P}\label{sec:garch}
 
 These models replace the block-constant volatilities by GARCH(1,1) volatilities that update daily. For each asset $i$, with returns in per cent, $x_{i,s}=100\,r_{i,s}$, I estimate on the window
 \begin{equation}
@@ -44,7 +46,7 @@ The three models differ in the correlation matrix of the standardised residuals:
 \end{align}
 Here $\bar R$ is the correlation matrix of $z$ over the window with equal weights and $\bar R_k$ is the correlation matrix of $z$ with weights $\gamma_{s,k}$. In RSC\_P only the SPY--IEF correlation switches with the regime and the other two correlations stay pooled. I fixed this pair in advance from the stock--bond hypothesis, not by scanning. A repair that keeps every matrix a valid correlation matrix is in place but never fired (Chapter~\ref{ch:code}). The forecast distribution of $y_t$ is a mixture of normals with weights $p_{t,k}$ ($p_{t,k}=1$ for CCC) and component variances $A_t^\prime R_k A_t$. Its mean, $m=w^\prime\hat\mu^{\mathrm{QML}}/100$ from the QML constants, is common to all components and to both models of the primary test.
 
-\subsection{Mixture value-at-risk and expected shortfall}\label{sec:mixvar}
+\subsubsection{Mixture value-at-risk and expected shortfall}\label{sec:mixvar}
 
 For a forecast mixture with weights $p_k$, means $m_k$ and standard deviations $s_k$, the value-at-risk is the solution $q$ of
 \begin{equation}
@@ -52,7 +54,7 @@ For a forecast mixture with weights $p_k$, means $m_k$ and standard deviations $
 \end{equation}
 found by root-finding, where $\Phi$ is the standard normal distribution function. The expected shortfall is the probability-weighted mean of the return below $q$, which has a closed form (Appendix~\ref{app:tech}). Both are returns, so both are negative at the levels used here. This is the Gaussian chain, which is the primary one. In the secondary Student-$t$ chain every component is a Student-$t$ distribution with common degrees of freedom $\nu$, scaled to the component's standard deviation. $\nu$ is estimated by maximum likelihood on the window's portfolio returns, standardised by an in-window model standard deviation; in the GARCH-margin models this is the constant-correlation standard deviation, so CCC, RSC and RSC\_P share one $\nu$. It is not comparable across the static and GARCH families.
 
-\subsection{Benchmarks}\label{sec:bench}
+\subsubsection{Benchmarks}\label{sec:bench}
 
 Two other models serve as reference points. The first is a dynamic conditional correlation model (DCC; \citealp{engle2002}) built on the same GARCH(1,1) margins, in which the correlation matrix follows a GARCH-type recursion in the standardised residuals (Appendix~\ref{app:tech}). Its parameters are re-estimated every 63 days and the recursion is updated daily; if the estimates are not admissible, it falls back to constant correlation (Chapter~\ref{ch:code}). The second is a GARCH(1,1) model with Student-$t$ errors fitted by maximum likelihood to the portfolio return itself (GARCH-t), which uses no information about the individual assets. Two practitioner baselines, both on the portfolio return, were added only after the hold-out was scored (Section~\ref{sec:holdout-posthoc}): historical simulation, the empirical 5\% quantile and the mean of the returns below it over the last 500 days; and a RiskMetrics exponentially weighted variance with decay 0.94, a zero mean and a normal distribution.
 
