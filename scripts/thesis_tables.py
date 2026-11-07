@@ -116,7 +116,7 @@ def main():
           "development data (RSC\\_P versus CCC)}}\\label{tab:real-pair}\n\\begin{tabular}{llrrrcrrr}\n\\toprule\n"
           "$\\alpha$ & Forecast days & $n$ & $\\bar d$ & SE & 95\\% interval & $t$ & $p$ (2-sided) & MDE \\\\\n\\midrule\n"
           + "\n".join(rows) + "\n\\bottomrule\n\\end{tabular}\n"
-          "\\tabnote{RSC\\_P\\_N minus CCC\\_S\\_N, Gaussian chain, pooled mean; negative favours switching the SPY--IEF correlation. "
+          "\\tabnote{RSC\\_P minus CCC, Gaussian chain, pooled mean; negative favours switching the SPY--IEF correlation. "
           "SE is MDE$/2.8$ (the table stores MDE rounded to $2.8\\,\\mathrm{SE}$); the interval is $\\bar d\\pm1.96\\,\\mathrm{SE}$. "
           "These are development data: the specification was chosen after seeing them, so they are not validation. "
           "Source: \\texttt{output/explore/routes/routes\\_dm\\_table.csv}, provider HMM\\_SPY2.}\n\\end{table}\n")
@@ -132,9 +132,9 @@ def main():
         return (f"{lab} & {pct(r.one_sided)} [{pct(r.one_sided_lo)}, {pct(r.one_sided_hi)}] & {pct(r.two_sided)} & "
                 f"{pct(r.upper_196)} & {f4(r.mean_diff)} & {f4(r.mean_se_d)} \\\\")
 
-    rows = ["\\multicolumn{6}{l}{\\textbf{Primary test: RSC\\_P versus CCC, 1,508 test days}}\\\\"]
+    rows = ["\\multicolumn{6}{l}{\\textbf{Primary test: RSC\\_P versus CCC, 1,508 test days, 500 replications}}\\\\"]
     rows += [prow(p15, s, "pair_with_margins", n) for s, n in names.items()]
-    rows += ["\\midrule", "\\multicolumn{6}{l}{\\textbf{Same test, 2,520 test days (earlier study)}}\\\\"]
+    rows += ["\\midrule", "\\multicolumn{6}{l}{\\textbf{Same test, 2,520 test days (earlier study, 200 replications)}}\\\\"]
     rows += [prow(p25, s, "pair_with_margins", n) for s, n in names.items()]
     rows += ["\\midrule", "\\multicolumn{6}{l}{\\textbf{RSC versus CCC (all pairs switch), 1,508 test days}}\\\\"]
     rows += [prow(p15, s, "corr_with_margins", n) for s, n in names.items()]
@@ -204,7 +204,7 @@ def holdout_tables():
     pw = {sc: p15[(p15.scenario == sc) & (p15.alpha == 0.05) & (p15.step == "pair_with_margins")].iloc[0].one_sided
           for sc in ("S1_moderate_breakdown", "S2_strong_breakdown")}
     d, se = pj["mean_diff"], pj["se"]
-    rows = [("Forecast days $n$", f"{pj['n']:,}"), ("Mean difference $\\bar d$ (RSC\\_P\\_N minus CCC\\_S\\_N)", f4(d)),
+    rows = [("Forecast days $n$", f"{pj['n']:,}"), ("Mean difference $\\bar d$ (RSC\\_P minus CCC)", f4(d)),
             ("HAC standard error (7 lags)", f4(se)), ("$t$ statistic", f2(pj["t"])),
             ("One-sided $p$-value (pre-declared test)", f"{pj['p_one_sided']:.3f}"),
             ("Two-sided $p$-value", f"{pj['p_two_sided']:.3f}"),
@@ -238,7 +238,7 @@ def holdout_tables():
     rows += [drow(r.analysis.replace("alpha", "$\\alpha$").replace("%", "\\%").replace("Student-t", "Student-$t$"), r) for r in ac.itertuples()]
     fy = pd.read_csv(H / "secondary_focus_year.csv").iloc[0]
     rows += ["\\midrule", "\\multicolumn{8}{l}{\\textbf{Calendar year 2022 (interval only, not a test)}}\\\\",
-             f"RSC\\_P\\_N versus CCC\\_S\\_N, 2022 & {int(fy.n):,} & {f4(fy.mean_diff)} & {f4(fy.se)} & [{f4(fy.ci_lo)}, {f4(fy.ci_hi)}] & -- & -- & -- \\\\"]
+             f"RSC\\_P versus CCC, 2022 & {int(fy.n):,} & {f4(fy.mean_diff)} & {f4(fy.se)} & [{f4(fy.ci_lo)}, {f4(fy.ci_hi)}] & -- & -- & -- \\\\"]
     write("tab_holdout_secondary.tex",
           "\\begin{table}[t]\n\\centering\\setstretch{1}\\scriptsize\\setlength{\\tabcolsep}{3pt}\n\\caption{\\uc{Secondary comparisons on the hold-out (unadjusted; not confirmatory)}}\\label{tab:holdout-secondary}\n"
           "\\begin{tabular}{lrrrcrrr}\n\\toprule\nComparison & $n$ & $\\bar d$ & SE & 95\\% interval & $t$ & $p$ (2-sided) & MDE \\\\\n\\midrule\n"
@@ -250,19 +250,27 @@ def holdout_tables():
 
     # calibration ----------------------------------------------------------------------------------------------
     cal = pd.read_csv(H / "calibration.csv")
-    rows = []
+    arm = {"RSC_P_N": "RSC\\_P", "CCC_S_N": "CCC", "RSC_P_t": "RSC\\_P", "CCC_S_t": "CCC"}
+    rows = ["\\multicolumn{10}{l}{\\textbf{Gaussian chain (the primary forecasts)}}\\\\"]
     for a in (0.05, 0.025):
         for r in cal[cal.alpha == a].itertuples():
-            rows.append(f"{pct(a)} & {r.arm.replace('_', chr(92) + '_')} & {int(r.hits)} & {pct(r.hit_rate)} & {pfmt(r.kupiec_p)} & {pfmt(r.independence_p)} & "
+            rows.append(f"{pct(a)} & {arm[r.arm]} & {int(r.hits)} & {pct(r.hit_rate)} & {pfmt(r.kupiec_p)} & {pfmt(r.independence_p)} & "
                         f"{pfmt(r.cc_p)} & {f3(r.z2)} & {pfmt(r.z2_p_underestimated)} & {f2(r.mean_es_exceedance_ratio)} \\\\")
+    tc = json.loads((ROOT / "output" / "confirm" / "posthoc.json").read_text())["t_chain_calib"]
+    rows += ["\\midrule", "\\multicolumn{10}{l}{\\textbf{Student-$t$ chain (POST HOC, descriptive)}}\\\\"]
+    for a in (0.05, 0.025):
+        for k in ("RSC_P_t", "CCC_S_t"):
+            r = tc[f"{k}_a{int(a * 1000)}"]
+            rows.append(f"{pct(a)} & {arm[k]} & {r['hits']} & {pct(r['hit_rate'])} & {pfmt(r['kupiec_p'])} & {pfmt(r['independence_p'])} & "
+                        f"{pfmt(r['cc_p'])} & -- & -- & {f2(r['es_ratio'])} \\\\")
     write("tab_holdout_calib.tex",
           "\\begin{table}[t]\n\\centering\\setstretch{1}\\scriptsize\\setlength{\\tabcolsep}{3pt}\n\\caption{\\uc{Coverage and expected-shortfall calibration of the two primary models on the hold-out}}\\label{tab:holdout-calib}\n"
           "\\begin{tabular}{llrrrrrrrr}\n\\toprule\n$\\alpha$ & Model & Hits & Hit rate & Kupiec $p$ & Indep. $p$ & Cond. cov. $p$ & $Z_2$ & $Z_2$ $p$ & ES ratio \\\\\n\\midrule\n"
           + "\n".join(rows) + "\n\\bottomrule\n\\end{tabular}\n"
-          "\\tabnote{1,508 forecast days. A hit is a day with $y_t\\le\\mathrm{VaR}_t$. Kupiec: unconditional coverage; Indep.: Christoffersen independence; "
+          "\\tabnote{1,508 forecast days; 75.4 hits expected at 5\\% and 37.7 at 2.5\\%. A hit is a day with $y_t\\le\\mathrm{VaR}_t$. Kupiec: unconditional coverage; Indep.: Christoffersen independence; "
           "Cond. cov.: their sum. $Z_2$ is positive when risk is underestimated (my sign, opposite to Acerbi and Szekely); its $p$-value is the simulated "
-          "share of $Z_2$ values at or above the observed one. ES ratio: mean of $y_t/\\mathrm{ES}_t$ over hit days, above one when exceedances are larger than the "
-          "forecast shortfall. Descriptive, not part of the decision. Source: \\texttt{output/confirm/holdout/calibration.csv}.}\n\\end{table}\n")
+          "share of $Z_2$ values at or above the observed one, and it is not simulated for the Student-$t$ chain. ES ratio: mean of $y_t/\\mathrm{ES}_t$ over hit days, above one when exceedances are larger than the "
+          "forecast shortfall. Descriptive, not part of the decision. Sources: \\texttt{output/confirm/holdout/calibration.csv}; Student-$t$ rows \\texttt{output/confirm/posthoc.json} (\\texttt{scripts/thesis\\_posthoc.py}).}\n\\end{table}\n")
 
 
 if __name__ == "__main__":

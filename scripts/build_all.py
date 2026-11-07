@@ -17,8 +17,10 @@ import time
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-STEPS = [("tables", ["scripts/thesis_tables.py"]),
+STEPS = [("data summary and correlation figure", ["scripts/thesis_data_summary.py"]),
+         ("tables", ["scripts/thesis_tables.py"]),
          ("figure: forest plots", ["scripts/thesis_fig_forest.py"]),
+         ("figure: hold-out cumulative difference", ["scripts/thesis_fig_cumulative.py"]),
          ("registered numbers", ["scripts/check_numbers.py"])]
 CHAPTERS = sorted((ROOT / "thesis" / "tex" / "chapters").glob("ch*.tex"))
 

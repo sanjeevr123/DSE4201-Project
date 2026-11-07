@@ -1,33 +1,23 @@
 \begin{center}\textbf{APPENDIX}\end{center}
-\section{SPECIFICATION, REPRODUCIBILITY AND FROZEN WORDING}\label{app:log}
+\section{DISCLOSURES, THE RECORD OF THE HOLD-OUT RUN AND FROZEN WORDING}\label{app:disclosure}
 
-\subsection{Where the record is}
+\subsection{Items seen before the specification was fixed}
 
-Every methodological decision is in \texttt{docs/decisions\_log.md}, including the exploration grid (10 ETF universes, 10 regime definitions, 214 headline tests) and the family tests. The confirmatory specification is \texttt{docs/preregistration\_confirmatory.md}, fixed by the annotated tags \texttt{spec-freeze-v1} and \texttt{spec-freeze-v1.1}; its section 8 records the one amendment (Section~\ref{sec:holdout-record}). \texttt{docs/EXECUTION\_LOG.md} lists each step of the work in order, with the hashes of the hold-out forecast file and of the scored tables. The hold-out forecast file has SHA-256 \texttt{9537bb5d6008028076126d0166bb2edc1f643e5a9f496cb852d7872f8485f974}; the scored tables are in \texttt{output/confirm/holdout/} with a manifest of their hashes. Tables of the development controls and sub-periods are in \texttt{output/explore/} and are not reprinted.
+Besides the two items discussed in Section~\ref{sec:disclosure}, the following were seen or used before the specification was fixed.
+\begin{enumerate}
+\item A descriptive data analysis and a data audit in the pilot displayed summary statistics for 2010 to 2025. Calendar-year SPY--IEF correlations, Table~\ref{tab:data-summary}, Figure~\ref{fig:corr} and the reference baselines of Section~\ref{sec:holdout-posthoc} were computed after the hold-out was scored, for description only.
+\item Three unit tests read the 2010--2025 pilot returns and passed in earlier sessions; they were excluded from the test run until the hold-out had been scored.
+\item A search of the test files printed two single-day returns, for 2020-03-10 and 2023-11-01, once by accident. They were not used, and no specification depends on them.
+\item All ETF data come from one vendor.
+\end{enumerate}
 
-\subsection{Rebuilding the thesis from saved results}
+\subsection{The record of the run}\label{sec:holdout-record}
 
-The command \texttt{python scripts/build\_all.py} rebuilds every table of Chapters 5 to 7, the forest plots and the PDF, and checks every registered number against its source file. It reads the saved result files, refits nothing and takes a few seconds. \texttt{scripts/verify\_clean\_clone.py} repeats the build in a clean clone of the committed repository and compares each table byte for byte, each figure pixel by pixel and the text of the PDF.
+The forecasts were produced once by \texttt{scripts/confirm\_00\_run.py} from the code fixed by the tag \texttt{spec-freeze-v1}, for 1,508 forecast days from 2 January 2020 to 31 December 2025. Before the run the file hashes in the specification matched the files, the tests passed, and no earlier hold-out output existed. The supervisor had been sent the hypothesis, the sidedness and the exact SPY--IEF specification, and had replied that the test looked appropriate.
 
-\subsection{Recomputing the results}
+The scorer then refused to score. Its first check required the commit recorded in the forecast file to equal the tagged commit, and the recorded commit was two commits later: those commits changed an ignore file and a log, and none of the forecast code. No number from the run had been computed or seen. I replaced the check with one that requires the recorded commit to descend from the tagged commit and the forecast code to be identical in both, wrote the change and its reason into the specification (its section 8), and tagged it \texttt{spec-freeze-v1.1}. The forecasts were not produced again. The original rule was part of the specification, and the amendment, although it cannot depend on a result that did not yet exist, is a departure from it. It also goes beyond the letter of the specification, which allowed a repair only after a crash before output was written, whereas here the output existed and the scorer refused it. The new check covers \texttt{src/}, the runner and the requirements file; it does not cover configuration files, the other scripts or the Python environment. That the amendment was made before any figure was seen rests on my record and on the commit times, not on an independent witness.
 
-The saved results can be recomputed from the raw data file stored under \texttt{data/raw/} (SHA-256 \texttt{0ab8c7f3\ldots150e29}) in the order below.
-\begin{itemize}
-\item The exploration grid, the ladder and the development power study: \texttt{scripts/explore\_00} to \texttt{explore\_20}.
-\item Power at the hold-out length: \texttt{scripts/explore\_21\_\allowbreak power\_\allowbreak holdout\_\allowbreak length.py}, 500 replications in each of four scenarios (about 19 seconds per replication), summarised by \texttt{scripts/explore\_22\_power\_summary.py}.
-\item The confirmatory dry run and hold-out: \texttt{scripts/confirm\_00\_run.py pseudo} (18 seconds) and \texttt{holdout} (27 seconds), then \texttt{scripts/confirm\_01\_score.py}. The runner refuses to run the hold-out unless the frozen files match the tag and refuses to overwrite an existing output.
-\end{itemize}
-The test suite (\texttt{pytest}; 105 tests in about one minute, plus three that read the hold-out period) checks the models, the scorer and the helper scripts.
-
-\subsection{Environment}
-
-Python 3.9.6 with numpy 2.0.2, pandas 2.3.3, scipy 1.13.1, arch 7.2.0, statsmodels 0.14.6, hmmlearn 0.3.3 and matplotlib 3.9.4; the full list is in \texttt{requirements.txt}. BLAS threads are set to one so that the numbers should not depend on the core count; I did not test this on another machine.
-
-\subsection{Hidden Markov model initial values}
-
-The first fit of a run is a cold start with 100 iterations from start probabilities $(0.5,0.5)$, a transition matrix with diagonal $(0.98,0.95)$, both means at the window mean, and variances $0.5v$ and $2.5v$, where $v$ is the window variance.
-
-\subsection{Frozen wording of the other outcomes}
+\subsection{Frozen wording of the other outcomes}\label{app:wording}
 
 The wording fixed before the run for the outcomes that did not occur was:
 \begin{description}
@@ -35,3 +25,80 @@ The wording fixed before the run for the outcomes that did not occur was:
 \item[O3] ``The data are inconsistent, at the one-sided 5\% level, with an improvement larger than SESOI $=0.002$ FZ0 units. Improvements smaller than this, and any degradation, are not excluded.''
 \item[O4] ``The hold-out data provide evidence that the switching specification has higher expected FZ0 loss ($\bar d$, 95\% CI $[a,b]$).''
 \end{description}
+
+\section{MEAN-TREATMENT CONTROLS}\label{app:mean}
+
+The development comparisons of Chapter~\ref{ch:results} use the pooled window mean in every component. Figures~\ref{fig:forest-zero} and~\ref{fig:forest-regime} repeat Figure~\ref{fig:forest} with a zero mean and with regime-specific means. The signs of the volatility and margin contrasts do not change, but their sizes do: the RSC-versus-D contrast is larger in absolute value with a zero mean. The correlation contrasts stay small under every treatment, with the exceptions noted in Section~\ref{sec:corr-results}. The full tables, including the sub-periods, are in \texttt{output/explore/ladder/ladder\_dm\_table.csv}.
+
+\begin{figure}[p]
+\centering
+\includegraphics[width=\textwidth,height=0.8\textheight,keepaspectratio]{forest_comparisons_zero.png}
+\caption{\uc{Mean FZ0 difference by comparison and sample, zero mean in both models}}\label{fig:forest-zero}
+\tabnote{As Figure~\ref{fig:forest}, with the forecast mean set to zero in every component. Source: \texttt{output/explore/ladder/ladder\_dm\_table.csv}.}
+\end{figure}
+
+\begin{figure}[p]
+\centering
+\includegraphics[width=\textwidth,height=0.8\textheight,keepaspectratio]{forest_comparisons_regime.png}
+\caption{\uc{Mean FZ0 difference by comparison and sample, regime-specific means}}\label{fig:forest-regime}
+\tabnote{As Figure~\ref{fig:forest}, with a regime-specific mean in each component of the static models; the GARCH-margin models and DCC have no regime-mean version, so the DCC panel is omitted. Source: \texttt{output/explore/ladder/ladder\_dm\_table.csv}.}
+\end{figure}
+
+\section{TECHNICAL DETAILS}\label{app:tech}
+
+\subsection{Weighted moments of the static models}
+
+For weights $q_s\ge0$ over the window days, the weighted mean and covariance of the asset returns are
+\begin{equation}
+\hat\mu(q)=\frac{\sum_s q_s r_s}{\sum_s q_s},\qquad
+\hat\Sigma(q)=\frac{\sum_s q_s\,(r_s-\hat\mu(q))(r_s-\hat\mu(q))^\prime}{\sum_s q_s},
+\end{equation}
+with the maximum-likelihood normalisation. The pooled moments use $q_s=1$; the regime moments use $q_s=\gamma_{s,k}$, with a floor of $10^{-12}$.
+
+\subsection{Expected shortfall of a normal mixture}
+
+For a mixture with weights $p_k$, means $m_k$ and standard deviations $s_k$, and value-at-risk $q$ from Section~\ref{sec:mixvar}, the expected shortfall is
+\begin{equation}
+\ES=\frac1\alpha\sum_k p_k\Bigl[m_k\,\Phi(z_k)-s_k\,\phi(z_k)\Bigr],\qquad z_k=\frac{q-m_k}{s_k},
+\end{equation}
+where $\Phi$ and $\phi$ are the standard normal distribution and density functions.
+
+\subsection{The DCC recursion}
+
+In the DCC benchmark the quasi-correlation matrix follows
+\begin{equation}
+Q_t=(1-\theta_1-\theta_2)\bar Q+\theta_1 z_{t-1}z_{t-1}^\prime+\theta_2 Q_{t-1},
+\end{equation}
+where $\bar Q$ is the sample covariance of the standardised residuals $z$, and $Q_t$ is rescaled to a correlation matrix. $(\theta_1,\theta_2)$ are estimated on the window by Gaussian quasi-maximum likelihood every 63 days.
+
+\subsection{The HAC variance estimator}
+
+The standard error of $\bar d$ in Section~\ref{sec:test} is $\widehat{\mathrm{SE}}=\sqrt{\widehat V/T}$, with the Bartlett-kernel estimator
+\begin{equation}
+\widehat{V}=\hat\gamma_0+2\sum_{\ell=1}^{m}\Bigl(1-\frac{\ell}{m+1}\Bigr)\hat\gamma_\ell,\qquad
+\hat\gamma_\ell=\frac1T\sum_{t=\ell+1}^{T}(d_t-\bar d)(d_{t-\ell}-\bar d).
+\end{equation}
+
+\subsection{Parameters of the simulated process}
+
+\begin{table}[h]
+\centering\setstretch{1}\footnotesize
+\caption{\uc{Parameters of the process used in the power study}}\label{tab:dgp}
+\begin{tabular}{lccc}
+\toprule
+ & Equity-like & Bond-like & Gold-like\\
+\midrule
+Daily volatility, calm state & 0.75\% & 0.30\% & 0.90\%\\
+Daily volatility, stress state & 2.0\% & 0.5\% & 1.6\%\\
+\midrule
+ & Equity--bond & Equity--gold & Bond--gold\\
+\midrule
+Correlation, calm state (all scenarios) & $-0.30$ & 0.05 & 0.30\\
+Stress state, S0 (no change) & $-0.30$ & 0.05 & 0.30\\
+Stress state, S1 (moderate breakdown) & 0.00 & 0.20 & 0.30\\
+Stress state, S2 (strong breakdown) & 0.40 & 0.40 & 0.30\\
+Stress state, S3 (flight to quality) & $-0.55$ & $-0.10$ & 0.40\\
+\bottomrule
+\end{tabular}
+\tabnote{Persistence of the calm state 0.99 and of the stress state 0.97. Innovations are multivariate Student-$t$ with six degrees of freedom. Each asset's volatility also follows GARCH(1,1) dynamics with coefficients 0.08 and 0.90 on the regime-scaled return, fixed and not estimated. Sources: \texttt{config/pilot.yaml} (volatilities, persistence, correlations, degrees of freedom) and \texttt{src/dgp\_garch.py} (GARCH coefficients).}
+\end{table}

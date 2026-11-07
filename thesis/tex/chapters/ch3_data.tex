@@ -1,22 +1,37 @@
 \section{DATA AND SAMPLE DESIGN}\label{ch:data}
 
-This chapter describes the data, the portfolio and the division of the sample into a development period, a dry-run period and a hold-out period. Many specifications were examined on the development period before one was chosen, so the hold-out is clean only in the sense that nothing was fitted on it.
+This chapter describes the data and the portfolio, shows the patterns that motivate the analysis, and divides the sample into a development period and a hold-out period. Many specifications were examined on the development period before one was chosen, so the hold-out is clean only in the sense that nothing was fitted on it.
 
 \subsection{Data}\label{sec:data}
 
-The main sample is three exchange-traded funds: SPY (US large-cap equities), IEF (US Treasuries with seven to ten years to maturity) and GLD (gold). I downloaded daily adjusted closing prices from Yahoo Finance through the \texttt{yfinance} package on 26 September 2026; the file is stored with its SHA-256 hash in \texttt{data/raw/MANIFEST.txt}. The estimation code truncates the series at 31 December 2025 before computing anything.
+The main sample is three exchange-traded funds: SPY (US large-cap equities), IEF (US Treasuries with seven to ten years to maturity) and GLD (gold). The data are daily adjusted closing prices from Yahoo Finance, obtained through the \texttt{yfinance} package; the data vintage is 26 September 2026, and the file and its SHA-256 hash are stored with the code (Chapter~\ref{ch:code}). The estimation code truncates the series at 31 December 2025 before computing anything.
 
-I compute simple daily returns, $r_{i,t}=P_{i,t}/P_{i,t-1}-1$, from the adjusted close. Dates on which any of the three prices is missing are dropped and returns are computed between consecutive available dates, with no forward filling. Through 31 December 2019 the file yields 3,805 prices and 3,804 returns, the first on 19 November 2004.
-
-A second download of the same three tickers, truncated at 2019, has the same 3,804 dates, and its daily returns differ from the first by at most $2.5\times10^{-6}$ (portfolio returns by at most $9.3\times10^{-7}$). This shows that the download is reproducible. It is not a second source: every ETF series in this thesis comes from one vendor.
+I compute simple daily returns, $r_{i,t}=P_{i,t}/P_{i,t-1}-1$, from the adjusted close. Dates on which any of the three prices is missing are dropped and returns are computed between consecutive available dates, with no forward filling. Through 31 December 2019 the file yields 3,805 prices and 3,804 returns, the first on 19 November 2004. Adjusted closes include distributions, so a return measures the total return of holding the fund. Daily ETF prices are the data a desk forecasting this portfolio would itself use, and they cover the 2022 reversal; their weakness, examined below, is that they start too late to contain an earlier spell of positive stock--bond correlation.
 
 \subsection{The portfolio}\label{sec:portfolio}
 
 The portfolio holds the three funds with constant weights $w=(1/3,1/3,1/3)$. The portfolio return is $y_t=w^\prime r_t$. Holding the weights constant means that the portfolio is rebalanced to equal weights every day. I do not model the turnover this implies, nor transaction costs, so the portfolio is a clean object on which to forecast risk and not an investable strategy. A buy-and-hold portfolio would have drifting weights and would give different numbers; every result in this thesis uses constant weights.
 
+\subsection{Summary statistics and the motivating pattern}\label{sec:summary}
+
+\input{generated/tab_data_summary}
+
+Table~\ref{tab:data-summary} summarises daily returns in the two forecast periods, and three features of it shape the analysis. First, the stock--bond hedge weakened. The SPY--IEF correlation was $-0.46$ over 2010--2019 and $-0.08$ over 2020--2025, and the 63-day rolling correlation, plotted in Figure~\ref{fig:corr}, was positive on 6.4\% of development days against 44.2\% of hold-out days. Second, the portfolio became riskier and more fat-tailed: its annualised volatility rose from 7.1\% to 10.0\% and its excess kurtosis from 4.2 to 7.3. A model estimated on the development years therefore starts the hold-out with a calm view of risk. Third, every series has fat tails in both periods, which is why a Student-$t$ variant is reported next to the Gaussian forecasts.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\textwidth]{fig_spy_ief_corr.png}
+\caption{\uc{Correlation of daily SPY and IEF returns over the previous 63 trading days, 2005--2025}}\label{fig:corr}
+\tabnote{Correlation of simple daily returns over a rolling 63-day window. The dashed line marks the first development forecast (4 January 2010); the shaded area is the hold-out (2020--2025). Source: \texttt{scripts/thesis\_data\_summary.py}.}
+\end{figure}
+
+\input{generated/tab_eras}
+
+A longer history puts the development period in context. Table~\ref{tab:eras} uses two mutual funds as proxies for stocks and long Treasuries: the 252-day stock--bond correlation was positive on 90.6\% of days in 1987--1999, on 23.7\% in 2000--2009 and on 0.0\% in 2010--2019. No ETF development sample contains the regime the thesis is about, so the development data cannot show whether a correlation-switching model detects it. Only the hold-out can.
+
 \subsection{Additional samples used in the development period}\label{sec:samples}
 
-The ladder of comparisons in Chapter~\ref{ch:results} is also run on three further ETF samples: SPY, IEF and HYG; four sector funds (XLU, XLK, XLF, XLE); and four risk assets (HYG, EEM, VNQ, DBC). They were used for a check declared in the decision log before it was run (Section~\ref{sec:ladder-design}). The first contains a Treasury fund, whose correlation with equities falls in stress in the development data; in the other two the correlations rise in stress. HYG has a shorter history, so the two samples that contain it start forecasting in 2012. A fifth sample uses two mutual funds as proxies for stocks and long Treasuries (VFINX and VUSTX, equally weighted), with forecasts from 1992 to 2019, to see a period in which the stock--bond correlation was positive. The funds are not ETFs, they price once a day, and VUSTX tracks long Treasuries and not IEF. None of these samples is used in the hold-out, and their data stop at 31 December 2019.
+The ladder of comparisons in Chapter~\ref{ch:results} is also run on three further ETF samples: SPY, IEF and HYG; four sector funds (XLU, XLK, XLF, XLE); and four risk assets (HYG, EEM, VNQ, DBC). They were used for a check declared before it was run (Section~\ref{sec:ladder-design}). The first contains a Treasury fund, whose correlation with equities falls in stress in the development data; in the other two the correlations rise in stress. HYG has a shorter history, so the two samples that contain it start forecasting in 2012. A fifth sample uses two mutual funds as proxies for stocks and long Treasuries (VFINX and VUSTX, equally weighted), with forecasts from 1992 to 2019, to include a period in which the stock--bond correlation was positive. The funds are not ETFs, and VUSTX tracks long Treasuries and not IEF. None of these samples is used in the hold-out, and their data stop at 31 December 2019.
 
 \subsection{Sample design}\label{sec:split}
 
@@ -38,21 +53,10 @@ Hold-out & 2 Jan 2020 -- 31 Dec 2025 & 1,508 & One run of one pre-specified test
 \tabnote{ETF samples that contain HYG start forecasting in 2012 and have 1,944 development days. The first estimation window for the first hold-out forecast covers 30 December 2014 to 31 December 2019. Day counts from the result files \texttt{ladder\_dm\_table.csv} and \texttt{routes\_dm\_table.csv}; the hold-out count is a count of dates in the raw file.}
 \end{table}
 
-The development period is where I explored. I screened ten ETF universes, ten regime definitions and two tail levels, plus the long-history sample. The headline family contains 214 tests of one comparison (D versus B, defined in Chapter~\ref{ch:method}); every specification tried is logged in \texttt{docs/decisions\_log.md} and none was dropped. Results on the development period are therefore descriptive. Anything chosen because it looked good there, including the confirmatory test itself, has no claim to be validated by those same days.
+The development period is where I explored. I screened ten ETF universes, ten regime definitions and two tail levels, plus the long-history sample. The headline family contains 214 tests of one comparison (D versus B, defined in Chapter~\ref{ch:method}); every specification tried is logged and none was dropped. Results on the development period are therefore descriptive. Anything chosen because it looked good there, including the confirmatory test itself, has no claim to be validated by those same days.
 
-The late part of the development period (2016--2019) serves as a dry run. I ran the final code path on it to check the pipeline end to end, and its estimates enter no argument about the hypothesis. The hidden-state chain in the dry run starts cold at its first forecast day, whereas the exploration chain had been running since 2010, so the two paths differ slightly (a median absolute VaR difference of $1.3\times10^{-5}$ to $1.4\times10^{-5}$ in the primary arms). The hold-out run starts cold in the same way.
+The late part of the development period (2016--2019) serves as a dry run: I ran the final code path on it to check the pipeline end to end, and its estimates enter no argument about the hypothesis. The hold-out is 2 January 2020 to 31 December 2025, 1,508 forecast days. It contains the 2020 crash, the 2022 stock--bond reversal that motivates the thesis and the years around it. I ran the pre-specified test on it once, after the specification was fixed (Section~\ref{sec:prereg}).
 
-The hold-out is 2 January 2020 to 31 December 2025, 1,508 forecast days. It contains the 2020 crash, the 2022 stock--bond reversal that motivates the thesis and the years around it. I run the pre-specified test on it once, after the specification file is fixed (Section~\ref{sec:prereg}).
+\subsection{What was known before the specification was fixed}\label{sec:disclosure}
 
-\subsection{What was seen before the specification was fixed}\label{sec:disclosure}
-
-The following was seen or used before the specification was fixed:
-\begin{enumerate}
-\item A descriptive data analysis and a data audit displayed summary statistics for 2010 to 2025. Calendar-year SPY--IEF correlations for 2010 to 2025 (Chapter~\ref{ch:intro}) and reference baselines (Section~\ref{sec:holdout-posthoc}) were computed after the hold-out was scored, for description only.
-\item Three unit tests read the 2010--2025 pilot returns and passed; they were excluded from the test run until the hold-out had been scored.
-\item A search printed two single-day returns, for 2020-03-10 and 2023-11-01, once by accident. They were not used, and no specification depends on them.
-\item No model was fitted or tuned on 2020--2025. But I know that the stock--bond correlation turned positive in 2022, and that knowledge motivated the question.
-\item The choice of the confirmatory test was made from simulated power on a process in which the SPY--IEF correlation shift is largest by construction (Section~\ref{sec:power-design}).
-\item All ETF data come from one vendor (above).
-\end{enumerate}
-The specification file, the scoring code and the raw-data hash were fixed together in the annotated git tag \texttt{spec-freeze-v1} before the run, and the scorer checks that the run was made from code that the tag fixed. The tag is a self-registration in a repository, not an entry in an independent registry, and it carries no external timestamp. One later amendment of the scorer's validity rule, made before any scoring, is described in Section~\ref{sec:holdout-record}.
+No model was fitted or tuned on 2020--2025, but two things that bear on the result were known. I knew that the stock--bond correlation turned positive in 2022, and that knowledge motivated the question. And the confirmatory test was chosen from simulated power on a process in which the SPY--IEF correlation shift is largest by construction (Section~\ref{sec:power-design}). The specification file, the scoring code and the raw-data hash were fixed together in the annotated git tag \texttt{spec-freeze-v1} before the run, and the scorer checks that the forecasts were produced from the code the tag fixed. The tag is a self-registration inside a repository, not an entry in an independent registry, and it carries no external timestamp. Appendix~\ref{app:disclosure} lists the remaining, minor items seen before the freeze and the one amendment made to the scorer before any scoring.
