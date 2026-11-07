@@ -91,13 +91,13 @@ def main():
     ladder_table(df, "tab_ladder_margin.tex", "GARCH margins against static regime covariance",
                  "tab:ladder-margin",
                  [("margin_pooledcorr", "CCC versus B (non-nested)"), ("margin_effect", "RSC versus D (non-nested; pre-declared family)")],
-                 note_common + " Holm $p$: the pre-declared family is RSC versus D in the four ETF samples, "
+                 "As Table~\\ref{tab:ladder-vol}. Holm $p$: the pre-declared family is RSC versus D in the four ETF samples, "
                  "Holm-adjusted over the four; the fund sample is not in the family.", holm_step="margin_effect")
     ladder_table(df, "tab_ladder_corr.tex", "Correlation steps",
                  "tab:ladder-corr",
                  [("static_corr", "D versus B (nested in the correlation matrix; size unreliable under GARCH margins)"),
                   ("corr_with_margins", "RSC versus CCC (nested in the correlation matrix)"),
-                  ("regime_vs_smooth", "DCC versus RSC (non-nested)")], note_common)
+                  ("regime_vs_smooth", "DCC versus RSC (non-nested)")], "As Table~\\ref{tab:ladder-vol}.")
 
     # real-data primary pair on development data --------------------------------------------------------------
     rt = pd.read_csv(ROOT / "output" / "explore" / "routes" / "routes_dm_table.csv")

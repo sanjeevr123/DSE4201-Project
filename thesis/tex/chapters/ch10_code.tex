@@ -53,27 +53,8 @@ Power at the hold-out length & \texttt{scripts/explore\_21\_power\_holdout\_leng
 \tabnote{The hold-out runner refuses to run unless the frozen files match the tag and refuses to overwrite an existing output; the stored hold-out forecasts are \texttt{output/confirm/holdout\_forecasts.pkl}. \texttt{scripts/verify\_clean\_clone.py} repeats the build in a fresh clone and compares each table, figure and the PDF text with the committed versions.}
 \end{table}
 
-\texttt{build\_all.py} runs \texttt{thesis\_data\_summary.py}, \texttt{thesis\_tables.py}, \texttt{thesis\_fig\_forest.py}, \texttt{thesis\_fig\_cumulative.py} and \texttt{check\_numbers.py}, then compiles the LaTeX source with \texttt{tectonic}. Every number quoted in the prose that comes from a result file is registered in \texttt{thesis/numbers.yaml} with its source file and format, and \texttt{check\_numbers.py} recomputes each one and checks that it appears in the stated chapter. Table~\ref{tab:exhibits} maps each exhibit to its source.
+\texttt{build\_all.py} runs \texttt{thesis\_data\_summary.py}, \texttt{thesis\_tables.py}, \texttt{thesis\_fig\_forest.py}, \texttt{thesis\_fig\_cumulative.py} and \texttt{check\_numbers.py}, then compiles the LaTeX source with \texttt{tectonic}. Every number quoted in the prose that comes from a result file is registered in \texttt{thesis/numbers.yaml} with its source file and format, and \texttt{check\_numbers.py} recomputes each one and checks that it appears in the stated chapter. Each table and figure names its result file and script in its note, and the repository's README collects the same map in one table.
 
-\begin{table}[t]
-\centering\setstretch{1}\scriptsize
-\caption{\uc{Source of each table and figure}}\label{tab:exhibits}
-\begin{tabular}{>{\raggedright\arraybackslash}p{3.3cm}>{\raggedright\arraybackslash}p{5.4cm}>{\raggedright\arraybackslash}p{4.9cm}}
-\toprule
-Exhibit & Result file & Produced by\\
-\midrule
-Tables~\ref{tab:data-summary}, Figure~\ref{fig:corr} & \texttt{output/tables/data\_summary.json} & \texttt{thesis\_data\_summary.py}\\
-Table~\ref{tab:eras} & \texttt{output/explore/longhistory\_summary.json} & \texttt{explore\_03\_longhistory.py}\\
-Table~\ref{tab:sesoi} & \texttt{output/confirm/sesoi.json} & \texttt{confirm\_04\_sesoi.py}\\
-Tables~\ref{tab:ladder-vol}--\ref{tab:ladder-corr}, Figures~\ref{fig:forest}, \ref{fig:forest-zero}, \ref{fig:forest-regime} & \texttt{output/explore/ladder/ladder\_dm\_table.csv}, \texttt{ladder\_loss\_table.csv} & \texttt{explore\_13\_ladder.py}, \texttt{explore\_14\_score\_ladder.py}, \texttt{explore\_15\_longhistory\_ladder.py}\\
-Table~\ref{tab:real-pair} & \texttt{output/explore/routes/routes\_dm\_table.csv} & \texttt{explore\_08\_routes.py}, \texttt{explore\_09\_score\_routes.py}\\
-Table~\ref{tab:power1508} & \texttt{output/explore/ladder/power\_1508\_summary.csv}, \texttt{power\_2520\_twosided.csv} & \texttt{explore\_16}, \texttt{explore\_20}--\texttt{explore\_22}\\
-Tables~\ref{tab:holdout-primary}--\ref{tab:holdout-calib} & \texttt{output/confirm/holdout/*} & \texttt{confirm\_00\_run.py}, \texttt{confirm\_01\_score.py}\\
-Figure~\ref{fig:cumulative}, post hoc rows & \texttt{output/confirm/holdout\_forecasts.pkl}, \texttt{posthoc.json}, \texttt{baselines.json} & \texttt{thesis\_fig\_cumulative.py}, \texttt{thesis\_posthoc.py}, \texttt{thesis\_baselines.py}\\
-\bottomrule
-\end{tabular}
-\tabnote{All tables are written to \texttt{thesis/tex/generated/} by \texttt{scripts/thesis\_tables.py}, except Table~\ref{tab:data-summary}, which \texttt{thesis\_data\_summary.py} writes; figures are written to \texttt{output/figures/}. Table~\ref{tab:differs} was derived by hand from the model code.}
-\end{table}
 
 \subsection{Checks on the code}\label{sec:code-tests}
 

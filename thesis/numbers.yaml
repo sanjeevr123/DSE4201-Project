@@ -1558,18 +1558,6 @@
   column: upper_1645
   fmt: .1f
   scale: 100
-- id: c8_hi
-  chapter: ch8_discussion.tex
-  text: '5.2'
-  kind: csv
-  file: output/explore/ladder/power_1508_summary.csv
-  where:
-    scenario: S0_vol_only
-    alpha: 0.05
-    step: pair_with_margins
-  column: one_sided_hi
-  fmt: .1f
-  scale: 100
 - id: c1_corr_dev
   chapter: ch1_introduction.tex
   text: '0.46'
